@@ -117,12 +117,11 @@ def test_paramtrized_divide(numerator, denominator, expected):
     assert divide_numbers(numerator, denominator) == expected
 
 
-def test_divide_numbers_zero():
-    def divide_by_zero(n):
-        divide_numbers(n, 0)
-
+def test_raise_div_by_zero_error():
     with pytest.raises(ZeroDivisionError):
-        divide_by_zero(1)
+        divide_numbers(1, 0)
+    with pytest.raises(ZeroDivisionError):
+        divide_numbers(1, 1)
 
 
 def test_21():
