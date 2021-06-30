@@ -1,0 +1,167 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.8.7, pytest-6.2.4, py-1.10.0, pluggy-0.13.1
+rootdir: /Users/jeff/coding/pytest-fold
+plugins: cov-2.12.1, Faker-8.8.2, html-3.1.1, metadata-1.11.0
+collected 36 items
+
+tests/test_something.py .F...FF.F..FFF...F.FF....F..F...F.F.             [100%]
+
+=================================== FAILURES ===================================
+____________________________ test_random_sentences _____________________________
+
+    def test_random_sentences():
+        fake = Faker()
+        s1 = fake.paragraph(5)
+        s2 = fake.paragraph(5)
+>       assert s1 == s2
+E       AssertionError: assert 'Piece town o...y site until.' == 'True conside...teacher save.'
+E         - True consider instead similar within past. Level type recent region require forget thank. Base new form important along material. Party staff across character professor stop. Fine particularly teacher save.
+E         + Piece town operation agent huge perform practice character. Newspaper reduce kind pattern born. Require drop rest. Stuff simply quite red son each treat. Along kind choice civil similar also. So however every site until.
+
+tests/test_something.py:17: AssertionError
+____________________________________ test_4 ____________________________________
+
+    def test_4():
+>       assert 0 == 1
+E       assert 0 == 1
+
+tests/test_something.py:33: AssertionError
+____________________________ test_random_passwords _____________________________
+
+    def test_random_passwords():
+        fake = Faker()
+        s1 = fake.password(50)
+        s2 = fake.password(30)
+>       assert s1 == s2
+E       AssertionError: assert '%&0Tpe^G5aI*...EFHOIDUjO8*hM' == 'xTc0aOj7acaQ...02EH3WD+SS@0q'
+E         - xTc0aOj7acaQsQtuc02EH3WD+SS@0q
+E         + %&0Tpe^G5aI*4xs$UAKKpOGKOKK$LJdRBRHNnEFHOIDUjO8*hM
+
+tests/test_something.py:40: AssertionError
+____________________________________ test_6 ____________________________________
+
+    def test_6():
+>       assert 0 != 0
+E       assert 0 != 0
+
+tests/test_something.py:48: AssertionError
+_______________________________ test_words_fail ________________________________
+
+    def test_words_fail():
+        fruits1 = ["banana", "apple", "grapes", "melon", "kiwi"]
+        fruits2 = ["banana", "apple", "orange", "melon", "kiwi"]
+>       assert fruits1 == fruits2
+E       AssertionError: assert ['banana', 'a...elon', 'kiwi'] == ['banana', 'a...elon', 'kiwi']
+E         At index 2 diff: 'grapes' != 'orange'
+E         Use -v to get the full diff
+
+tests/test_something.py:62: AssertionError
+______________________________ test_numbers_fail _______________________________
+
+    def test_numbers_fail():
+        number_to_text1 = {str(x): x for x in range(5)}
+        number_to_text2 = {str(x * 10): x * 10 for x in range(5)}
+>       assert number_to_text1 == number_to_text2
+E       AssertionError: assert {'0': 0, '1':..., '3': 3, ...} == {'0': 0, '10'...'30': 30, ...}
+E         Omitting 1 identical items, use -vv to show
+E         Left contains 4 more items:
+E         {'1': 1, '2': 2, '3': 3, '4': 4}
+E         Right contains 4 more items:
+E         {'10': 10, '20': 20, '30': 30, '40': 40}
+E         Use -v to get the full diff
+
+tests/test_something.py:68: AssertionError
+_____________________________ test_long_text_fail ______________________________
+
+    def test_long_text_fail():
+        long_text = "Lorem ipsum dolor sit amet " * 10
+>       assert "hello world" in long_text
+E       AssertionError: assert 'hello world' in 'Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ips... sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet '
+
+tests/test_something.py:73: AssertionError
+___________________________________ test_14 ____________________________________
+
+    def test_14():
+>       assert 0 == 1
+E       assert 0 == 1
+
+tests/test_something.py:89: AssertionError
+___________________________________ test_16 ____________________________________
+
+    def test_16():
+>       assert 0 != 0
+E       assert 0 != 0
+
+tests/test_something.py:97: AssertionError
+___________________________________ test_17 ____________________________________
+
+    def test_17():
+>       assert "a" not in "abc"
+E       AssertionError: assert 'a' not in 'abc'
+E         'a' is contained here:
+E           abc
+E         ? +
+
+tests/test_something.py:101: AssertionError
+_______________________ test_paramtrized_divide[1-1-100] _______________________
+
+numerator = 1, denominator = 1, expected = 100
+
+    @pytest.mark.parametrize(
+        "numerator, denominator, expected",
+        [
+            (1, 1, 1),
+            (2, 2, 1),
+            (3, 3, 1),
+            (-1, -1, 1),
+            (1, 1, 100),  # <= FAIL
+            (-2, -2, 1),
+            (1, 2, 0.5),
+        ],
+    )
+    def test_paramtrized_divide(numerator, denominator, expected):
+>       assert divide_numbers(numerator, denominator) == expected
+E       assert 1.0 == 100
+E        +  where 1.0 = divide_numbers(1, 1)
+
+tests/test_something.py:117: AssertionError
+_________________________ test_raise_div_by_zero_error _________________________
+
+    def test_raise_div_by_zero_error():
+        with pytest.raises(ZeroDivisionError):
+            divide_numbers(1, 0)
+        with pytest.raises(ZeroDivisionError):
+>           divide_numbers(1, 1)
+E           Failed: DID NOT RAISE <class 'ZeroDivisionError'>
+
+tests/test_something.py:124: Failed
+___________________________________ test_24 ____________________________________
+
+    def test_24():
+>       assert 0 == 1
+E       assert 0 == 1
+
+tests/test_something.py:140: AssertionError
+___________________________________ test_26 ____________________________________
+
+    def test_26():
+>       assert 0 != 0
+E       assert 0 != 0
+
+tests/test_something.py:148: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_something.py::test_random_sentences - AssertionError: asser...
+FAILED tests/test_something.py::test_4 - assert 0 == 1
+FAILED tests/test_something.py::test_random_passwords - AssertionError: asser...
+FAILED tests/test_something.py::test_6 - assert 0 != 0
+FAILED tests/test_something.py::test_words_fail - AssertionError: assert ['ba...
+FAILED tests/test_something.py::test_numbers_fail - AssertionError: assert {'...
+FAILED tests/test_something.py::test_long_text_fail - AssertionError: assert ...
+FAILED tests/test_something.py::test_14 - assert 0 == 1
+FAILED tests/test_something.py::test_16 - assert 0 != 0
+FAILED tests/test_something.py::test_17 - AssertionError: assert 'a' not in '...
+FAILED tests/test_something.py::test_paramtrized_divide[1-1-100] - assert 1.0...
+FAILED tests/test_something.py::test_raise_div_by_zero_error - Failed: DID NO...
+FAILED tests/test_something.py::test_24 - assert 0 == 1
+FAILED tests/test_something.py::test_26 - assert 0 != 0
+======================== 14 failed, 22 passed in 0.36s =========================
