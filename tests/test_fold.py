@@ -1,6 +1,32 @@
 # -*- coding: utf-8 -*-
 
 
+def test_with_fold(sample_test):
+    result = sample_test.runpytest("--fold")
+    result.stdout.fnmatch_lines(
+        [
+            "*",
+        ]
+    )
+    assert result.ret == 1
+
+
+def test_with_fold_verbose(sample_test):
+    result = sample_test.runpytest("-v", "--fold")
+    result.stdout.fnmatch_lines(
+        [
+            "▶",
+        ]
+    )
+    assert result.ret == 1
+
+
+def test_no_fold_verbose(sample_test):
+    result = sample_test.runpytest("-v")
+    result.stdout.fnmatch_lines(["*"])
+    assert result.ret == 1
+
+
 def test_bar_fixture(testdir):
     """Make sure that pytest accepts our fixture."""
 
@@ -43,7 +69,7 @@ def test_hello_ini_setting(testdir):
     testdir.makeini(
         """
         [pytest]
-        HELLO = world
+        FOLD = world
     """
     )
 

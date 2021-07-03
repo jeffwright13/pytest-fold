@@ -5,3 +5,5 @@
 ✔︎ To read for testing plugins: https://docs.pytest.org/en/6.2.x/writing_plugins.html
 ✔︎ Testing plugins: https://docs.pytest.org/en/6.2.x/writing_plugins.html#testing-plugins
 ☐ https://stackoverflow.com/questions/53637733/output-ascii-art-to-console-on-succesfull-pytest-run
+- UTF-8 rightwards triangle: ▶ (https://codepoints.net/U+25B6)
+- UTF-8 downwards triangle: ▼ (https://codepoints.net/U+25BC
