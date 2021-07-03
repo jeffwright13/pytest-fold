@@ -10,7 +10,7 @@ def pytest_addoption(parser):
         action='store',
         dest='dest_foo',
         default='2021',
-        help='Set the value for the fixture "bar".'
+        help='Fold reults in console'
     )
 
     parser.addini('HELLO', 'Dummy pytest.ini setting')

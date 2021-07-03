@@ -18,12 +18,13 @@ pytest-fold
     :target: https://ci.appveyor.com/project/jeffwright13/pytest-fold/branch/master
     :alt: See Build Status on AppVeyor
 
-A Pytest plugin to make output more manageable
+A Pytest plugin to make console output more manageable
 
 Features
 --------
 
-* TODO
+* Folds console output for failing tests so they only take up a single line each
+* Allows unfolding with user interaction
 
 
 Requirements
@@ -43,7 +44,7 @@ You can install "pytest-fold" via `pip`_ from `PyPI`_::
 Usage
 -----
 
-* TODO
+* pytest --fold ...
 
 Contributing
 ------------
