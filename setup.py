@@ -20,7 +20,7 @@ setup(
     maintainer_email="jeff.washcloth@gmail.com",
     license="MIT",
     url="https://github.com/jeffwright13/pytest-fold",
-    description="A Pytest plugin to make output more manageable",
+    description="A Pytest plugin to make console output more manageable",
     long_description=read("README.rst"),
     py_modules=["pytest_fold"],
     python_requires=">=3.5",
