@@ -18,3 +18,16 @@ def pytest_report_teststatus(config, report):
     if report.when == "call":
         if report.failed and config.getoption("--loser"):
             return (report.outcome, "L", "LOSER")
+
+def pytest_runtest_setup(item):
+    print("setting up:", item)
+
+def pytest_runtest_call(item):
+    print("calling:", item)
+
+def pytest_runtest_collect(item):
+    print("collecting:", item)
+
+def pytest_runtest_teardown(item):
+    print("tearing down:", item)
+
