@@ -1,3 +1,4 @@
+import time
 import pytest
 from faker import Faker
 
@@ -8,6 +9,8 @@ def divide_numbers(numerator, denominator):
 
 def test_print_to_stdout():
     print("Printing to stdout!")
+    time.sleep(1)
+    print("Just printed to stdout!")
 
 
 def test_random_sentences():

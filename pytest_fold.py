@@ -6,16 +6,16 @@ import pytest
 def pytest_addoption(parser):
     group = parser.getgroup('fold')
     group.addoption(
-        '--foo',
+        '--fold',
         action='store',
-        dest='dest_foo',
+        dest='fold',
         default='2021',
-        help='Set the value for the fixture "bar".'
+        help='Fold test results in console'
     )
 
-    parser.addini('HELLO', 'Dummy pytest.ini setting')
+    parser.addini('FOLD', 'pytest.ini setting for pytest_fold')
 
 
 @pytest.fixture
-def bar(request):
-    return request.config.option.dest_foo
+def fold(request):
+    return request.config.option.fold
