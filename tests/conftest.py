@@ -1,36 +1,43 @@
 import pytest
 
+
 pytest_plugins = "pytester"
 
 
-def pytest_addoption(parser):
-    group = parser.getgroup("loser")
-    group.addoption("--loser", action="store_true", help="loser: ya basic")
-
-
-def pytest_report_header(config):
-    """Override. Thank tester."""
-    if config.getoption("loser"):
-        return "Thanks for your service, Capt. Tester!"
-
-
-def pytest_report_teststatus(config, report):
-    if report.when == "call":
-        if report.failed and config.getoption("--loser"):
-            return (report.outcome, "L", "LOSER")
+def pytest_configure(config):
+    config.addinivalue_line("markers", "cool: this one is for cool tests.")
 
 
 def pytest_runtest_setup(item):
-    print("setting up:", item)
+    print("/tests: setting up:", item)
 
 
 def pytest_runtest_call(item):
-    print("calling:", item)
-
-
-def pytest_runtest_collect(item):
-    print("collecting:", item)
+    print("/tests: calling:", item)
 
 
 def pytest_runtest_teardown(item):
-    print("tearing down:", item)
+    print("/tests: tearing down:", item)
+
+
+def pytest_addoption(parser):
+    group = parser.getgroup("helloworld")
+    group.addoption(
+        "--name",
+        action="store",
+        dest="name",
+        default="World",
+        help="Default 'name' for hello().",
+    )
+
+
+@pytest.fixture
+def hell(request):
+    name = request.config.getoption("name")
+
+    def _hello(name=None):
+        if not name:
+            name = request.config.getoption("name")
+        return "Hello, {name}!".format(name=name)
+
+    return _hello
