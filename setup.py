@@ -25,7 +25,12 @@ setup(
     py_modules=["pytest_fold"],
     python_requires=">=3.5",
     install_requires=["pytest>=3.5.0"],
-    test_requires=["pytest>=6.0", "pytest-cov>=2.12.0", "Faker>=8.2.1"],
+    test_requires=[
+        "pytest>=6.0",
+        "pytest-cov>=2.12.0",
+        "Faker>=8.2.1",
+        "tox-travis>=0.12",
+    ],
     classifiers=[
         "Development Status :: 4 - Beta",
         "Framework :: Pytest",

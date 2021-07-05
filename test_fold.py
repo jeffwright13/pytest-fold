@@ -3,6 +3,7 @@ import pytest
 
 # Buncha silly little fodder tests
 
+
 def test_1():
     assert 1 == 1
 
@@ -16,7 +17,7 @@ def test_3():
 
 
 def test_4():
-    assert 'a' == 'a'
+    assert "a" == "a"
 
 
 '''
