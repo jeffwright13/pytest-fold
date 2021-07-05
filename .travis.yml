@@ -2,6 +2,11 @@
 
 language: python
 
+os:
+  - linux
+  - osx
+  - windows
+
 matrix:
   include:
     - python: 3.5
