@@ -9,6 +9,6 @@ os:
   - linux
   - osx
 
-install: pip install tox-travis
+install: pip install tox-travis pytest-black
 
 script: tox
