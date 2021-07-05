@@ -2,6 +2,13 @@ import pytest
 
 
 pytest_plugins = "pytester"
+collect_ignore = [
+    "pytest_fold.py",
+    "setup.py",
+    "pytest_something.py",
+    "pytest_capture.py",
+    "*.yml",
+]
 
 
 def pytest_configure(config):
