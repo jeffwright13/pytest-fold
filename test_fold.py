@@ -1,6 +1,25 @@
 # -*- coding: utf-8 -*-
 import pytest
 
+# Buncha silly little fodder tests
+
+def test_1():
+    assert 1 == 1
+
+
+def test_2():
+    assert 0 == 0
+
+
+def test_3():
+    assert -1 == -1
+
+
+def test_4():
+    assert 'a' == 'a'
+
+
+'''
 ### Following few tests takn from Okken's book
 @pytest.fixture()
 def sample_test(pytester):
@@ -42,7 +61,8 @@ def test_no_fold_verbose(sample_test):
 
 
 ### <END> Okken's stuff
-
+'''
+'''
 ### Following is all from cookie-cutter;
 ### needs refactoring for this plugin
 def test_bar_fixture(pytester):
@@ -115,3 +135,4 @@ def test_hello_ini_setting(pytester):
 
     # make sure that that we get a '0' exit code for the testsuite
     assert result.ret == 0
+'''
