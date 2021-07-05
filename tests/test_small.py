@@ -1,5 +1,6 @@
 import pytest
 
+
 @pytest.mark.cool
 def test_1():
     assert 1 == 1

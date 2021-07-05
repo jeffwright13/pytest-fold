@@ -1,4 +1,18 @@
 # -*- coding: utf-8 -*-
+import pytest
+
+### Following few tests takn from Okken's book
+@pytest.fixture()
+def sample_test(pytester):
+    pytester.makepyfile(
+        """
+        def test_pass():
+            assert 1 == 1
+            def test_fail():
+            assert 1 == 2
+        """
+    )
+    return pytester
 
 
 def test_with_fold(sample_test):
@@ -27,11 +41,15 @@ def test_no_fold_verbose(sample_test):
     assert result.ret == 1
 
 
-def test_bar_fixture(testdir):
+### <END> Okken's stuff
+
+### Following is all from cookie-cutter;
+### needs refactoring for this plugin
+def test_bar_fixture(pytester):
     """Make sure that pytest accepts our fixture."""
 
     # create a temporary pytest test module
-    testdir.makepyfile(
+    pytester.makepyfile(
         """
         def test_sth(bar):
             assert bar == "europython2015"
@@ -39,7 +57,7 @@ def test_bar_fixture(testdir):
     )
 
     # run pytest with the following cmd args
-    result = testdir.runpytest("--foo=europython2015", "-v")
+    result = pytester.runpytest("--foo=europython2015", "-v")
 
     # fnmatch_lines does an assertion internally
     result.stdout.fnmatch_lines(
@@ -52,8 +70,8 @@ def test_bar_fixture(testdir):
     assert result.ret == 0
 
 
-def test_help_message(testdir):
-    result = testdir.runpytest(
+def test_help_message(pytester):
+    result = pytester.runpytest(
         "--help",
     )
     # fnmatch_lines does an assertion internally
@@ -65,15 +83,15 @@ def test_help_message(testdir):
     )
 
 
-def test_hello_ini_setting(testdir):
-    testdir.makeini(
+def test_hello_ini_setting(pytester):
+    pytester.makeini(
         """
         [pytest]
         FOLD = world
     """
     )
 
-    testdir.makepyfile(
+    pytester.makepyfile(
         """
         import pytest
 
@@ -86,7 +104,7 @@ def test_hello_ini_setting(testdir):
     """
     )
 
-    result = testdir.runpytest("-v")
+    result = pytester.runpytest("-v")
 
     # fnmatch_lines does an assertion internally
     result.stdout.fnmatch_lines(

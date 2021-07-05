@@ -4,6 +4,8 @@
 ☐ I cannot figure out what the hell the travis_folding code is doing (appears o be nothing in my experiements), so I am putting it aside for now.
 ✔︎ To read for testing plugins: https://docs.pytest.org/en/6.2.x/writing_plugins.html
 ✔︎ Testing plugins: https://docs.pytest.org/en/6.2.x/writing_plugins.html#testing-plugins
+- 'testdir' fixture now replaced by 'pytester' (as of 6.2)
+- ^^^ https://github.com/pytest-dev/cookiecutter-pytest-plugin/issues/51 ^^^
 ☐ https://stackoverflow.com/questions/53637733/output-ascii-art-to-console-on-succesfull-pytest-run
 - UTF-8 rightwards triangle: ▶ (https://codepoints.net/U+25B6)
 - UTF-8 downwards triangle: ▼ (https://codepoints.net/U+25BC
