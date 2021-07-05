@@ -1,7 +1,9 @@
-# -*- coding: utf-8 -*-
 import pytest
+from pytest_fold import __version__
 
-# Buncha silly little fodder tests
+
+def test_version():
+    assert __version__ == '0.1.0'
 
 
 def test_1():
@@ -18,7 +20,6 @@ def test_3():
 
 def test_4():
     assert "a" == "a"
-
 
 '''
 ### Following few tests takn from Okken's book
