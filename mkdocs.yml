@@ -1,5 +1,5 @@
 site_name: pytest-fold
-site_description: A Pytest plugin to make output more manageable
+site_description: A Pytest plugin to make console output more manageable
 site_author: Jeff Wright
 
 theme: readthedocs

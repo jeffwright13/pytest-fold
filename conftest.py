@@ -39,7 +39,7 @@ def pytest_addoption(parser):
 
 
 @pytest.fixture
-def hell(request):
+def hello(request):
     name = request.config.getoption("name")
 
     def _hello(name=None):
