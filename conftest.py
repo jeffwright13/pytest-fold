@@ -1,4 +1,5 @@
 import os
+import sys
 import pytest
 
 
@@ -19,15 +20,18 @@ def pytest_configure(config):
 
 
 def pytest_runtest_setup(item):
-    print("/tests: setting up:", item)
+    print("stdout: setting up:", item)
+    sys.stderr.write("stderr: setting up:\n")
 
 
 def pytest_runtest_call(item):
-    print("/tests: calling:", item)
+    print("stdout: calling:", item)
+    sys.stderr.write("stderr: calling:\n")
 
 
 def pytest_runtest_teardown(item):
-    print("/tests: tearing down:", item)
+    print("stdout: tearing down:", item)
+    sys.stderr.write("stderr: tearing down:\n")
 
 
 def pytest_addoption(parser):
@@ -62,13 +66,13 @@ def pytest_terminal_summary(terminalreporter, exitstatus, config):
     # get all reports
     reports = terminalreporter.getreports("")
     # combine captured stdout of reports for tests named `<smth>::test_summary`
-    content = os.linesep.join(
+    content_stdout = os.linesep.join(
         report.capstdout
         for report in reports
         if report.capstdout and report.nodeid.endswith("test_summary")
     )
     # add custom section that mimics pytest's one
-    if content:
+    if content_stdout:
         terminalreporter.ensure_newline()
         terminalreporter.section(
             "Captured stdout call",
@@ -76,4 +80,25 @@ def pytest_terminal_summary(terminalreporter, exitstatus, config):
             blue=True,
             bold=True,
         )
-        terminalreporter.line(content)
+        terminalreporter.line(content_stdout)
+
+    content_stderr = os.linesep.join(
+        report.capstderr
+        for report in reports
+        if report.capstderr and report.nodeid.endswith("test_summary")
+    )
+    # add custom section that mimics pytest's one
+    if content_stderr:
+        terminalreporter.ensure_newline()
+        terminalreporter.section(
+            "Captured stderr call",
+            sep="!",
+            red=True,
+            bold=True,
+        )
+        terminalreporter.line(content_stderr)
+
+
+# Experiment with Ctrl-C
+def pytest_keyboard_interrupt(excinfo):
+    pass
