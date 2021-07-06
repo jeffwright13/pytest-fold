@@ -1,3 +1,4 @@
+import time
 import pytest
 from pytest_fold import __version__
 
@@ -15,6 +16,7 @@ def test_2():
 
 
 def test_3():
+    time.sleep(5)
     assert -1 == -1
 
 
@@ -24,6 +26,10 @@ def test_4():
 
 def test_summary():
     assert "a" == "a"
+
+
+def test_hello(hello):
+    assert "hello" == "hello"
 
 '''
 ### Following few tests takn from Okken's book
