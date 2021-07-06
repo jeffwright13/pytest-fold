@@ -44,7 +44,10 @@ nosetests.xml
 coverage.xml
 *,cover
 .hypothesis/
+
+# Pytest and plugins
 .pytest_cache
+report.html
 
 # Translations
 *.mo
