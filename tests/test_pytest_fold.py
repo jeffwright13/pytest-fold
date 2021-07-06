@@ -22,6 +22,9 @@ def test_4():
     assert "a" == "a"
 
 
+def test_summary():
+    assert "a" == "a"
+
 '''
 ### Following few tests takn from Okken's book
 @pytest.fixture()

@@ -9,3 +9,6 @@
 ☐ https://stackoverflow.com/questions/53637733/output-ascii-art-to-console-on-succesfull-pytest-run
 - UTF-8 rightwards triangle: ▶ (https://codepoints.net/U+25B6)
 - UTF-8 downwards triangle: ▼ (https://codepoints.net/U+25BC
+
+- https://github.com/pytest-dev/pytest/blob/main/src/_pytest/terminal.py
+- https://stackoverflow.com/questions/64812992/pytest-capture-stdout-of-a-certain-test/64822668#64822668

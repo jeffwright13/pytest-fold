@@ -1,3 +1,4 @@
+import os
 import pytest
 
 
@@ -50,3 +51,29 @@ def hello(request):
         return "Hello, {name}!".format(name=name)
 
     return _hello
+
+
+# From: https://stackoverflow.com/questions/64812992/pytest-capture-stdout-of-a-certain-test/64822668#64822668
+def pytest_terminal_summary(terminalreporter, exitstatus, config):
+    # on failures, don't add "Captured stdout call" as pytest does that already
+    # otherwise, the section "Captured stdout call" will be added twice
+    if exitstatus > 0:
+        return
+    # get all reports
+    reports = terminalreporter.getreports("")
+    # combine captured stdout of reports for tests named `<smth>::test_summary`
+    content = os.linesep.join(
+        report.capstdout
+        for report in reports
+        if report.capstdout and report.nodeid.endswith("test_summary")
+    )
+    # add custom section that mimics pytest's one
+    if content:
+        terminalreporter.ensure_newline()
+        terminalreporter.section(
+            "Captured stdout call",
+            sep="-",
+            blue=True,
+            bold=True,
+        )
+        terminalreporter.line(content)
