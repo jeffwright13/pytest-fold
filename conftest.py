@@ -34,6 +34,13 @@ def pytest_runtest_teardown(item):
     sys.stderr.write("stderr: tearing down:\n")
 
 
+# Override https://docs.pytest.org/en/stable/reference.html#pytest.hookspec.pytest_runtest_logreport
+# def pytest_runtest_logreport(testreport):
+#     breakpoint()
+
+
+# helloworld() example in Pytest docs "Testing Plugins" section
+# https://docs.pytest.org/en/6.2.x/writing_plugins.html#testing-plugins
 def pytest_addoption(parser):
     group = parser.getgroup("helloworld")
     group.addoption(
@@ -55,6 +62,42 @@ def hello(request):
         return "Hello, {name}!".format(name=name)
 
     return _hello
+
+
+def test_hello(testdir):
+    """Make sure that our plugin works."""
+
+    # create a temporary conftest.py file
+    testdir.makeconftest(
+        """
+        import pytest
+
+        @pytest.fixture(params=[
+            "Brianna",
+            "Andreas",
+            "Floris",
+        ])
+        def name(request):
+            return request.param
+    """
+    )
+
+    # create a temporary pytest test file
+    testdir.makepyfile(
+        """
+        def test_hello_default(hello):
+            assert hello() == "Hello World!"
+
+        def test_hello_name(hello, name):
+            assert hello(name) == "Hello {0}!".format(name)
+    """
+    )
+
+    # run all tests with pytest
+    result = testdir.runpytest()
+
+    # check that all 4 tests passed
+    result.assert_outcomes(passed=4)
 
 
 # From: https://stackoverflow.com/questions/64812992/pytest-capture-stdout-of-a-certain-test/64822668#64822668
@@ -99,6 +142,7 @@ def pytest_terminal_summary(terminalreporter, exitstatus, config):
         terminalreporter.line(content_stderr)
 
 
-# Experiment with Ctrl-C
+# Experiment with Ctrl-C/Del
 def pytest_keyboard_interrupt(excinfo):
+    breakpoint()
     pass
