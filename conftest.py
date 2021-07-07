@@ -15,28 +15,75 @@ collect_ignore = [
 ]
 
 
+'''
+# Custom marker "cool"
 def pytest_configure(config):
     config.addinivalue_line("markers", "cool: this one is for cool tests.")
 
-
+# Print out info during test setup, call, teardown
 def pytest_runtest_setup(item):
     print("stdout: setting up:", item)
     sys.stderr.write("stderr: setting up:\n")
-
 
 def pytest_runtest_call(item):
     print("stdout: calling:", item)
     sys.stderr.write("stderr: calling:\n")
 
-
 def pytest_runtest_teardown(item):
     print("stdout: tearing down:", item)
     sys.stderr.write("stderr: tearing down:\n")
-
+'''
 
 # Override https://docs.pytest.org/en/stable/reference.html#pytest.hookspec.pytest_runtest_logreport
-# def pytest_runtest_logreport(testreport):
-#     breakpoint()
+@pytest.hookimpl(trylast=True, hookwrapper=True)
+def pytest_runtest_logreport(report):
+    if report.when == "setup":
+        print("\n")
+    print(f"BEFORE_YIELD - when: {report.when.upper()} | location: {report.location} | outcome: {report.outcome}")
+    yield
+    if report.when == "call":
+        print("\r")
+    print(f"AFTER_YIELD - when: {report.when.upper()} | location: {report.location} | outcome: {report.outcome}")
+
+'''
+@pytest.hookimpl(hookwrapper=True)
+def pytest_runtest_logreport(report):
+    outcome = yield
+    rep = outcome.get_result()
+    # breakpoint()
+    # Define when/what to report:
+    # when = setup / call / teardown
+    # .failed / .passed / .skipped
+    if report.when == "teardown":
+        # breakpoint()
+        print(report.longreprtext)
+        print(report.sections)
+        print(report.capstdout)
+        print(report.capstderr)
+'''
+
+'''
+@pytest.hookimpl(tryfirst=True, hookwrapper=True)
+def pytest_runtest_makereport(item, call):
+    # execute all other hooks to obtain the report object
+    outcome = yield
+    rep = outcome.get_result()
+    # breakpoint()
+
+    # we only look at actual failing test calls, not setup/teardown
+    if rep.when == "call" and rep.failed:
+        mode = "a" if os.path.exists("failures") else "w"
+        with open("failures", mode) as f:
+            # let's also access a fixture for the fun of it
+            if "tmp_path" in item.fixturenames:
+                extra = " ({})".format(item.funcargs["tmp_path"])
+            else:
+                extra = ""
+
+            f.write(rep.nodeid + extra + "\n")
+'''
+
+
 
 
 # helloworld() example in Pytest docs "Testing Plugins" section
@@ -99,7 +146,7 @@ def test_hello(testdir):
     # check that all 4 tests passed
     result.assert_outcomes(passed=4)
 
-
+'''
 # From: https://stackoverflow.com/questions/64812992/pytest-capture-stdout-of-a-certain-test/64822668#64822668
 def pytest_terminal_summary(terminalreporter, exitstatus, config):
     # on failures, don't add "Captured stdout call" as pytest does that already
@@ -140,7 +187,7 @@ def pytest_terminal_summary(terminalreporter, exitstatus, config):
             bold=True,
         )
         terminalreporter.line(content_stderr)
-
+'''
 
 # Experiment with Ctrl-C/Del
 def pytest_keyboard_interrupt(excinfo):

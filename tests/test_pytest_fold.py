@@ -11,15 +11,17 @@ def test_1():
     assert 1 == 1
 
 
-def test_2():
-    assert 0 == 0
-
+def test_2(capsys):
+    print("this test fails")
+    pass
+    # assert 0 == 1
 
 def test_3():
-    time.sleep(5)
+    # time.sleep(5)
     assert -1 == -1
 
 
+'''
 def test_4():
     assert "a" == "a"
 
@@ -31,7 +33,6 @@ def test_summary():
 def test_hello(hello):
     assert "hello" == "hello"
 
-'''
 ### Following few tests takn from Okken's book
 @pytest.fixture()
 def sample_test(pytester):

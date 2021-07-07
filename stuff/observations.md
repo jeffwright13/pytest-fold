@@ -13,3 +13,15 @@
 - https://github.com/pytest-dev/pytest/blob/main/src/_pytest/terminal.py
 - https://stackoverflow.com/questions/64812992/pytest-capture-stdout-of-a-certain-test/64822668#64822668
 - https://stackoverflow.com/questions/46865816/read-py-tests-output-as-object/46867867#46867867
+
+- Put the following text into conftest.py, then run some passing and some failing tests. Interesting observation: pytest *only* marks a specific test's TestReport.outcom attribute as "failed" during the call() phase. During setup() and teardown(), a failing test still has TestReport.outcome = "passed".
+    @pytest.hookimpl(trylast=True, hookwrapper=True)
+    def pytest_runtest_logreport(report):
+        if report.when == "setup":
+            print("\n")
+        print(f"BEFORE_YIELD - when: {report.when.upper()} | location: {report.location} | outcome: {report.outcome}")
+        yield
+        if report.when == "call":
+            print("\r")
+        print(f"AFTER_YIELD - when: {report.when.upper()} | location: {report.location} | outcome: {report.outcome}")
+
