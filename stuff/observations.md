@@ -12,3 +12,4 @@
 
 - https://github.com/pytest-dev/pytest/blob/main/src/_pytest/terminal.py
 - https://stackoverflow.com/questions/64812992/pytest-capture-stdout-of-a-certain-test/64822668#64822668
+- https://stackoverflow.com/questions/46865816/read-py-tests-output-as-object/46867867#46867867
