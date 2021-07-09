@@ -31,15 +31,19 @@ def test_which_passes_3():
     assert 1 == 1
 
 
-# def test_2(capsys):
-#     print("this test fails")
-#     assert 0 == 1
+def test_which_passes_and_has_stdout_1(capsys):
+    print("this test fails")
+    assert 0 == 1
 
-# def test_3():
-#     time.sleep(5)
-#     assert -1 == 11
 
-def test_4():
+def test_which_passes_and_pauses_and_has_stdout_1(capsys):
+    print("this test pauses")
+    time.sleep(2)
+    assert -1 == 11
+
+
+def test_which_passes_and_has_stdout_2(capsys):
+    print("this test passes")  # stdout is consumed by pytest
     assert "a" == "a"
 
 
