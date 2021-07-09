@@ -31,15 +31,15 @@ def test_which_passes_3():
     assert 1 == 1
 
 
-def test_which_passes_and_has_stdout_1(capsys):
-    print("this test fails")
-    assert 0 == 1
+# def test_which_fails_and_has_stdout_1(capsys):
+#     print("this test fails")
+#     assert 0 == 1
 
 
 def test_which_passes_and_pauses_and_has_stdout_1(capsys):
-    print("this test pauses")
+    print("this test pauses, then passses")
     time.sleep(2)
-    assert -1 == 11
+    assert -11 == -11
 
 
 def test_which_passes_and_has_stdout_2(capsys):
