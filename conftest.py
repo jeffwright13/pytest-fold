@@ -51,12 +51,11 @@ def fold(request):
 
 
 @pytest.hookimpl(trylast=True, hookwrapper=True)
-def pytest_runtest_logreport(report, config):
+def pytest_runtest_logreport(report):
     yield
     if report.when == "call":
         if report.failed:
-            print(config)
-            breakpoint()
+            # breakpoint()
             # if fold:
             #     print("Test failed; overridden by fold plugin.", file=sys.stderr)
             print("Test failed; now what?")

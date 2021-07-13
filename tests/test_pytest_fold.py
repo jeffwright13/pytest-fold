@@ -38,31 +38,41 @@ logger.propagate = True
 #     assert 1 == 1
 
 
-def test_fail_capturing(capsys):
-    print("\nFAIL this stdout is captured")
-    sys.stderr.write("FAIL this stderr is captured\n")
-    logger.warning("FAIL this log is captured")
-    with capsys.disabled():
-        print("FAIL stdout not captured, going directly to sys.stdout")
-        sys.stderr.write("FAIL stderr not captured, going directly to sys.stderr\n")
-        logger.warning("FAIL is this log captured?")
-    print("FAIL this stdout is also captured")
-    sys.stderr.write("FAIL this stderr is also captured\n")
-    logger.warning("FAIL this log is also captured")
-    assert False
+# def test_fail_capturing(capsys):
+#     print("FAIL this stdout is captured")
+#     print("FAIL this stderr is captured", file=sys.stderr)
+#     logger.warning("FAIL this log is captured")
+#     with capsys.disabled():
+#         print("FAIL stdout not captured, going directly to sys.stdout")
+#         print("FAIL stderr not captured, going directly to sys.stderr", file=sys.stderr)
+#         logger.warning("FAIL is this log captured?")
+#     print("FAIL this stdout is also captured")
+#     print("FAIL this stderr is also captured", file=sys.stderr)
+#     logger.warning("FAIL this log is also captured")
+#     assert False
 
-def test_pass_capturing(capsys):
-    print("\nPASS this stdout is captured")
-    sys.stderr.write("PASS this stderr is captured\n")
-    logger.warning("PASS this log is captured")
-    with capsys.disabled():
-        print("PASS stdout not captured, going directly to sys.stdout")
-        sys.stderr.write("PASS stderr not captured, going directly to sys.stderr\n")
-        logger.warning("is this log captured?")
-    print("PASS this stdout is also captured")
-    sys.stderr.write("PASS this stderr is also captured\n")
-    logger.warning("PASS this log is also captured")
+
+# def test_pass_capturing(capsys):
+#     print("\nPASS this stdout is captured")
+#     print("PASS this stderr is captured", file=sys.stderr)
+#     logger.warning("PASS this log is captured")
+#     with capsys.disabled():
+#         print("PASS stdout not captured, going directly to sys.stdout")
+#         print("PASS stderr not captured, going directly to sys.stderr", file=sys.stderr)
+#         logger.warning("is this log captured?")
+#     print("PASS this stdout is also captured")
+#     print("PASS this stderr is also captured", file=sys.stderr)
+#     logger.warning("PASS this log is also captured")
+#     assert True
+
+
+# def test_fail():
+#     assert False
+
+
+def test_pass():
     assert True
+
 
 # def test_which_fails_and_has_stdout_1(capsys):
 #     print("this test fails")
