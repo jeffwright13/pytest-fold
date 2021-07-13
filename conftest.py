@@ -21,12 +21,39 @@ collect_ignore = [
 # ['__annotations__', '__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__test__', '__weakref__', '_from_json', '_get_verbose_word', '_to_json', 'caplog', 'capstderr', 'capstdout', 'count_towards_summary', 'duration', 'failed', 'from_item_and_call', 'fspath', 'get_sections', 'head_line', 'keywords', 'location', 'longrepr', 'longreprtext', 'nodeid', 'outcome', 'passed', 'sections', 'skipped', 'toterminal', 'user_properties', 'when']
 
 
+
+# @pytest.mark.tryfirst
+# def pytest_runtest_logreport(report):
+#     """Overwrite report by removing any captured stderr."""
+#     # print("PLUGIN SAYS -> report -> {0}".format(report))
+#     # print("PLUGIN SAYS -> report.sections -> {0}".format(report.sections))
+#     # print("PLUGIN SAYS -> dir(report) -> {0}".format(dir(report)))
+#     # print("PLUGIN SAYS -> type(report) -> {0}".format(type(report)))
+#     sections = [
+#         item
+#         for item in report.sections
+#         if item[0] not in (
+#             "Captured stdout call",
+#             "Captured stderr call",
+#             "Captured stdout setup",
+#             "Captured stderr setup",
+#             "Captured stdout teardown",
+#             "Captured stderr teardown",
+#             "Captured log call",
+#         )
+#     ]
+#     # print("PLUGIN SAYS -> sections -> {0}".format(sections))
+#     report.sections = sections
+
+
+
 @pytest.hookimpl(trylast=True, hookwrapper=True)
 def pytest_runtest_logreport(report):
-    if report.when == "teardown":
-        pass
-        # print(f"report innards: {report.head_line}")
     yield
+    if report.when == "call":
+        if report.failed:
+            # breakpoint()
+            pass
 
 
 # # Custom marker "cool"
