@@ -1,6 +1,7 @@
 import os
 import sys
 import pytest
+from _pytest.terminal import TerminalReporter
 
 
 pytest_plugins = "pytester"
@@ -15,11 +16,56 @@ collect_ignore = [
 ]
 
 
+# https://stackoverflow.com/questions/65526149/pytest-customize-short-test-summary-info-remove-filepath
+class MyReporter(TerminalReporter):
+    def short_test_summary(self):
+        # your own impl goes here, for example:
+        self.write_sep("=", "my own short summary info")
+        failed = self.stats.get("failed", [])
+        for rep in failed:
+            self.write_line(f"failed test {rep.nodeid}")
+
+
+@pytest.mark.trylast
+def pytest_configure(config):
+    vanilla_reporter = config.pluginmanager.getplugin("terminalreporter")
+    my_reporter = MyReporter(config)
+    config.pluginmanager.unregister(vanilla_reporter)
+    config.pluginmanager.register(my_reporter, "terminalreporter")
+
+
+
+
+
+# Register pytest-fold option (--fold)
+def pytest_addoption(parser):
+    group = parser.getgroup("fold")
+    group.addoption(
+        "--fold", action="store_true", help="fold: fold failed test output section"
+    )
+
+
+@pytest.fixture(autouse=True)
+def fold(request):
+    return request.config.getoption("--fold")
+
+
+@pytest.hookimpl(trylast=True, hookwrapper=True)
+def pytest_runtest_logreport(report, config):
+    yield
+    if report.when == "call":
+        if report.failed:
+            print(config)
+            breakpoint()
+            # if fold:
+            #     print("Test failed; overridden by fold plugin.", file=sys.stderr)
+            print("Test failed; now what?")
+            pass
+
 #   --tb=style     traceback print mode (auto/long/short/line/native/no).
 
 # (Pdb) dir(report)
 # ['__annotations__', '__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__test__', '__weakref__', '_from_json', '_get_verbose_word', '_to_json', 'caplog', 'capstderr', 'capstdout', 'count_towards_summary', 'duration', 'failed', 'from_item_and_call', 'fspath', 'get_sections', 'head_line', 'keywords', 'location', 'longrepr', 'longreprtext', 'nodeid', 'outcome', 'passed', 'sections', 'skipped', 'toterminal', 'user_properties', 'when']
-
 
 
 # @pytest.mark.tryfirst
@@ -44,16 +90,6 @@ collect_ignore = [
 #     ]
 #     # print("PLUGIN SAYS -> sections -> {0}".format(sections))
 #     report.sections = sections
-
-
-
-@pytest.hookimpl(trylast=True, hookwrapper=True)
-def pytest_runtest_logreport(report):
-    yield
-    if report.when == "call":
-        if report.failed:
-            # breakpoint()
-            pass
 
 
 # # Custom marker "cool"
@@ -227,3 +263,40 @@ def pytest_runtest_logreport(report):
 # def pytest_keyboard_interrupt(excinfo):
 #     breakpoint()
 #     pass
+
+
+# def pytest_addoption(parser):
+#     parser.addoption('--silent', action='store_true', default=False)
+
+
+# def pytest_report_teststatus(report):
+#     category, short, verbose = '', '', ''
+#     if not pytest.config.getoption('--silent'):
+#         return None
+
+#     if hasattr(report, 'wasxfail'):
+#         if report.skipped:
+#             category = 'xfailed'
+#         elif report.passed:
+#             category = 'xpassed'
+#         return (category, short, verbose)
+#     elif report.when in ('setup', 'teardown'):
+#         if report.failed:
+#             category = 'error'
+#         elif report.skipped:
+#             category = 'skipped'
+#         return (category, short, verbose)
+#     category = report.outcome
+#     return (category, short, verbose)
+
+# Allow Pytest debug in Sublime
+# See https://stackoverflow.com/questions/62419998/how-can-i-get-pytest-to-not-catch-exceptions/62563106#62563106
+if os.getenv("_PYTEST_RAISE", "0") != "0":
+
+    @pytest.hookimpl(tryfirst=True)
+    def pytest_exception_interact(call):
+        raise call.excinfo.value
+
+    @pytest.hookimpl(tryfirst=True)
+    def pytest_internalerror(excinfo):
+        raise excinfo.value
