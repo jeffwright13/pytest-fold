@@ -26,21 +26,45 @@
         print(f"AFTER_YIELD - when: {report.when.upper()} | location: {report.location} | outcome: {report.outcome}")
 
 - pytest-sugar psuedo-code for pytest_runtest_logreport:
-get (category, letter, word) from report   # e.g. passed, P, PASS
-append category to reports list
-if test outcome is failed:
-    print newline
-    call print_failure function
-if current test is in teardown phase:
-    add 1 to 'number of tests taken' metric
-    call insert_progress function
-if current test is in call phase, or if current test is marked 'skip':
-    print/update some initial crap
+
+    get (category, letter, word) from report   # e.g. passed, P, PASS
+    append category to reports list
     if test outcome is failed:
-        print/update some other crap
-    else:
-        print/update some other, but different crap
-if not letter or word:
-    return
-if verbose:
-    do some verbose stuff on the terminal
+        print newline
+        call print_failure function
+    if current test is in teardown phase:
+        add 1 to 'number of tests taken' metric
+        call insert_progress function
+    if current test is in call phase, or if current test is marked 'skip':
+        print/update some initial crap
+        if test outcome is failed:
+            print/update some other crap
+        else:
+            print/update some other, but different crap
+    if not letter or word:
+        return
+    if verbose:
+        do some verbose stuff on the terminal
+
+
+- pytest-hidecaptured (https://pypi.org/project/pytest-hidecaptured/) has some interesting code, esp its main method (https://github.com/codeghar/pytest-hidecaptured/blob/master/pytest_hidecaptured.py), which squelches stdlog/stderr/stdout printing to console:
+
+    @pytest.mark.tryfirst
+    def pytest_runtest_logreport(report):
+        """Overwrite report by removing any captured stderr."""
+        sections = [
+            item
+            for item in report.sections
+            if item[0] not in (
+                "Captured stdout call",
+                "Captured stderr call",
+                "Captured stdout setup",
+                "Captured stderr setup",
+                "Captured stdout teardown",
+                "Captured stderr teardown",
+                "Captured log call",
+            )
+        ]
+        report.sections = sections
+
+- pytest-capturelog may be of interest: http://pypi.python.org/pypi/pytest-capturelog/
