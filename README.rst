@@ -10,7 +10,7 @@ pytest-fold
     :target: https://pypi.org/project/pytest-fold
     :alt: Python versions
 
-.. image:: https://travis-ci.org/jeffwright13/pytest-fold.svg?branch=master
+.. image:: https://travis-ci.com/jeffwright13/pytest-fold.svg?token=h2yU59uvx7ZpWMRdRGi8&branch=main
     :target: https://www.travis-ci.com/github/jeffwright13/pytest-fold
     :alt: See Build Status on Travis CI
 
