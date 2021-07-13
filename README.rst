@@ -11,12 +11,8 @@ pytest-fold
     :alt: Python versions
 
 .. image:: https://travis-ci.org/jeffwright13/pytest-fold.svg?branch=master
-    :target: https://travis-ci.org/jeffwright13/pytest-fold
+    :target: https://www.travis-ci.com/github/jeffwright13/pytest-fold
     :alt: See Build Status on Travis CI
-
-.. image:: https://ci.appveyor.com/api/projects/status/github/jeffwright13/pytest-fold?branch=master
-    :target: https://ci.appveyor.com/project/jeffwright13/pytest-fold/branch/master
-    :alt: See Build Status on AppVeyor
 
 A Pytest plugin to make console output more manageable
 
