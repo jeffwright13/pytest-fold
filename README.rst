@@ -44,13 +44,15 @@ Usage
 
 Contributing
 ------------
-Contributions are very welcome. Tests can be run with `tox`_, please ensure
-the coverage at least stays the same before you submit a pull request.
+Contributions are very welcome. Please run flake8 and black on your code before
+submitting (at some point I will implement [pre-commit](https://pypi.org/project/pre-commit/)
+in this project). Tests can be run with `tox`_; please ensure the coverage at
+least stays the same before you submit a pull request.
 
 License
 -------
 
-Distributed under the terms of the `MIT`_ license, "pytest-fold" is free and open source software
+Distributed under the terms of the `MIT`_ license, "pytest-fold" is free and open source software.
 
 
 Issues
