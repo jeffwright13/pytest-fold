@@ -19,14 +19,18 @@ A Pytest plugin to make console output more manageable
 Features
 --------
 
-* Folds console output for failing tests so they only take up a single line each
-* Allows unfolding with user interaction
+* PHASE 1:
+** Marks failing tests with a special "folding" mark
+
+* PHASE 2:
+** Folds console output for failing tests so they only take up a single line each
+** Allows unfolding with user interaction
 
 
 Requirements
 ------------
 
-* TODO
+* [poetry](https://python-poetry.org/)
 
 
 Installation
