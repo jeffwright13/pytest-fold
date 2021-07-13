@@ -68,3 +68,6 @@
         report.sections = sections
 
 - pytest-capturelog may be of interest: http://pypi.python.org/pypi/pytest-capturelog/
+
+- Override pytest_runtest_logreport:
+  https://stackoverflow.com/questions/65526149/pytest-customize-short-test-summary-info-remove-filepath
