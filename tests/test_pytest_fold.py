@@ -66,11 +66,39 @@ logger.propagate = True
 #     assert True
 
 
-# def test_fail():
-#     assert False
+def test_fail_1():
+    a = 0
+    time.sleep(.2)
+    assert False
 
 
-def test_pass():
+def test_fail_2():
+    a = 0
+    time.sleep(.2)
+    assert False
+
+
+def test_fail_3():
+    a = 0
+    time.sleep(.2)
+    assert False
+
+
+def test_pass_1():
+    a = 0
+    time.sleep(.2)
+    assert True
+
+
+def test_pass_2():
+    a = 0
+    time.sleep(.2)
+    assert True
+
+
+def test_pass_3():
+    a = 0
+    time.sleep(.2)
     assert True
 
 
