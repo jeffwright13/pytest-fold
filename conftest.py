@@ -18,5 +18,6 @@ def pytest_runtest_logreport(report):
             # if fold:
             #     print("Test failed; overridden by fold plugin.", file=sys.stderr)
             report.longrepr.chain[0][0].reprentries[0].lines.insert(0, "===MARKER1===")
-            report.longrepr.chain[0][0].reprentries[0].reprfileloc.message += "===MARKER2==="
+            # report.longrepr.chain[0][0].reprentries[0].reprfileloc.message += "===MARKER2==="
+            report.longrepr.chain[0][0].extraline = "===MARKER2==="
             pass
