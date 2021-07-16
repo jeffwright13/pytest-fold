@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pytest-fold"
-version = "0.1.0"
+version = "0..0"
 description = "A Pytest plugin to make console output more manageable"
 authors = ["Jeffrey Wright <jeffrey.wright@wartsila.com>"]
 repository = "https://github.com/jeffwright13/pytest_fold/"
