@@ -47,6 +47,19 @@ Usage
     pytest --fold ...
 
 
+Discussion
+----------
+`pytest-fold` does not mark ERROR output sections for folding. It is assumed that
+the tester will want to see full text output from pytest when their tests cause
+an error to be asserted. (TODO: make this configurable?)
+
+`pytest-fold` does not mark stderr or stdout sections for folding. It is assumed
+that the tester is interested in seeing such output. (TODO: make this configurable?)
+
+`pytest-fold` is currently incompatible with `--tb=native` and will cause an
+INTERNALERROR if run together. (TODO: Fix this.)
+
+
 Contributing
 ------------
 Contributions are very welcome. Please run flake8 and black on your code before
