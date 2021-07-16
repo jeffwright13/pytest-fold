@@ -38,67 +38,69 @@ def test_which_passes_3():
     assert 1 == 1
 
 
-def test_fail_capturing(capsys):
-    print("FAIL this stdout is captured")
-    print("FAIL this stderr is captured", file=sys.stderr)
-    logger.warning("FAIL this log is captured")
-    with capsys.disabled():
-        print("FAIL stdout not captured, going directly to sys.stdout")
-        print("FAIL stderr not captured, going directly to sys.stderr", file=sys.stderr)
-        logger.warning("FAIL is this log captured?")
-    print("FAIL this stdout is also captured")
-    print("FAIL this stderr is also captured", file=sys.stderr)
-    logger.warning("FAIL this log is also captured")
-    assert False
+# # These two tests are helpful in showing how pytest deals with various types
+# # of output (stdout, stderr, log)
+# def test_fail_capturing(capsys):
+#     print("FAIL this stdout is captured")
+#     print("FAIL this stderr is captured", file=sys.stderr)
+#     logger.warning("FAIL this log is captured")
+#     with capsys.disabled():
+#         print("FAIL stdout not captured, going directly to sys.stdout")
+#         print("FAIL stderr not captured, going directly to sys.stderr", file=sys.stderr)
+#         logger.warning("FAIL is this log captured?")
+#     print("FAIL this stdout is also captured")
+#     print("FAIL this stderr is also captured", file=sys.stderr)
+#     logger.warning("FAIL this log is also captured")
+#     assert False
 
 
-def test_pass_capturing(capsys):
-    print("\nPASS this stdout is captured")
-    print("PASS this stderr is captured", file=sys.stderr)
-    logger.warning("PASS this log is captured")
-    with capsys.disabled():
-        print("PASS stdout not captured, going directly to sys.stdout")
-        print("PASS stderr not captured, going directly to sys.stderr", file=sys.stderr)
-        logger.warning("is this log captured?")
-    print("PASS this stdout is also captured")
-    print("PASS this stderr is also captured", file=sys.stderr)
-    logger.warning("PASS this log is also captured")
-    assert True
+# def test_pass_capturing(capsys):
+#     print("\nPASS this stdout is captured")
+#     print("PASS this stderr is captured", file=sys.stderr)
+#     logger.warning("PASS this log is captured")
+#     with capsys.disabled():
+#         print("PASS stdout not captured, going directly to sys.stdout")
+#         print("PASS stderr not captured, going directly to sys.stderr", file=sys.stderr)
+#         logger.warning("is this log captured?")
+#     print("PASS this stdout is also captured")
+#     print("PASS this stderr is also captured", file=sys.stderr)
+#     logger.warning("PASS this log is also captured")
+#     assert True
 
 
 def test_fail_1():
     a = 0
-    time.sleep(.2)
+    time.sleep(0.05)
     assert False
 
 
 def test_fail_2():
     a = 0
-    time.sleep(.2)
+    time.sleep(0.05)
     assert False
 
 
 def test_fail_3():
     a = 0
-    time.sleep(.2)
+    time.sleep(0.05)
     assert False
 
 
 def test_pass_1():
     a = 0
-    time.sleep(.2)
+    time.sleep(0.05)
     assert True
 
 
 def test_pass_2():
     a = 0
-    time.sleep(.2)
+    time.sleep(0.05)
     assert True
 
 
 def test_pass_3():
     a = 0
-    time.sleep(.2)
+    time.sleep(0.05)
     assert True
 
 
@@ -121,6 +123,18 @@ def test_which_passes_and_has_stdout_2(capsys):
 def test_summary():
     assert "a" == "a"
 
+# This test can intentionally cause an error - useful for testing output of
+# folding - if the fixture is commented oit, the test throws an error at setup.
+# @pytest.fixture()
+# def fixture_for_fun():
+#     pass
+
+def test_fixture_for_fun_pass(fixture_for_fun):
+    assert 1
+
+def test_fixture_for_fun_fail(fixture_for_fun):
+    assert 0
+
 
 # def test_hello(hello):
 #     assert "hello" == "hello"
@@ -139,30 +153,30 @@ def test_summary():
 #     return pytester
 
 
-def test_with_fold(sample_test):
-    result = sample_test.runpytest("--fold")
-    result.stdout.fnmatch_lines(
-        [
-            "*",
-        ]
-    )
-    assert result.ret == 1
+# def test_with_fold(sample_test):
+#     result = sample_test.runpytest("--fold")
+#     result.stdout.fnmatch_lines(
+#         [
+#             "*",
+#         ]
+#     )
+#     assert result.ret == 1
 
 
-def test_with_fold_verbose(sample_test):
-    result = sample_test.runpytest("-v", "--fold")
-    result.stdout.fnmatch_lines(
-        [
-            "▶",
-        ]
-    )
-    assert result.ret == 1
+# def test_with_fold_verbose(sample_test):
+#     result = sample_test.runpytest("-v", "--fold")
+#     result.stdout.fnmatch_lines(
+#         [
+#             "▶",
+#         ]
+#     )
+#     assert result.ret == 1
 
 
-def test_no_fold_verbose(sample_test):
-    result = sample_test.runpytest("-v")
-    result.stdout.fnmatch_lines(["*"])
-    assert result.ret == 1
+# def test_no_fold_verbose(sample_test):
+#     result = sample_test.runpytest("-v")
+#     result.stdout.fnmatch_lines(["*"])
+#     assert result.ret == 1
 
 
 # ### <END> Okken's stuff
