@@ -110,7 +110,7 @@ def test_which_fails_and_has_stdout_1(capsys):
 
 
 def test_which_pauses_and_fails_and_has_stdout_1(capsys):
-    print("this test pauses, then passses")
+    print("this test pauses, then fails")
     time.sleep(2)
     assert 0 == -11
 
