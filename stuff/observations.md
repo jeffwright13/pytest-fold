@@ -71,3 +71,7 @@
 
 - Override pytest_runtest_logreport:
   https://stackoverflow.com/questions/65526149/pytest-customize-short-test-summary-info-remove-filepath
+
+- Pastebin servive: pytest --pastebin=all
+  (see file 2FLQ.txt)
+

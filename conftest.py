@@ -35,8 +35,10 @@ def pytest_runtest_makereport(item, call):
 @pytest.hookimpl(trylast=True, hookwrapper=True)
 def pytest_runtest_logreport(report):
     yield
-    if report.when == "call" and report.failed:
-        # breakpoint()
-        if report.session.config.option.fold:
-            report.longrepr.chain[0][0].reprentries[0].lines.insert(0, "===MARKER1===")
-            report.longrepr.chain[0][0].extraline = "===MARKER2==="
+    if (
+        report.when == "call"
+        and report.failed
+        and report.session.config.option.fold
+    ):
+        report.longrepr.chain[0][0].reprentries[0].lines.insert(0, "===MARKER1===")
+        report.longrepr.chain[0][0].extraline = "===MARKER2==="
