@@ -75,3 +75,6 @@
 - Pastebin servive: pytest --pastebin=all
   (see file 2FLQ.txt)
 
+- To print output to file: 
+  pip install pytest-session2file
+  https://github.com/BuhtigithuB/pytest_session2file

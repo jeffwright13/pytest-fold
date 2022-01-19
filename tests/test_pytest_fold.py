@@ -124,13 +124,13 @@ def test_summary():
     assert "a" == "a"
 
 # This test can intentionally cause an error - useful for testing output of
-# folding - if the fixture is commented oit, the test throws an error at setup.
+# folding - if the fixture is commented out, the test throws an error at setup.
 # @pytest.fixture()
 # def fixture_for_fun():
 #     pass
 
-def test_fixture_for_fun_pass(fixture_for_fun):
-    assert 1
+# def test_fixture_for_fun_pass(fixture_for_fun):
+#     assert 1
 
 def test_fixture_for_fun_fail(fixture_for_fun):
     assert 0

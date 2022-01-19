@@ -1,5 +1,6 @@
 import pytest
 
+pytest_plugins = 'pytest_session2file'
 
 collect_ignore = [
     "pytest_fold.py",
@@ -9,7 +10,6 @@ collect_ignore = [
     "*.yml",
 ]
 
-
 # Register pytest-fold option (--fold)
 def pytest_addoption(parser):
     group = parser.getgroup("fold")
@@ -17,11 +17,9 @@ def pytest_addoption(parser):
         "--fold", action="store_true", help="fold: fold failed test output sections"
     )
 
-
 @pytest.fixture(autouse=True)
 def fold(request):
     return request.config.getoption("--fold")
-
 
 # attach session info to report for later use in pytest_runtest_logreport
 # https://stackoverflow.com/questions/54717786/access-pytest-session-or-arguments-in-pytest-runtest-logreport
@@ -30,7 +28,6 @@ def pytest_runtest_makereport(item, call):
     out = yield
     report = out.get_result()
     report.session = item.session
-
 
 @pytest.hookimpl(trylast=True, hookwrapper=True)
 def pytest_runtest_logreport(report):
