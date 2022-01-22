@@ -1,9 +1,9 @@
 from pathlib import Path
 import itertools
-from asciimatics.screen import Screen, Canvas
+from asciimatics.screen import Screen
 
-starter = "===MARKER1==="
-stopper = "===MARKER2==="
+starter = "==>MARKER1<=="
+stopper = "==>MARKER2<=="
 
 
 class Point:
@@ -21,6 +21,7 @@ class Fold:
         with open(self.resultsfile, "r") as results_file:
             self.results_lines = results_file.readlines()
         self.sections = None
+        self.section_points = []
 
     def tokenize(self) -> list[str]:
         sections = []
@@ -30,6 +31,8 @@ class Fold:
             if not first_marker_seen:
                 if starter in line:
                     first_marker_seen = True
+                    sections.append(section_content)
+                    section_content = ""
                     continue
                 section_content += line
                 continue
@@ -40,16 +43,46 @@ class Fold:
                 section_content = ""
                 continue
             section_content += line
+        sections.append(section_content)
         self.sections = sections
 
+    def render(self, screen):
+        screen.clear()
+        for _ in range(len(self.sections)):
+            P = Point(0, _)
+            self.section_points.append(P)
+            screen.print_at("▶", P.x, P.y)
+        screen.refresh()
+
+        while True:
+            event = screen.get_event()
+            if event:
+                if "MouseEvent" in repr(type(event)):
+                    ClickPoint = Point(event.x, event.y)
+                    for point in self.section_points:
+                        if ClickPoint.is_same_as(point):
+                            if screen.get_from(point.x, point.y)[0] == ord("▶"):
+                                screen.print_at("▼", point.x, point.y)
+                                for _, line in enumerate(self.sections, start=1):
+                                    screen.print_at(line, point.x, point.y + _)
+                                    screen.refresh()
+                            else:
+                                screen.print_at("▶", point.x, point.y)
+                    # screen.clear()
+                    screen.refresh()
+                if "KeyboardEvent" in repr(type(event)):
+                    if event.key_code in (ord("Q"), ord("q")):
+                        return
+                else:
+                    continue
+
+
+
 def main():
-    F = Fold(
-        Path(
-            "/Users/jwr003/coding/pytest-fold/output_files_to_analyze/outputtbshortfold.ansi"
-        )
-    )
+    F = Fold(Path.cwd() / "console_output.fold")
     F.tokenize()
-    print("hello")
+    # F.render()
+    Screen.wrapper(F.render)
 
 
 def main_orig(
