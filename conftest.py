@@ -45,9 +45,6 @@ def pytest_runtest_logreport(report):
         report.longrepr.chain[0][0].extraline = MARKER2
 
 
-
-
-
 # Write console output to a file for use by TUI. Stolen from Pytest's pastebin.py
 # Tip of the hat to pytest_session2file:
 # (https://github.com/BuhtigithuB/pytest_session2file/blob/master/pytest_session2file/pytest_session2file.py)
@@ -59,7 +56,7 @@ def pytest_configure(config: Config) -> None:
         # this can happen when this function executes in a worker node
         # when using pytest-xdist, for example.
         if tr is not None:
-            config._pyfoldoutputfile = tempfile.TemporaryFile('wb+')
+            config._pyfoldoutputfile = tempfile.TemporaryFile("wb+")
             oldwrite = tr._tw.write
 
             def tee_write(s, **kwargs):
@@ -82,5 +79,10 @@ def pytest_unconfigure(config: Config) -> None:
         tr = config.pluginmanager.getplugin("terminalreporter")
         del tr._tw.__dict__["write"]
         # write out to file
-        with open(OUTFILE, 'wb') as outfile:
+        with open(OUTFILE, "wb") as outfile:
             outfile.write(sessionlog)
+        run_it()
+
+
+def run_it():
+    pass

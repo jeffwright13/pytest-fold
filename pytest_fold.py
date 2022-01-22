@@ -87,14 +87,6 @@
 #             outfile.writelines(sessionlog)
 
 
-
-
-
-
-
-
-
-
 # # plugin = pytest.config.pluginmanager.get_plugin("pytest_session2file")
 
 # # def pytest_addoption(parser):
