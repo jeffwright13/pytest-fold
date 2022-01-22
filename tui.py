@@ -1,5 +1,10 @@
+from pathlib import Path
 import itertools
 from asciimatics.screen import Screen, Canvas
+
+starter = "===MARKER1==="
+stopper = "===MARKER2==="
+
 
 class Point:
     def __init__(self, x: int = 0, y: int = 0):
@@ -9,7 +14,47 @@ class Point:
     def is_same_as(self, other):
         return self.x == other.x and self.y == other.y
 
-def main(inp_file: str="/Users/jwr003/coding/pytest-fold/pytest_fold/output.ansi"):
+
+class Fold:
+    def __init__(self, filepath: Path):
+        self.resultsfile = filepath
+        with open(self.resultsfile, "r") as results_file:
+            self.results_lines = results_file.readlines()
+        self.sections = None
+
+    def tokenize(self) -> list[str]:
+        sections = []
+        section_content = ""
+        first_marker_seen = False
+        for line in self.results_lines:
+            if not first_marker_seen:
+                if starter in line:
+                    first_marker_seen = True
+                    continue
+                section_content += line
+                continue
+            if starter in line:
+                continue
+            if stopper in line:
+                sections.append(section_content)
+                section_content = ""
+                continue
+            section_content += line
+        self.sections = sections
+
+def main():
+    F = Fold(
+        Path(
+            "/Users/jwr003/coding/pytest-fold/output_files_to_analyze/outputtbshortfold.ansi"
+        )
+    )
+    F.tokenize()
+    print("hello")
+
+
+def main_orig(
+    inp_file: str = "/Users/jwr003/coding/pytest-fold/output_files_to_analyze/outputfulltracefold.ansi",
+):
     with open(inp_file, "r") as results_file:
         results_lines = results_file.readlines()
         fold_symbols = itertools.cycle(["▼", "▶"])
@@ -53,6 +98,5 @@ def main(inp_file: str="/Users/jwr003/coding/pytest-fold/pytest_fold/output.ansi
         Screen.wrapper(folder)
 
 
-
 if __name__ == "__main__":
-        main("/Users/jwr003/coding/pytest-fold/pytest_fold/output2.ansi")
+    main()
