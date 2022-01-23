@@ -2,8 +2,8 @@
 platform darwin -- Python 3.10.0b2, pytest-6.2.5, py-1.10.0, pluggy-1.0.0
 rootdir: /Users/jwr003/coding/pytest-fold, configfile: pyproject.toml, testpaths: tests
 plugins: session2file-0.1.11
-collecting ... 
-collected 18 items                                                                                                                                         
+collecting ...
+collected 18 items
 
 tests/test_pytest_fold.py .F.F.F.FFF...FF..E                                                                                                         [100%]
 
@@ -22,7 +22,7 @@ ____________________________________________________________________ test_which_
 cls = <class '_pytest.runner.CallInfo'>, func = <function call_runtest_hook.<locals>.<lambda> at 0x10d3cad40>, when = 'call'
 reraise = (<class '_pytest.outcomes.Exit'>, <class 'KeyboardInterrupt'>)
 
-===MARKER1===
+==>MARKER1<==
     [37m@classmethod[39;49;00m
     [94mdef[39;49;00m [92mfrom_call[39;49;00m(
         [96mcls[39;49;00m,
@@ -38,14 +38,14 @@ reraise = (<class '_pytest.outcomes.Exit'>, <class 'KeyboardInterrupt'>)
         [94mtry[39;49;00m:
 >           result: Optional[TResult] = func()
 
-.venv/lib/python3.10/site-packages/_pytest/runner.py:311: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/_pytest/runner.py:311:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 >       [94mlambda[39;49;00m: ihook(item=item, **kwds), when=when, reraise=reraise
     )
 
-.venv/lib/python3.10/site-packages/_pytest/runner.py:255: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/_pytest/runner.py:255:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <_HookCaller 'pytest_runtest_call'>, args = (), kwargs = {'item': <Function test_which_fails_1>}, argname = 'item', firstresult = False
 
@@ -53,7 +53,7 @@ self = <_HookCaller 'pytest_runtest_call'>, args = (), kwargs = {'item': <Functi
         [94mif[39;49;00m args:
             [94mraise[39;49;00m [96mTypeError[39;49;00m([33m"[39;49;00m[33mhook calling supports only keyword arguments[39;49;00m[33m"[39;49;00m)
         [94massert[39;49;00m [95mnot[39;49;00m [96mself[39;49;00m.is_historic()
-    
+
         [90m# This is written to avoid expensive operations when not needed.[39;49;00m
         [94mif[39;49;00m [96mself[39;49;00m.spec:
             [94mfor[39;49;00m argname [95min[39;49;00m [96mself[39;49;00m.spec.argnames:
@@ -65,15 +65,15 @@ self = <_HookCaller 'pytest_runtest_call'>, args = (), kwargs = {'item': <Functi
                         stacklevel=[94m2[39;49;00m,
                     )
                     [94mbreak[39;49;00m
-    
+
             firstresult = [96mself[39;49;00m.spec.opts.get([33m"[39;49;00m[33mfirstresult[39;49;00m[33m"[39;49;00m)
         [94melse[39;49;00m:
             firstresult = [94mFalse[39;49;00m
-    
+
 >       [94mreturn[39;49;00m [96mself[39;49;00m._hookexec([96mself[39;49;00m.name, [96mself[39;49;00m.get_hookimpls(), kwargs, firstresult)
 
-.venv/lib/python3.10/site-packages/pluggy/_hooks.py:265: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_hooks.py:265:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <_pytest.config.PytestPluginManager object at 0x10c6f7910>, hook_name = 'pytest_runtest_call'
 methods = [<HookImpl plugin_name='runner', plugin=<module '_pytest.runner' from '/Users/jwr003/coding/pytest-fold/.venv/lib/pyth...readexception' from '/Users/jwr003/coding/pytest-fold/.venv/lib/python3.10/site-packages/_pytest/threadexception.py'>>]
@@ -84,8 +84,8 @@ kwargs = {'item': <Function test_which_fails_1>}, firstresult = False
         [90m# enable_tracing will set its own wrapping function at self._inner_hookexec[39;49;00m
 >       [94mreturn[39;49;00m [96mself[39;49;00m._inner_hookexec(hook_name, methods, kwargs, firstresult)
 
-.venv/lib/python3.10/site-packages/pluggy/_manager.py:80: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_manager.py:80:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 hook_name = 'pytest_runtest_call'
 hook_impls = [<HookImpl plugin_name='runner', plugin=<module '_pytest.runner' from '/Users/jwr003/coding/pytest-fold/.venv/lib/pyth...readexception' from '/Users/jwr003/coding/pytest-fold/.venv/lib/python3.10/site-packages/_pytest/threadexception.py'>>]
@@ -112,7 +112,7 @@ caller_kwargs = {'item': <Function test_which_fails_1>}, firstresult = False
                                 [94mraise[39;49;00m HookCallError(
                                     [33mf[39;49;00m[33m"[39;49;00m[33mhook call must provide argument [39;49;00m[33m{[39;49;00margname[33m!r}[39;49;00m[33m"[39;49;00m
                                 )
-    
+
                     [94mif[39;49;00m hook_impl.hookwrapper:
                         [94mtry[39;49;00m:
                             gen = hook_impl.function(*args)
@@ -133,7 +133,7 @@ caller_kwargs = {'item': <Function test_which_fails_1>}, firstresult = False
                 outcome = _Result(results[[94m0[39;49;00m] [94mif[39;49;00m results [94melse[39;49;00m [94mNone[39;49;00m, excinfo)
             [94melse[39;49;00m:
                 outcome = _Result(results, excinfo)
-    
+
             [90m# run all wrapper post-yield blocks[39;49;00m
             [94mfor[39;49;00m gen [95min[39;49;00m [96mreversed[39;49;00m(teardowns):
                 [94mtry[39;49;00m:
@@ -141,11 +141,11 @@ caller_kwargs = {'item': <Function test_which_fails_1>}, firstresult = False
                     _raise_wrapfail(gen, [33m"[39;49;00m[33mhas second yield[39;49;00m[33m"[39;49;00m)
                 [94mexcept[39;49;00m [96mStopIteration[39;49;00m:
                     [94mpass[39;49;00m
-    
+
 >           [94mreturn[39;49;00m outcome.get_result()
 
-.venv/lib/python3.10/site-packages/pluggy/_callers.py:60: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_callers.py:60:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <pluggy._result._Result object at 0x10d4bec80>
 
@@ -162,8 +162,8 @@ self = <pluggy._result._Result object at 0x10d4bec80>
             ex = [96mself[39;49;00m._excinfo
 >           [94mraise[39;49;00m ex[[94m1[39;49;00m].with_traceback(ex[[94m2[39;49;00m])
 
-.venv/lib/python3.10/site-packages/pluggy/_result.py:60: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_result.py:60:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 hook_name = 'pytest_runtest_call'
 hook_impls = [<HookImpl plugin_name='runner', plugin=<module '_pytest.runner' from '/Users/jwr003/coding/pytest-fold/.venv/lib/pyth...readexception' from '/Users/jwr003/coding/pytest-fold/.venv/lib/python3.10/site-packages/_pytest/threadexception.py'>>]
@@ -190,7 +190,7 @@ caller_kwargs = {'item': <Function test_which_fails_1>}, firstresult = False
                                 [94mraise[39;49;00m HookCallError(
                                     [33mf[39;49;00m[33m"[39;49;00m[33mhook call must provide argument [39;49;00m[33m{[39;49;00margname[33m!r}[39;49;00m[33m"[39;49;00m
                                 )
-    
+
                     [94mif[39;49;00m hook_impl.hookwrapper:
                         [94mtry[39;49;00m:
                             gen = hook_impl.function(*args)
@@ -201,8 +201,8 @@ caller_kwargs = {'item': <Function test_which_fails_1>}, firstresult = False
                     [94melse[39;49;00m:
 >                       res = hook_impl.function(*args)
 
-.venv/lib/python3.10/site-packages/pluggy/_callers.py:39: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_callers.py:39:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 item = <Function test_which_fails_1>
 
@@ -225,8 +225,8 @@ item = <Function test_which_fails_1>
             sys.last_traceback = e.__traceback__.tb_next
 >           [94mraise[39;49;00m e
 
-.venv/lib/python3.10/site-packages/_pytest/runner.py:170: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/_pytest/runner.py:170:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 item = <Function test_which_fails_1>
 
@@ -241,8 +241,8 @@ item = <Function test_which_fails_1>
         [94mtry[39;49;00m:
 >           item.runtest()
 
-.venv/lib/python3.10/site-packages/_pytest/runner.py:162: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/_pytest/runner.py:162:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <Function test_which_fails_1>
 
@@ -250,8 +250,8 @@ self = <Function test_which_fails_1>
         [33m"""Execute the underlying test function."""[39;49;00m
 >       [96mself[39;49;00m.ihook.pytest_pyfunc_call(pyfuncitem=[96mself[39;49;00m)
 
-.venv/lib/python3.10/site-packages/_pytest/python.py:1641: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/_pytest/python.py:1641:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <_HookCaller 'pytest_pyfunc_call'>, args = (), kwargs = {'pyfuncitem': <Function test_which_fails_1>}, argname = 'pyfuncitem', firstresult = True
 
@@ -259,7 +259,7 @@ self = <_HookCaller 'pytest_pyfunc_call'>, args = (), kwargs = {'pyfuncitem': <F
         [94mif[39;49;00m args:
             [94mraise[39;49;00m [96mTypeError[39;49;00m([33m"[39;49;00m[33mhook calling supports only keyword arguments[39;49;00m[33m"[39;49;00m)
         [94massert[39;49;00m [95mnot[39;49;00m [96mself[39;49;00m.is_historic()
-    
+
         [90m# This is written to avoid expensive operations when not needed.[39;49;00m
         [94mif[39;49;00m [96mself[39;49;00m.spec:
             [94mfor[39;49;00m argname [95min[39;49;00m [96mself[39;49;00m.spec.argnames:
@@ -271,15 +271,15 @@ self = <_HookCaller 'pytest_pyfunc_call'>, args = (), kwargs = {'pyfuncitem': <F
                         stacklevel=[94m2[39;49;00m,
                     )
                     [94mbreak[39;49;00m
-    
+
             firstresult = [96mself[39;49;00m.spec.opts.get([33m"[39;49;00m[33mfirstresult[39;49;00m[33m"[39;49;00m)
         [94melse[39;49;00m:
             firstresult = [94mFalse[39;49;00m
-    
+
 >       [94mreturn[39;49;00m [96mself[39;49;00m._hookexec([96mself[39;49;00m.name, [96mself[39;49;00m.get_hookimpls(), kwargs, firstresult)
 
-.venv/lib/python3.10/site-packages/pluggy/_hooks.py:265: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_hooks.py:265:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <_pytest.config.PytestPluginManager object at 0x10c6f7910>, hook_name = 'pytest_pyfunc_call'
 methods = [<HookImpl plugin_name='python', plugin=<module '_pytest.python' from '/Users/jwr003/coding/pytest-fold/.venv/lib/python3.10/site-packages/_pytest/python.py'>>]
@@ -290,8 +290,8 @@ kwargs = {'pyfuncitem': <Function test_which_fails_1>}, firstresult = True
         [90m# enable_tracing will set its own wrapping function at self._inner_hookexec[39;49;00m
 >       [94mreturn[39;49;00m [96mself[39;49;00m._inner_hookexec(hook_name, methods, kwargs, firstresult)
 
-.venv/lib/python3.10/site-packages/pluggy/_manager.py:80: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_manager.py:80:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 hook_name = 'pytest_pyfunc_call'
 hook_impls = [<HookImpl plugin_name='python', plugin=<module '_pytest.python' from '/Users/jwr003/coding/pytest-fold/.venv/lib/python3.10/site-packages/_pytest/python.py'>>]
@@ -318,7 +318,7 @@ caller_kwargs = {'pyfuncitem': <Function test_which_fails_1>}, firstresult = Tru
                                 [94mraise[39;49;00m HookCallError(
                                     [33mf[39;49;00m[33m"[39;49;00m[33mhook call must provide argument [39;49;00m[33m{[39;49;00margname[33m!r}[39;49;00m[33m"[39;49;00m
                                 )
-    
+
                     [94mif[39;49;00m hook_impl.hookwrapper:
                         [94mtry[39;49;00m:
                             gen = hook_impl.function(*args)
@@ -339,7 +339,7 @@ caller_kwargs = {'pyfuncitem': <Function test_which_fails_1>}, firstresult = Tru
                 outcome = _Result(results[[94m0[39;49;00m] [94mif[39;49;00m results [94melse[39;49;00m [94mNone[39;49;00m, excinfo)
             [94melse[39;49;00m:
                 outcome = _Result(results, excinfo)
-    
+
             [90m# run all wrapper post-yield blocks[39;49;00m
             [94mfor[39;49;00m gen [95min[39;49;00m [96mreversed[39;49;00m(teardowns):
                 [94mtry[39;49;00m:
@@ -347,11 +347,11 @@ caller_kwargs = {'pyfuncitem': <Function test_which_fails_1>}, firstresult = Tru
                     _raise_wrapfail(gen, [33m"[39;49;00m[33mhas second yield[39;49;00m[33m"[39;49;00m)
                 [94mexcept[39;49;00m [96mStopIteration[39;49;00m:
                     [94mpass[39;49;00m
-    
+
 >           [94mreturn[39;49;00m outcome.get_result()
 
-.venv/lib/python3.10/site-packages/pluggy/_callers.py:60: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_callers.py:60:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <pluggy._result._Result object at 0x10d4beec0>
 
@@ -368,8 +368,8 @@ self = <pluggy._result._Result object at 0x10d4beec0>
             ex = [96mself[39;49;00m._excinfo
 >           [94mraise[39;49;00m ex[[94m1[39;49;00m].with_traceback(ex[[94m2[39;49;00m])
 
-.venv/lib/python3.10/site-packages/pluggy/_result.py:60: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_result.py:60:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 hook_name = 'pytest_pyfunc_call'
 hook_impls = [<HookImpl plugin_name='python', plugin=<module '_pytest.python' from '/Users/jwr003/coding/pytest-fold/.venv/lib/python3.10/site-packages/_pytest/python.py'>>]
@@ -396,7 +396,7 @@ caller_kwargs = {'pyfuncitem': <Function test_which_fails_1>}, firstresult = Tru
                                 [94mraise[39;49;00m HookCallError(
                                     [33mf[39;49;00m[33m"[39;49;00m[33mhook call must provide argument [39;49;00m[33m{[39;49;00margname[33m!r}[39;49;00m[33m"[39;49;00m
                                 )
-    
+
                     [94mif[39;49;00m hook_impl.hookwrapper:
                         [94mtry[39;49;00m:
                             gen = hook_impl.function(*args)
@@ -407,8 +407,8 @@ caller_kwargs = {'pyfuncitem': <Function test_which_fails_1>}, firstresult = Tru
                     [94melse[39;49;00m:
 >                       res = hook_impl.function(*args)
 
-.venv/lib/python3.10/site-packages/pluggy/_callers.py:39: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_callers.py:39:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 pyfuncitem = <Function test_which_fails_1>
 
@@ -421,21 +421,21 @@ pyfuncitem = <Function test_which_fails_1>
         testargs = {arg: funcargs[arg] [94mfor[39;49;00m arg [95min[39;49;00m pyfuncitem._fixtureinfo.argnames}
 >       result = testfunction(**testargs)
 
-.venv/lib/python3.10/site-packages/_pytest/python.py:183: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/_pytest/python.py:183:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
     [94mdef[39;49;00m [92mtest_which_fails_1[39;49;00m():
 >       [94massert[39;49;00m [94m0[39;49;00m
 E       assert 0
 
 tests/test_pytest_fold.py:18: AssertionError
-===MARKER2===
+==>MARKER2<==
 ____________________________________________________________________ test_which_fails_2 ____________________________________________________________________
 
 cls = <class '_pytest.runner.CallInfo'>, func = <function call_runtest_hook.<locals>.<lambda> at 0x10d456050>, when = 'call'
 reraise = (<class '_pytest.outcomes.Exit'>, <class 'KeyboardInterrupt'>)
 
-===MARKER1===
+==>MARKER1<==
     [37m@classmethod[39;49;00m
     [94mdef[39;49;00m [92mfrom_call[39;49;00m(
         [96mcls[39;49;00m,
@@ -451,14 +451,14 @@ reraise = (<class '_pytest.outcomes.Exit'>, <class 'KeyboardInterrupt'>)
         [94mtry[39;49;00m:
 >           result: Optional[TResult] = func()
 
-.venv/lib/python3.10/site-packages/_pytest/runner.py:311: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/_pytest/runner.py:311:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 >       [94mlambda[39;49;00m: ihook(item=item, **kwds), when=when, reraise=reraise
     )
 
-.venv/lib/python3.10/site-packages/_pytest/runner.py:255: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/_pytest/runner.py:255:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <_HookCaller 'pytest_runtest_call'>, args = (), kwargs = {'item': <Function test_which_fails_2>}, argname = 'item', firstresult = False
 
@@ -466,7 +466,7 @@ self = <_HookCaller 'pytest_runtest_call'>, args = (), kwargs = {'item': <Functi
         [94mif[39;49;00m args:
             [94mraise[39;49;00m [96mTypeError[39;49;00m([33m"[39;49;00m[33mhook calling supports only keyword arguments[39;49;00m[33m"[39;49;00m)
         [94massert[39;49;00m [95mnot[39;49;00m [96mself[39;49;00m.is_historic()
-    
+
         [90m# This is written to avoid expensive operations when not needed.[39;49;00m
         [94mif[39;49;00m [96mself[39;49;00m.spec:
             [94mfor[39;49;00m argname [95min[39;49;00m [96mself[39;49;00m.spec.argnames:
@@ -478,15 +478,15 @@ self = <_HookCaller 'pytest_runtest_call'>, args = (), kwargs = {'item': <Functi
                         stacklevel=[94m2[39;49;00m,
                     )
                     [94mbreak[39;49;00m
-    
+
             firstresult = [96mself[39;49;00m.spec.opts.get([33m"[39;49;00m[33mfirstresult[39;49;00m[33m"[39;49;00m)
         [94melse[39;49;00m:
             firstresult = [94mFalse[39;49;00m
-    
+
 >       [94mreturn[39;49;00m [96mself[39;49;00m._hookexec([96mself[39;49;00m.name, [96mself[39;49;00m.get_hookimpls(), kwargs, firstresult)
 
-.venv/lib/python3.10/site-packages/pluggy/_hooks.py:265: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_hooks.py:265:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <_pytest.config.PytestPluginManager object at 0x10c6f7910>, hook_name = 'pytest_runtest_call'
 methods = [<HookImpl plugin_name='runner', plugin=<module '_pytest.runner' from '/Users/jwr003/coding/pytest-fold/.venv/lib/pyth...readexception' from '/Users/jwr003/coding/pytest-fold/.venv/lib/python3.10/site-packages/_pytest/threadexception.py'>>]
@@ -497,8 +497,8 @@ kwargs = {'item': <Function test_which_fails_2>}, firstresult = False
         [90m# enable_tracing will set its own wrapping function at self._inner_hookexec[39;49;00m
 >       [94mreturn[39;49;00m [96mself[39;49;00m._inner_hookexec(hook_name, methods, kwargs, firstresult)
 
-.venv/lib/python3.10/site-packages/pluggy/_manager.py:80: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_manager.py:80:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 hook_name = 'pytest_runtest_call'
 hook_impls = [<HookImpl plugin_name='runner', plugin=<module '_pytest.runner' from '/Users/jwr003/coding/pytest-fold/.venv/lib/pyth...readexception' from '/Users/jwr003/coding/pytest-fold/.venv/lib/python3.10/site-packages/_pytest/threadexception.py'>>]
@@ -525,7 +525,7 @@ caller_kwargs = {'item': <Function test_which_fails_2>}, firstresult = False
                                 [94mraise[39;49;00m HookCallError(
                                     [33mf[39;49;00m[33m"[39;49;00m[33mhook call must provide argument [39;49;00m[33m{[39;49;00margname[33m!r}[39;49;00m[33m"[39;49;00m
                                 )
-    
+
                     [94mif[39;49;00m hook_impl.hookwrapper:
                         [94mtry[39;49;00m:
                             gen = hook_impl.function(*args)
@@ -546,7 +546,7 @@ caller_kwargs = {'item': <Function test_which_fails_2>}, firstresult = False
                 outcome = _Result(results[[94m0[39;49;00m] [94mif[39;49;00m results [94melse[39;49;00m [94mNone[39;49;00m, excinfo)
             [94melse[39;49;00m:
                 outcome = _Result(results, excinfo)
-    
+
             [90m# run all wrapper post-yield blocks[39;49;00m
             [94mfor[39;49;00m gen [95min[39;49;00m [96mreversed[39;49;00m(teardowns):
                 [94mtry[39;49;00m:
@@ -554,11 +554,11 @@ caller_kwargs = {'item': <Function test_which_fails_2>}, firstresult = False
                     _raise_wrapfail(gen, [33m"[39;49;00m[33mhas second yield[39;49;00m[33m"[39;49;00m)
                 [94mexcept[39;49;00m [96mStopIteration[39;49;00m:
                     [94mpass[39;49;00m
-    
+
 >           [94mreturn[39;49;00m outcome.get_result()
 
-.venv/lib/python3.10/site-packages/pluggy/_callers.py:60: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_callers.py:60:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <pluggy._result._Result object at 0x10d533d90>
 
@@ -575,8 +575,8 @@ self = <pluggy._result._Result object at 0x10d533d90>
             ex = [96mself[39;49;00m._excinfo
 >           [94mraise[39;49;00m ex[[94m1[39;49;00m].with_traceback(ex[[94m2[39;49;00m])
 
-.venv/lib/python3.10/site-packages/pluggy/_result.py:60: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_result.py:60:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 hook_name = 'pytest_runtest_call'
 hook_impls = [<HookImpl plugin_name='runner', plugin=<module '_pytest.runner' from '/Users/jwr003/coding/pytest-fold/.venv/lib/pyth...readexception' from '/Users/jwr003/coding/pytest-fold/.venv/lib/python3.10/site-packages/_pytest/threadexception.py'>>]
@@ -603,7 +603,7 @@ caller_kwargs = {'item': <Function test_which_fails_2>}, firstresult = False
                                 [94mraise[39;49;00m HookCallError(
                                     [33mf[39;49;00m[33m"[39;49;00m[33mhook call must provide argument [39;49;00m[33m{[39;49;00margname[33m!r}[39;49;00m[33m"[39;49;00m
                                 )
-    
+
                     [94mif[39;49;00m hook_impl.hookwrapper:
                         [94mtry[39;49;00m:
                             gen = hook_impl.function(*args)
@@ -614,8 +614,8 @@ caller_kwargs = {'item': <Function test_which_fails_2>}, firstresult = False
                     [94melse[39;49;00m:
 >                       res = hook_impl.function(*args)
 
-.venv/lib/python3.10/site-packages/pluggy/_callers.py:39: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_callers.py:39:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 item = <Function test_which_fails_2>
 
@@ -638,8 +638,8 @@ item = <Function test_which_fails_2>
             sys.last_traceback = e.__traceback__.tb_next
 >           [94mraise[39;49;00m e
 
-.venv/lib/python3.10/site-packages/_pytest/runner.py:170: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/_pytest/runner.py:170:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 item = <Function test_which_fails_2>
 
@@ -654,8 +654,8 @@ item = <Function test_which_fails_2>
         [94mtry[39;49;00m:
 >           item.runtest()
 
-.venv/lib/python3.10/site-packages/_pytest/runner.py:162: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/_pytest/runner.py:162:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <Function test_which_fails_2>
 
@@ -663,8 +663,8 @@ self = <Function test_which_fails_2>
         [33m"""Execute the underlying test function."""[39;49;00m
 >       [96mself[39;49;00m.ihook.pytest_pyfunc_call(pyfuncitem=[96mself[39;49;00m)
 
-.venv/lib/python3.10/site-packages/_pytest/python.py:1641: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/_pytest/python.py:1641:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <_HookCaller 'pytest_pyfunc_call'>, args = (), kwargs = {'pyfuncitem': <Function test_which_fails_2>}, argname = 'pyfuncitem', firstresult = True
 
@@ -672,7 +672,7 @@ self = <_HookCaller 'pytest_pyfunc_call'>, args = (), kwargs = {'pyfuncitem': <F
         [94mif[39;49;00m args:
             [94mraise[39;49;00m [96mTypeError[39;49;00m([33m"[39;49;00m[33mhook calling supports only keyword arguments[39;49;00m[33m"[39;49;00m)
         [94massert[39;49;00m [95mnot[39;49;00m [96mself[39;49;00m.is_historic()
-    
+
         [90m# This is written to avoid expensive operations when not needed.[39;49;00m
         [94mif[39;49;00m [96mself[39;49;00m.spec:
             [94mfor[39;49;00m argname [95min[39;49;00m [96mself[39;49;00m.spec.argnames:
@@ -684,15 +684,15 @@ self = <_HookCaller 'pytest_pyfunc_call'>, args = (), kwargs = {'pyfuncitem': <F
                         stacklevel=[94m2[39;49;00m,
                     )
                     [94mbreak[39;49;00m
-    
+
             firstresult = [96mself[39;49;00m.spec.opts.get([33m"[39;49;00m[33mfirstresult[39;49;00m[33m"[39;49;00m)
         [94melse[39;49;00m:
             firstresult = [94mFalse[39;49;00m
-    
+
 >       [94mreturn[39;49;00m [96mself[39;49;00m._hookexec([96mself[39;49;00m.name, [96mself[39;49;00m.get_hookimpls(), kwargs, firstresult)
 
-.venv/lib/python3.10/site-packages/pluggy/_hooks.py:265: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_hooks.py:265:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <_pytest.config.PytestPluginManager object at 0x10c6f7910>, hook_name = 'pytest_pyfunc_call'
 methods = [<HookImpl plugin_name='python', plugin=<module '_pytest.python' from '/Users/jwr003/coding/pytest-fold/.venv/lib/python3.10/site-packages/_pytest/python.py'>>]
@@ -703,8 +703,8 @@ kwargs = {'pyfuncitem': <Function test_which_fails_2>}, firstresult = True
         [90m# enable_tracing will set its own wrapping function at self._inner_hookexec[39;49;00m
 >       [94mreturn[39;49;00m [96mself[39;49;00m._inner_hookexec(hook_name, methods, kwargs, firstresult)
 
-.venv/lib/python3.10/site-packages/pluggy/_manager.py:80: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_manager.py:80:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 hook_name = 'pytest_pyfunc_call'
 hook_impls = [<HookImpl plugin_name='python', plugin=<module '_pytest.python' from '/Users/jwr003/coding/pytest-fold/.venv/lib/python3.10/site-packages/_pytest/python.py'>>]
@@ -731,7 +731,7 @@ caller_kwargs = {'pyfuncitem': <Function test_which_fails_2>}, firstresult = Tru
                                 [94mraise[39;49;00m HookCallError(
                                     [33mf[39;49;00m[33m"[39;49;00m[33mhook call must provide argument [39;49;00m[33m{[39;49;00margname[33m!r}[39;49;00m[33m"[39;49;00m
                                 )
-    
+
                     [94mif[39;49;00m hook_impl.hookwrapper:
                         [94mtry[39;49;00m:
                             gen = hook_impl.function(*args)
@@ -752,7 +752,7 @@ caller_kwargs = {'pyfuncitem': <Function test_which_fails_2>}, firstresult = Tru
                 outcome = _Result(results[[94m0[39;49;00m] [94mif[39;49;00m results [94melse[39;49;00m [94mNone[39;49;00m, excinfo)
             [94melse[39;49;00m:
                 outcome = _Result(results, excinfo)
-    
+
             [90m# run all wrapper post-yield blocks[39;49;00m
             [94mfor[39;49;00m gen [95min[39;49;00m [96mreversed[39;49;00m(teardowns):
                 [94mtry[39;49;00m:
@@ -760,11 +760,11 @@ caller_kwargs = {'pyfuncitem': <Function test_which_fails_2>}, firstresult = Tru
                     _raise_wrapfail(gen, [33m"[39;49;00m[33mhas second yield[39;49;00m[33m"[39;49;00m)
                 [94mexcept[39;49;00m [96mStopIteration[39;49;00m:
                     [94mpass[39;49;00m
-    
+
 >           [94mreturn[39;49;00m outcome.get_result()
 
-.venv/lib/python3.10/site-packages/pluggy/_callers.py:60: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_callers.py:60:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <pluggy._result._Result object at 0x10d533c40>
 
@@ -781,8 +781,8 @@ self = <pluggy._result._Result object at 0x10d533c40>
             ex = [96mself[39;49;00m._excinfo
 >           [94mraise[39;49;00m ex[[94m1[39;49;00m].with_traceback(ex[[94m2[39;49;00m])
 
-.venv/lib/python3.10/site-packages/pluggy/_result.py:60: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_result.py:60:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 hook_name = 'pytest_pyfunc_call'
 hook_impls = [<HookImpl plugin_name='python', plugin=<module '_pytest.python' from '/Users/jwr003/coding/pytest-fold/.venv/lib/python3.10/site-packages/_pytest/python.py'>>]
@@ -809,7 +809,7 @@ caller_kwargs = {'pyfuncitem': <Function test_which_fails_2>}, firstresult = Tru
                                 [94mraise[39;49;00m HookCallError(
                                     [33mf[39;49;00m[33m"[39;49;00m[33mhook call must provide argument [39;49;00m[33m{[39;49;00margname[33m!r}[39;49;00m[33m"[39;49;00m
                                 )
-    
+
                     [94mif[39;49;00m hook_impl.hookwrapper:
                         [94mtry[39;49;00m:
                             gen = hook_impl.function(*args)
@@ -820,8 +820,8 @@ caller_kwargs = {'pyfuncitem': <Function test_which_fails_2>}, firstresult = Tru
                     [94melse[39;49;00m:
 >                       res = hook_impl.function(*args)
 
-.venv/lib/python3.10/site-packages/pluggy/_callers.py:39: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_callers.py:39:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 pyfuncitem = <Function test_which_fails_2>
 
@@ -834,21 +834,21 @@ pyfuncitem = <Function test_which_fails_2>
         testargs = {arg: funcargs[arg] [94mfor[39;49;00m arg [95min[39;49;00m pyfuncitem._fixtureinfo.argnames}
 >       result = testfunction(**testargs)
 
-.venv/lib/python3.10/site-packages/_pytest/python.py:183: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/_pytest/python.py:183:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
     [94mdef[39;49;00m [92mtest_which_fails_2[39;49;00m():
 >       [94massert[39;49;00m [94m0[39;49;00m
 E       assert 0
 
 tests/test_pytest_fold.py:26: AssertionError
-===MARKER2===
+==>MARKER2<==
 ____________________________________________________________________ test_which_fails_3 ____________________________________________________________________
 
 cls = <class '_pytest.runner.CallInfo'>, func = <function call_runtest_hook.<locals>.<lambda> at 0x10d4f7910>, when = 'call'
 reraise = (<class '_pytest.outcomes.Exit'>, <class 'KeyboardInterrupt'>)
 
-===MARKER1===
+==>MARKER1<==
     [37m@classmethod[39;49;00m
     [94mdef[39;49;00m [92mfrom_call[39;49;00m(
         [96mcls[39;49;00m,
@@ -864,14 +864,14 @@ reraise = (<class '_pytest.outcomes.Exit'>, <class 'KeyboardInterrupt'>)
         [94mtry[39;49;00m:
 >           result: Optional[TResult] = func()
 
-.venv/lib/python3.10/site-packages/_pytest/runner.py:311: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/_pytest/runner.py:311:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 >       [94mlambda[39;49;00m: ihook(item=item, **kwds), when=when, reraise=reraise
     )
 
-.venv/lib/python3.10/site-packages/_pytest/runner.py:255: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/_pytest/runner.py:255:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <_HookCaller 'pytest_runtest_call'>, args = (), kwargs = {'item': <Function test_which_fails_3>}, argname = 'item', firstresult = False
 
@@ -879,7 +879,7 @@ self = <_HookCaller 'pytest_runtest_call'>, args = (), kwargs = {'item': <Functi
         [94mif[39;49;00m args:
             [94mraise[39;49;00m [96mTypeError[39;49;00m([33m"[39;49;00m[33mhook calling supports only keyword arguments[39;49;00m[33m"[39;49;00m)
         [94massert[39;49;00m [95mnot[39;49;00m [96mself[39;49;00m.is_historic()
-    
+
         [90m# This is written to avoid expensive operations when not needed.[39;49;00m
         [94mif[39;49;00m [96mself[39;49;00m.spec:
             [94mfor[39;49;00m argname [95min[39;49;00m [96mself[39;49;00m.spec.argnames:
@@ -891,15 +891,15 @@ self = <_HookCaller 'pytest_runtest_call'>, args = (), kwargs = {'item': <Functi
                         stacklevel=[94m2[39;49;00m,
                     )
                     [94mbreak[39;49;00m
-    
+
             firstresult = [96mself[39;49;00m.spec.opts.get([33m"[39;49;00m[33mfirstresult[39;49;00m[33m"[39;49;00m)
         [94melse[39;49;00m:
             firstresult = [94mFalse[39;49;00m
-    
+
 >       [94mreturn[39;49;00m [96mself[39;49;00m._hookexec([96mself[39;49;00m.name, [96mself[39;49;00m.get_hookimpls(), kwargs, firstresult)
 
-.venv/lib/python3.10/site-packages/pluggy/_hooks.py:265: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_hooks.py:265:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <_pytest.config.PytestPluginManager object at 0x10c6f7910>, hook_name = 'pytest_runtest_call'
 methods = [<HookImpl plugin_name='runner', plugin=<module '_pytest.runner' from '/Users/jwr003/coding/pytest-fold/.venv/lib/pyth...readexception' from '/Users/jwr003/coding/pytest-fold/.venv/lib/python3.10/site-packages/_pytest/threadexception.py'>>]
@@ -910,8 +910,8 @@ kwargs = {'item': <Function test_which_fails_3>}, firstresult = False
         [90m# enable_tracing will set its own wrapping function at self._inner_hookexec[39;49;00m
 >       [94mreturn[39;49;00m [96mself[39;49;00m._inner_hookexec(hook_name, methods, kwargs, firstresult)
 
-.venv/lib/python3.10/site-packages/pluggy/_manager.py:80: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_manager.py:80:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 hook_name = 'pytest_runtest_call'
 hook_impls = [<HookImpl plugin_name='runner', plugin=<module '_pytest.runner' from '/Users/jwr003/coding/pytest-fold/.venv/lib/pyth...readexception' from '/Users/jwr003/coding/pytest-fold/.venv/lib/python3.10/site-packages/_pytest/threadexception.py'>>]
@@ -938,7 +938,7 @@ caller_kwargs = {'item': <Function test_which_fails_3>}, firstresult = False
                                 [94mraise[39;49;00m HookCallError(
                                     [33mf[39;49;00m[33m"[39;49;00m[33mhook call must provide argument [39;49;00m[33m{[39;49;00margname[33m!r}[39;49;00m[33m"[39;49;00m
                                 )
-    
+
                     [94mif[39;49;00m hook_impl.hookwrapper:
                         [94mtry[39;49;00m:
                             gen = hook_impl.function(*args)
@@ -959,7 +959,7 @@ caller_kwargs = {'item': <Function test_which_fails_3>}, firstresult = False
                 outcome = _Result(results[[94m0[39;49;00m] [94mif[39;49;00m results [94melse[39;49;00m [94mNone[39;49;00m, excinfo)
             [94melse[39;49;00m:
                 outcome = _Result(results, excinfo)
-    
+
             [90m# run all wrapper post-yield blocks[39;49;00m
             [94mfor[39;49;00m gen [95min[39;49;00m [96mreversed[39;49;00m(teardowns):
                 [94mtry[39;49;00m:
@@ -967,11 +967,11 @@ caller_kwargs = {'item': <Function test_which_fails_3>}, firstresult = False
                     _raise_wrapfail(gen, [33m"[39;49;00m[33mhas second yield[39;49;00m[33m"[39;49;00m)
                 [94mexcept[39;49;00m [96mStopIteration[39;49;00m:
                     [94mpass[39;49;00m
-    
+
 >           [94mreturn[39;49;00m outcome.get_result()
 
-.venv/lib/python3.10/site-packages/pluggy/_callers.py:60: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_callers.py:60:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <pluggy._result._Result object at 0x10d5dbe20>
 
@@ -988,8 +988,8 @@ self = <pluggy._result._Result object at 0x10d5dbe20>
             ex = [96mself[39;49;00m._excinfo
 >           [94mraise[39;49;00m ex[[94m1[39;49;00m].with_traceback(ex[[94m2[39;49;00m])
 
-.venv/lib/python3.10/site-packages/pluggy/_result.py:60: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_result.py:60:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 hook_name = 'pytest_runtest_call'
 hook_impls = [<HookImpl plugin_name='runner', plugin=<module '_pytest.runner' from '/Users/jwr003/coding/pytest-fold/.venv/lib/pyth...readexception' from '/Users/jwr003/coding/pytest-fold/.venv/lib/python3.10/site-packages/_pytest/threadexception.py'>>]
@@ -1016,7 +1016,7 @@ caller_kwargs = {'item': <Function test_which_fails_3>}, firstresult = False
                                 [94mraise[39;49;00m HookCallError(
                                     [33mf[39;49;00m[33m"[39;49;00m[33mhook call must provide argument [39;49;00m[33m{[39;49;00margname[33m!r}[39;49;00m[33m"[39;49;00m
                                 )
-    
+
                     [94mif[39;49;00m hook_impl.hookwrapper:
                         [94mtry[39;49;00m:
                             gen = hook_impl.function(*args)
@@ -1027,8 +1027,8 @@ caller_kwargs = {'item': <Function test_which_fails_3>}, firstresult = False
                     [94melse[39;49;00m:
 >                       res = hook_impl.function(*args)
 
-.venv/lib/python3.10/site-packages/pluggy/_callers.py:39: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_callers.py:39:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 item = <Function test_which_fails_3>
 
@@ -1051,8 +1051,8 @@ item = <Function test_which_fails_3>
             sys.last_traceback = e.__traceback__.tb_next
 >           [94mraise[39;49;00m e
 
-.venv/lib/python3.10/site-packages/_pytest/runner.py:170: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/_pytest/runner.py:170:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 item = <Function test_which_fails_3>
 
@@ -1067,8 +1067,8 @@ item = <Function test_which_fails_3>
         [94mtry[39;49;00m:
 >           item.runtest()
 
-.venv/lib/python3.10/site-packages/_pytest/runner.py:162: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/_pytest/runner.py:162:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <Function test_which_fails_3>
 
@@ -1076,8 +1076,8 @@ self = <Function test_which_fails_3>
         [33m"""Execute the underlying test function."""[39;49;00m
 >       [96mself[39;49;00m.ihook.pytest_pyfunc_call(pyfuncitem=[96mself[39;49;00m)
 
-.venv/lib/python3.10/site-packages/_pytest/python.py:1641: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/_pytest/python.py:1641:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <_HookCaller 'pytest_pyfunc_call'>, args = (), kwargs = {'pyfuncitem': <Function test_which_fails_3>}, argname = 'pyfuncitem', firstresult = True
 
@@ -1085,7 +1085,7 @@ self = <_HookCaller 'pytest_pyfunc_call'>, args = (), kwargs = {'pyfuncitem': <F
         [94mif[39;49;00m args:
             [94mraise[39;49;00m [96mTypeError[39;49;00m([33m"[39;49;00m[33mhook calling supports only keyword arguments[39;49;00m[33m"[39;49;00m)
         [94massert[39;49;00m [95mnot[39;49;00m [96mself[39;49;00m.is_historic()
-    
+
         [90m# This is written to avoid expensive operations when not needed.[39;49;00m
         [94mif[39;49;00m [96mself[39;49;00m.spec:
             [94mfor[39;49;00m argname [95min[39;49;00m [96mself[39;49;00m.spec.argnames:
@@ -1097,15 +1097,15 @@ self = <_HookCaller 'pytest_pyfunc_call'>, args = (), kwargs = {'pyfuncitem': <F
                         stacklevel=[94m2[39;49;00m,
                     )
                     [94mbreak[39;49;00m
-    
+
             firstresult = [96mself[39;49;00m.spec.opts.get([33m"[39;49;00m[33mfirstresult[39;49;00m[33m"[39;49;00m)
         [94melse[39;49;00m:
             firstresult = [94mFalse[39;49;00m
-    
+
 >       [94mreturn[39;49;00m [96mself[39;49;00m._hookexec([96mself[39;49;00m.name, [96mself[39;49;00m.get_hookimpls(), kwargs, firstresult)
 
-.venv/lib/python3.10/site-packages/pluggy/_hooks.py:265: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_hooks.py:265:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <_pytest.config.PytestPluginManager object at 0x10c6f7910>, hook_name = 'pytest_pyfunc_call'
 methods = [<HookImpl plugin_name='python', plugin=<module '_pytest.python' from '/Users/jwr003/coding/pytest-fold/.venv/lib/python3.10/site-packages/_pytest/python.py'>>]
@@ -1116,8 +1116,8 @@ kwargs = {'pyfuncitem': <Function test_which_fails_3>}, firstresult = True
         [90m# enable_tracing will set its own wrapping function at self._inner_hookexec[39;49;00m
 >       [94mreturn[39;49;00m [96mself[39;49;00m._inner_hookexec(hook_name, methods, kwargs, firstresult)
 
-.venv/lib/python3.10/site-packages/pluggy/_manager.py:80: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_manager.py:80:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 hook_name = 'pytest_pyfunc_call'
 hook_impls = [<HookImpl plugin_name='python', plugin=<module '_pytest.python' from '/Users/jwr003/coding/pytest-fold/.venv/lib/python3.10/site-packages/_pytest/python.py'>>]
@@ -1144,7 +1144,7 @@ caller_kwargs = {'pyfuncitem': <Function test_which_fails_3>}, firstresult = Tru
                                 [94mraise[39;49;00m HookCallError(
                                     [33mf[39;49;00m[33m"[39;49;00m[33mhook call must provide argument [39;49;00m[33m{[39;49;00margname[33m!r}[39;49;00m[33m"[39;49;00m
                                 )
-    
+
                     [94mif[39;49;00m hook_impl.hookwrapper:
                         [94mtry[39;49;00m:
                             gen = hook_impl.function(*args)
@@ -1165,7 +1165,7 @@ caller_kwargs = {'pyfuncitem': <Function test_which_fails_3>}, firstresult = Tru
                 outcome = _Result(results[[94m0[39;49;00m] [94mif[39;49;00m results [94melse[39;49;00m [94mNone[39;49;00m, excinfo)
             [94melse[39;49;00m:
                 outcome = _Result(results, excinfo)
-    
+
             [90m# run all wrapper post-yield blocks[39;49;00m
             [94mfor[39;49;00m gen [95min[39;49;00m [96mreversed[39;49;00m(teardowns):
                 [94mtry[39;49;00m:
@@ -1173,11 +1173,11 @@ caller_kwargs = {'pyfuncitem': <Function test_which_fails_3>}, firstresult = Tru
                     _raise_wrapfail(gen, [33m"[39;49;00m[33mhas second yield[39;49;00m[33m"[39;49;00m)
                 [94mexcept[39;49;00m [96mStopIteration[39;49;00m:
                     [94mpass[39;49;00m
-    
+
 >           [94mreturn[39;49;00m outcome.get_result()
 
-.venv/lib/python3.10/site-packages/pluggy/_callers.py:60: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_callers.py:60:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <pluggy._result._Result object at 0x10d5dbd90>
 
@@ -1194,8 +1194,8 @@ self = <pluggy._result._Result object at 0x10d5dbd90>
             ex = [96mself[39;49;00m._excinfo
 >           [94mraise[39;49;00m ex[[94m1[39;49;00m].with_traceback(ex[[94m2[39;49;00m])
 
-.venv/lib/python3.10/site-packages/pluggy/_result.py:60: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_result.py:60:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 hook_name = 'pytest_pyfunc_call'
 hook_impls = [<HookImpl plugin_name='python', plugin=<module '_pytest.python' from '/Users/jwr003/coding/pytest-fold/.venv/lib/python3.10/site-packages/_pytest/python.py'>>]
@@ -1222,7 +1222,7 @@ caller_kwargs = {'pyfuncitem': <Function test_which_fails_3>}, firstresult = Tru
                                 [94mraise[39;49;00m HookCallError(
                                     [33mf[39;49;00m[33m"[39;49;00m[33mhook call must provide argument [39;49;00m[33m{[39;49;00margname[33m!r}[39;49;00m[33m"[39;49;00m
                                 )
-    
+
                     [94mif[39;49;00m hook_impl.hookwrapper:
                         [94mtry[39;49;00m:
                             gen = hook_impl.function(*args)
@@ -1233,8 +1233,8 @@ caller_kwargs = {'pyfuncitem': <Function test_which_fails_3>}, firstresult = Tru
                     [94melse[39;49;00m:
 >                       res = hook_impl.function(*args)
 
-.venv/lib/python3.10/site-packages/pluggy/_callers.py:39: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_callers.py:39:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 pyfuncitem = <Function test_which_fails_3>
 
@@ -1247,21 +1247,21 @@ pyfuncitem = <Function test_which_fails_3>
         testargs = {arg: funcargs[arg] [94mfor[39;49;00m arg [95min[39;49;00m pyfuncitem._fixtureinfo.argnames}
 >       result = testfunction(**testargs)
 
-.venv/lib/python3.10/site-packages/_pytest/python.py:183: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/_pytest/python.py:183:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
     [94mdef[39;49;00m [92mtest_which_fails_3[39;49;00m():
 >       [94massert[39;49;00m [94m0[39;49;00m
 E       assert 0
 
 tests/test_pytest_fold.py:34: AssertionError
-===MARKER2===
+==>MARKER2<==
 _______________________________________________________________________ test_fail_1 ________________________________________________________________________
 
 cls = <class '_pytest.runner.CallInfo'>, func = <function call_runtest_hook.<locals>.<lambda> at 0x10d457490>, when = 'call'
 reraise = (<class '_pytest.outcomes.Exit'>, <class 'KeyboardInterrupt'>)
 
-===MARKER1===
+==>MARKER1<==
     [37m@classmethod[39;49;00m
     [94mdef[39;49;00m [92mfrom_call[39;49;00m(
         [96mcls[39;49;00m,
@@ -1277,14 +1277,14 @@ reraise = (<class '_pytest.outcomes.Exit'>, <class 'KeyboardInterrupt'>)
         [94mtry[39;49;00m:
 >           result: Optional[TResult] = func()
 
-.venv/lib/python3.10/site-packages/_pytest/runner.py:311: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/_pytest/runner.py:311:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 >       [94mlambda[39;49;00m: ihook(item=item, **kwds), when=when, reraise=reraise
     )
 
-.venv/lib/python3.10/site-packages/_pytest/runner.py:255: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/_pytest/runner.py:255:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <_HookCaller 'pytest_runtest_call'>, args = (), kwargs = {'item': <Function test_fail_1>}, argname = 'item', firstresult = False
 
@@ -1292,7 +1292,7 @@ self = <_HookCaller 'pytest_runtest_call'>, args = (), kwargs = {'item': <Functi
         [94mif[39;49;00m args:
             [94mraise[39;49;00m [96mTypeError[39;49;00m([33m"[39;49;00m[33mhook calling supports only keyword arguments[39;49;00m[33m"[39;49;00m)
         [94massert[39;49;00m [95mnot[39;49;00m [96mself[39;49;00m.is_historic()
-    
+
         [90m# This is written to avoid expensive operations when not needed.[39;49;00m
         [94mif[39;49;00m [96mself[39;49;00m.spec:
             [94mfor[39;49;00m argname [95min[39;49;00m [96mself[39;49;00m.spec.argnames:
@@ -1304,15 +1304,15 @@ self = <_HookCaller 'pytest_runtest_call'>, args = (), kwargs = {'item': <Functi
                         stacklevel=[94m2[39;49;00m,
                     )
                     [94mbreak[39;49;00m
-    
+
             firstresult = [96mself[39;49;00m.spec.opts.get([33m"[39;49;00m[33mfirstresult[39;49;00m[33m"[39;49;00m)
         [94melse[39;49;00m:
             firstresult = [94mFalse[39;49;00m
-    
+
 >       [94mreturn[39;49;00m [96mself[39;49;00m._hookexec([96mself[39;49;00m.name, [96mself[39;49;00m.get_hookimpls(), kwargs, firstresult)
 
-.venv/lib/python3.10/site-packages/pluggy/_hooks.py:265: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_hooks.py:265:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <_pytest.config.PytestPluginManager object at 0x10c6f7910>, hook_name = 'pytest_runtest_call'
 methods = [<HookImpl plugin_name='runner', plugin=<module '_pytest.runner' from '/Users/jwr003/coding/pytest-fold/.venv/lib/pyth...readexception' from '/Users/jwr003/coding/pytest-fold/.venv/lib/python3.10/site-packages/_pytest/threadexception.py'>>]
@@ -1323,8 +1323,8 @@ kwargs = {'item': <Function test_fail_1>}, firstresult = False
         [90m# enable_tracing will set its own wrapping function at self._inner_hookexec[39;49;00m
 >       [94mreturn[39;49;00m [96mself[39;49;00m._inner_hookexec(hook_name, methods, kwargs, firstresult)
 
-.venv/lib/python3.10/site-packages/pluggy/_manager.py:80: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_manager.py:80:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 hook_name = 'pytest_runtest_call'
 hook_impls = [<HookImpl plugin_name='runner', plugin=<module '_pytest.runner' from '/Users/jwr003/coding/pytest-fold/.venv/lib/pyth...readexception' from '/Users/jwr003/coding/pytest-fold/.venv/lib/python3.10/site-packages/_pytest/threadexception.py'>>]
@@ -1351,7 +1351,7 @@ caller_kwargs = {'item': <Function test_fail_1>}, firstresult = False
                                 [94mraise[39;49;00m HookCallError(
                                     [33mf[39;49;00m[33m"[39;49;00m[33mhook call must provide argument [39;49;00m[33m{[39;49;00margname[33m!r}[39;49;00m[33m"[39;49;00m
                                 )
-    
+
                     [94mif[39;49;00m hook_impl.hookwrapper:
                         [94mtry[39;49;00m:
                             gen = hook_impl.function(*args)
@@ -1372,7 +1372,7 @@ caller_kwargs = {'item': <Function test_fail_1>}, firstresult = False
                 outcome = _Result(results[[94m0[39;49;00m] [94mif[39;49;00m results [94melse[39;49;00m [94mNone[39;49;00m, excinfo)
             [94melse[39;49;00m:
                 outcome = _Result(results, excinfo)
-    
+
             [90m# run all wrapper post-yield blocks[39;49;00m
             [94mfor[39;49;00m gen [95min[39;49;00m [96mreversed[39;49;00m(teardowns):
                 [94mtry[39;49;00m:
@@ -1380,11 +1380,11 @@ caller_kwargs = {'item': <Function test_fail_1>}, firstresult = False
                     _raise_wrapfail(gen, [33m"[39;49;00m[33mhas second yield[39;49;00m[33m"[39;49;00m)
                 [94mexcept[39;49;00m [96mStopIteration[39;49;00m:
                     [94mpass[39;49;00m
-    
+
 >           [94mreturn[39;49;00m outcome.get_result()
 
-.venv/lib/python3.10/site-packages/pluggy/_callers.py:60: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_callers.py:60:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <pluggy._result._Result object at 0x10d50f370>
 
@@ -1401,8 +1401,8 @@ self = <pluggy._result._Result object at 0x10d50f370>
             ex = [96mself[39;49;00m._excinfo
 >           [94mraise[39;49;00m ex[[94m1[39;49;00m].with_traceback(ex[[94m2[39;49;00m])
 
-.venv/lib/python3.10/site-packages/pluggy/_result.py:60: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_result.py:60:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 hook_name = 'pytest_runtest_call'
 hook_impls = [<HookImpl plugin_name='runner', plugin=<module '_pytest.runner' from '/Users/jwr003/coding/pytest-fold/.venv/lib/pyth...readexception' from '/Users/jwr003/coding/pytest-fold/.venv/lib/python3.10/site-packages/_pytest/threadexception.py'>>]
@@ -1429,7 +1429,7 @@ caller_kwargs = {'item': <Function test_fail_1>}, firstresult = False
                                 [94mraise[39;49;00m HookCallError(
                                     [33mf[39;49;00m[33m"[39;49;00m[33mhook call must provide argument [39;49;00m[33m{[39;49;00margname[33m!r}[39;49;00m[33m"[39;49;00m
                                 )
-    
+
                     [94mif[39;49;00m hook_impl.hookwrapper:
                         [94mtry[39;49;00m:
                             gen = hook_impl.function(*args)
@@ -1440,8 +1440,8 @@ caller_kwargs = {'item': <Function test_fail_1>}, firstresult = False
                     [94melse[39;49;00m:
 >                       res = hook_impl.function(*args)
 
-.venv/lib/python3.10/site-packages/pluggy/_callers.py:39: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_callers.py:39:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 item = <Function test_fail_1>
 
@@ -1464,8 +1464,8 @@ item = <Function test_fail_1>
             sys.last_traceback = e.__traceback__.tb_next
 >           [94mraise[39;49;00m e
 
-.venv/lib/python3.10/site-packages/_pytest/runner.py:170: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/_pytest/runner.py:170:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 item = <Function test_fail_1>
 
@@ -1480,8 +1480,8 @@ item = <Function test_fail_1>
         [94mtry[39;49;00m:
 >           item.runtest()
 
-.venv/lib/python3.10/site-packages/_pytest/runner.py:162: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/_pytest/runner.py:162:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <Function test_fail_1>
 
@@ -1489,8 +1489,8 @@ self = <Function test_fail_1>
         [33m"""Execute the underlying test function."""[39;49;00m
 >       [96mself[39;49;00m.ihook.pytest_pyfunc_call(pyfuncitem=[96mself[39;49;00m)
 
-.venv/lib/python3.10/site-packages/_pytest/python.py:1641: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/_pytest/python.py:1641:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <_HookCaller 'pytest_pyfunc_call'>, args = (), kwargs = {'pyfuncitem': <Function test_fail_1>}, argname = 'pyfuncitem', firstresult = True
 
@@ -1498,7 +1498,7 @@ self = <_HookCaller 'pytest_pyfunc_call'>, args = (), kwargs = {'pyfuncitem': <F
         [94mif[39;49;00m args:
             [94mraise[39;49;00m [96mTypeError[39;49;00m([33m"[39;49;00m[33mhook calling supports only keyword arguments[39;49;00m[33m"[39;49;00m)
         [94massert[39;49;00m [95mnot[39;49;00m [96mself[39;49;00m.is_historic()
-    
+
         [90m# This is written to avoid expensive operations when not needed.[39;49;00m
         [94mif[39;49;00m [96mself[39;49;00m.spec:
             [94mfor[39;49;00m argname [95min[39;49;00m [96mself[39;49;00m.spec.argnames:
@@ -1510,15 +1510,15 @@ self = <_HookCaller 'pytest_pyfunc_call'>, args = (), kwargs = {'pyfuncitem': <F
                         stacklevel=[94m2[39;49;00m,
                     )
                     [94mbreak[39;49;00m
-    
+
             firstresult = [96mself[39;49;00m.spec.opts.get([33m"[39;49;00m[33mfirstresult[39;49;00m[33m"[39;49;00m)
         [94melse[39;49;00m:
             firstresult = [94mFalse[39;49;00m
-    
+
 >       [94mreturn[39;49;00m [96mself[39;49;00m._hookexec([96mself[39;49;00m.name, [96mself[39;49;00m.get_hookimpls(), kwargs, firstresult)
 
-.venv/lib/python3.10/site-packages/pluggy/_hooks.py:265: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_hooks.py:265:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <_pytest.config.PytestPluginManager object at 0x10c6f7910>, hook_name = 'pytest_pyfunc_call'
 methods = [<HookImpl plugin_name='python', plugin=<module '_pytest.python' from '/Users/jwr003/coding/pytest-fold/.venv/lib/python3.10/site-packages/_pytest/python.py'>>]
@@ -1529,8 +1529,8 @@ kwargs = {'pyfuncitem': <Function test_fail_1>}, firstresult = True
         [90m# enable_tracing will set its own wrapping function at self._inner_hookexec[39;49;00m
 >       [94mreturn[39;49;00m [96mself[39;49;00m._inner_hookexec(hook_name, methods, kwargs, firstresult)
 
-.venv/lib/python3.10/site-packages/pluggy/_manager.py:80: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_manager.py:80:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 hook_name = 'pytest_pyfunc_call'
 hook_impls = [<HookImpl plugin_name='python', plugin=<module '_pytest.python' from '/Users/jwr003/coding/pytest-fold/.venv/lib/python3.10/site-packages/_pytest/python.py'>>]
@@ -1557,7 +1557,7 @@ caller_kwargs = {'pyfuncitem': <Function test_fail_1>}, firstresult = True
                                 [94mraise[39;49;00m HookCallError(
                                     [33mf[39;49;00m[33m"[39;49;00m[33mhook call must provide argument [39;49;00m[33m{[39;49;00margname[33m!r}[39;49;00m[33m"[39;49;00m
                                 )
-    
+
                     [94mif[39;49;00m hook_impl.hookwrapper:
                         [94mtry[39;49;00m:
                             gen = hook_impl.function(*args)
@@ -1578,7 +1578,7 @@ caller_kwargs = {'pyfuncitem': <Function test_fail_1>}, firstresult = True
                 outcome = _Result(results[[94m0[39;49;00m] [94mif[39;49;00m results [94melse[39;49;00m [94mNone[39;49;00m, excinfo)
             [94melse[39;49;00m:
                 outcome = _Result(results, excinfo)
-    
+
             [90m# run all wrapper post-yield blocks[39;49;00m
             [94mfor[39;49;00m gen [95min[39;49;00m [96mreversed[39;49;00m(teardowns):
                 [94mtry[39;49;00m:
@@ -1586,11 +1586,11 @@ caller_kwargs = {'pyfuncitem': <Function test_fail_1>}, firstresult = True
                     _raise_wrapfail(gen, [33m"[39;49;00m[33mhas second yield[39;49;00m[33m"[39;49;00m)
                 [94mexcept[39;49;00m [96mStopIteration[39;49;00m:
                     [94mpass[39;49;00m
-    
+
 >           [94mreturn[39;49;00m outcome.get_result()
 
-.venv/lib/python3.10/site-packages/pluggy/_callers.py:60: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_callers.py:60:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <pluggy._result._Result object at 0x10d50fa90>
 
@@ -1607,8 +1607,8 @@ self = <pluggy._result._Result object at 0x10d50fa90>
             ex = [96mself[39;49;00m._excinfo
 >           [94mraise[39;49;00m ex[[94m1[39;49;00m].with_traceback(ex[[94m2[39;49;00m])
 
-.venv/lib/python3.10/site-packages/pluggy/_result.py:60: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_result.py:60:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 hook_name = 'pytest_pyfunc_call'
 hook_impls = [<HookImpl plugin_name='python', plugin=<module '_pytest.python' from '/Users/jwr003/coding/pytest-fold/.venv/lib/python3.10/site-packages/_pytest/python.py'>>]
@@ -1635,7 +1635,7 @@ caller_kwargs = {'pyfuncitem': <Function test_fail_1>}, firstresult = True
                                 [94mraise[39;49;00m HookCallError(
                                     [33mf[39;49;00m[33m"[39;49;00m[33mhook call must provide argument [39;49;00m[33m{[39;49;00margname[33m!r}[39;49;00m[33m"[39;49;00m
                                 )
-    
+
                     [94mif[39;49;00m hook_impl.hookwrapper:
                         [94mtry[39;49;00m:
                             gen = hook_impl.function(*args)
@@ -1646,8 +1646,8 @@ caller_kwargs = {'pyfuncitem': <Function test_fail_1>}, firstresult = True
                     [94melse[39;49;00m:
 >                       res = hook_impl.function(*args)
 
-.venv/lib/python3.10/site-packages/pluggy/_callers.py:39: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_callers.py:39:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 pyfuncitem = <Function test_fail_1>
 
@@ -1660,8 +1660,8 @@ pyfuncitem = <Function test_fail_1>
         testargs = {arg: funcargs[arg] [94mfor[39;49;00m arg [95min[39;49;00m pyfuncitem._fixtureinfo.argnames}
 >       result = testfunction(**testargs)
 
-.venv/lib/python3.10/site-packages/_pytest/python.py:183: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/_pytest/python.py:183:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
     [94mdef[39;49;00m [92mtest_fail_1[39;49;00m():
         a = [94m0[39;49;00m
@@ -1670,13 +1670,13 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 E       assert False
 
 tests/test_pytest_fold.py:74: AssertionError
-===MARKER2===
+==>MARKER2<==
 _______________________________________________________________________ test_fail_2 ________________________________________________________________________
 
 cls = <class '_pytest.runner.CallInfo'>, func = <function call_runtest_hook.<locals>.<lambda> at 0x10cbaf760>, when = 'call'
 reraise = (<class '_pytest.outcomes.Exit'>, <class 'KeyboardInterrupt'>)
 
-===MARKER1===
+==>MARKER1<==
     [37m@classmethod[39;49;00m
     [94mdef[39;49;00m [92mfrom_call[39;49;00m(
         [96mcls[39;49;00m,
@@ -1692,14 +1692,14 @@ reraise = (<class '_pytest.outcomes.Exit'>, <class 'KeyboardInterrupt'>)
         [94mtry[39;49;00m:
 >           result: Optional[TResult] = func()
 
-.venv/lib/python3.10/site-packages/_pytest/runner.py:311: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/_pytest/runner.py:311:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 >       [94mlambda[39;49;00m: ihook(item=item, **kwds), when=when, reraise=reraise
     )
 
-.venv/lib/python3.10/site-packages/_pytest/runner.py:255: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/_pytest/runner.py:255:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <_HookCaller 'pytest_runtest_call'>, args = (), kwargs = {'item': <Function test_fail_2>}, argname = 'item', firstresult = False
 
@@ -1707,7 +1707,7 @@ self = <_HookCaller 'pytest_runtest_call'>, args = (), kwargs = {'item': <Functi
         [94mif[39;49;00m args:
             [94mraise[39;49;00m [96mTypeError[39;49;00m([33m"[39;49;00m[33mhook calling supports only keyword arguments[39;49;00m[33m"[39;49;00m)
         [94massert[39;49;00m [95mnot[39;49;00m [96mself[39;49;00m.is_historic()
-    
+
         [90m# This is written to avoid expensive operations when not needed.[39;49;00m
         [94mif[39;49;00m [96mself[39;49;00m.spec:
             [94mfor[39;49;00m argname [95min[39;49;00m [96mself[39;49;00m.spec.argnames:
@@ -1719,15 +1719,15 @@ self = <_HookCaller 'pytest_runtest_call'>, args = (), kwargs = {'item': <Functi
                         stacklevel=[94m2[39;49;00m,
                     )
                     [94mbreak[39;49;00m
-    
+
             firstresult = [96mself[39;49;00m.spec.opts.get([33m"[39;49;00m[33mfirstresult[39;49;00m[33m"[39;49;00m)
         [94melse[39;49;00m:
             firstresult = [94mFalse[39;49;00m
-    
+
 >       [94mreturn[39;49;00m [96mself[39;49;00m._hookexec([96mself[39;49;00m.name, [96mself[39;49;00m.get_hookimpls(), kwargs, firstresult)
 
-.venv/lib/python3.10/site-packages/pluggy/_hooks.py:265: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_hooks.py:265:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <_pytest.config.PytestPluginManager object at 0x10c6f7910>, hook_name = 'pytest_runtest_call'
 methods = [<HookImpl plugin_name='runner', plugin=<module '_pytest.runner' from '/Users/jwr003/coding/pytest-fold/.venv/lib/pyth...readexception' from '/Users/jwr003/coding/pytest-fold/.venv/lib/python3.10/site-packages/_pytest/threadexception.py'>>]
@@ -1738,8 +1738,8 @@ kwargs = {'item': <Function test_fail_2>}, firstresult = False
         [90m# enable_tracing will set its own wrapping function at self._inner_hookexec[39;49;00m
 >       [94mreturn[39;49;00m [96mself[39;49;00m._inner_hookexec(hook_name, methods, kwargs, firstresult)
 
-.venv/lib/python3.10/site-packages/pluggy/_manager.py:80: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_manager.py:80:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 hook_name = 'pytest_runtest_call'
 hook_impls = [<HookImpl plugin_name='runner', plugin=<module '_pytest.runner' from '/Users/jwr003/coding/pytest-fold/.venv/lib/pyth...readexception' from '/Users/jwr003/coding/pytest-fold/.venv/lib/python3.10/site-packages/_pytest/threadexception.py'>>]
@@ -1766,7 +1766,7 @@ caller_kwargs = {'item': <Function test_fail_2>}, firstresult = False
                                 [94mraise[39;49;00m HookCallError(
                                     [33mf[39;49;00m[33m"[39;49;00m[33mhook call must provide argument [39;49;00m[33m{[39;49;00margname[33m!r}[39;49;00m[33m"[39;49;00m
                                 )
-    
+
                     [94mif[39;49;00m hook_impl.hookwrapper:
                         [94mtry[39;49;00m:
                             gen = hook_impl.function(*args)
@@ -1787,7 +1787,7 @@ caller_kwargs = {'item': <Function test_fail_2>}, firstresult = False
                 outcome = _Result(results[[94m0[39;49;00m] [94mif[39;49;00m results [94melse[39;49;00m [94mNone[39;49;00m, excinfo)
             [94melse[39;49;00m:
                 outcome = _Result(results, excinfo)
-    
+
             [90m# run all wrapper post-yield blocks[39;49;00m
             [94mfor[39;49;00m gen [95min[39;49;00m [96mreversed[39;49;00m(teardowns):
                 [94mtry[39;49;00m:
@@ -1795,11 +1795,11 @@ caller_kwargs = {'item': <Function test_fail_2>}, firstresult = False
                     _raise_wrapfail(gen, [33m"[39;49;00m[33mhas second yield[39;49;00m[33m"[39;49;00m)
                 [94mexcept[39;49;00m [96mStopIteration[39;49;00m:
                     [94mpass[39;49;00m
-    
+
 >           [94mreturn[39;49;00m outcome.get_result()
 
-.venv/lib/python3.10/site-packages/pluggy/_callers.py:60: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_callers.py:60:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <pluggy._result._Result object at 0x10cbab640>
 
@@ -1816,8 +1816,8 @@ self = <pluggy._result._Result object at 0x10cbab640>
             ex = [96mself[39;49;00m._excinfo
 >           [94mraise[39;49;00m ex[[94m1[39;49;00m].with_traceback(ex[[94m2[39;49;00m])
 
-.venv/lib/python3.10/site-packages/pluggy/_result.py:60: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_result.py:60:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 hook_name = 'pytest_runtest_call'
 hook_impls = [<HookImpl plugin_name='runner', plugin=<module '_pytest.runner' from '/Users/jwr003/coding/pytest-fold/.venv/lib/pyth...readexception' from '/Users/jwr003/coding/pytest-fold/.venv/lib/python3.10/site-packages/_pytest/threadexception.py'>>]
@@ -1844,7 +1844,7 @@ caller_kwargs = {'item': <Function test_fail_2>}, firstresult = False
                                 [94mraise[39;49;00m HookCallError(
                                     [33mf[39;49;00m[33m"[39;49;00m[33mhook call must provide argument [39;49;00m[33m{[39;49;00margname[33m!r}[39;49;00m[33m"[39;49;00m
                                 )
-    
+
                     [94mif[39;49;00m hook_impl.hookwrapper:
                         [94mtry[39;49;00m:
                             gen = hook_impl.function(*args)
@@ -1855,8 +1855,8 @@ caller_kwargs = {'item': <Function test_fail_2>}, firstresult = False
                     [94melse[39;49;00m:
 >                       res = hook_impl.function(*args)
 
-.venv/lib/python3.10/site-packages/pluggy/_callers.py:39: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_callers.py:39:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 item = <Function test_fail_2>
 
@@ -1879,8 +1879,8 @@ item = <Function test_fail_2>
             sys.last_traceback = e.__traceback__.tb_next
 >           [94mraise[39;49;00m e
 
-.venv/lib/python3.10/site-packages/_pytest/runner.py:170: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/_pytest/runner.py:170:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 item = <Function test_fail_2>
 
@@ -1895,8 +1895,8 @@ item = <Function test_fail_2>
         [94mtry[39;49;00m:
 >           item.runtest()
 
-.venv/lib/python3.10/site-packages/_pytest/runner.py:162: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/_pytest/runner.py:162:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <Function test_fail_2>
 
@@ -1904,8 +1904,8 @@ self = <Function test_fail_2>
         [33m"""Execute the underlying test function."""[39;49;00m
 >       [96mself[39;49;00m.ihook.pytest_pyfunc_call(pyfuncitem=[96mself[39;49;00m)
 
-.venv/lib/python3.10/site-packages/_pytest/python.py:1641: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/_pytest/python.py:1641:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <_HookCaller 'pytest_pyfunc_call'>, args = (), kwargs = {'pyfuncitem': <Function test_fail_2>}, argname = 'pyfuncitem', firstresult = True
 
@@ -1913,7 +1913,7 @@ self = <_HookCaller 'pytest_pyfunc_call'>, args = (), kwargs = {'pyfuncitem': <F
         [94mif[39;49;00m args:
             [94mraise[39;49;00m [96mTypeError[39;49;00m([33m"[39;49;00m[33mhook calling supports only keyword arguments[39;49;00m[33m"[39;49;00m)
         [94massert[39;49;00m [95mnot[39;49;00m [96mself[39;49;00m.is_historic()
-    
+
         [90m# This is written to avoid expensive operations when not needed.[39;49;00m
         [94mif[39;49;00m [96mself[39;49;00m.spec:
             [94mfor[39;49;00m argname [95min[39;49;00m [96mself[39;49;00m.spec.argnames:
@@ -1925,15 +1925,15 @@ self = <_HookCaller 'pytest_pyfunc_call'>, args = (), kwargs = {'pyfuncitem': <F
                         stacklevel=[94m2[39;49;00m,
                     )
                     [94mbreak[39;49;00m
-    
+
             firstresult = [96mself[39;49;00m.spec.opts.get([33m"[39;49;00m[33mfirstresult[39;49;00m[33m"[39;49;00m)
         [94melse[39;49;00m:
             firstresult = [94mFalse[39;49;00m
-    
+
 >       [94mreturn[39;49;00m [96mself[39;49;00m._hookexec([96mself[39;49;00m.name, [96mself[39;49;00m.get_hookimpls(), kwargs, firstresult)
 
-.venv/lib/python3.10/site-packages/pluggy/_hooks.py:265: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_hooks.py:265:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <_pytest.config.PytestPluginManager object at 0x10c6f7910>, hook_name = 'pytest_pyfunc_call'
 methods = [<HookImpl plugin_name='python', plugin=<module '_pytest.python' from '/Users/jwr003/coding/pytest-fold/.venv/lib/python3.10/site-packages/_pytest/python.py'>>]
@@ -1944,8 +1944,8 @@ kwargs = {'pyfuncitem': <Function test_fail_2>}, firstresult = True
         [90m# enable_tracing will set its own wrapping function at self._inner_hookexec[39;49;00m
 >       [94mreturn[39;49;00m [96mself[39;49;00m._inner_hookexec(hook_name, methods, kwargs, firstresult)
 
-.venv/lib/python3.10/site-packages/pluggy/_manager.py:80: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_manager.py:80:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 hook_name = 'pytest_pyfunc_call'
 hook_impls = [<HookImpl plugin_name='python', plugin=<module '_pytest.python' from '/Users/jwr003/coding/pytest-fold/.venv/lib/python3.10/site-packages/_pytest/python.py'>>]
@@ -1972,7 +1972,7 @@ caller_kwargs = {'pyfuncitem': <Function test_fail_2>}, firstresult = True
                                 [94mraise[39;49;00m HookCallError(
                                     [33mf[39;49;00m[33m"[39;49;00m[33mhook call must provide argument [39;49;00m[33m{[39;49;00margname[33m!r}[39;49;00m[33m"[39;49;00m
                                 )
-    
+
                     [94mif[39;49;00m hook_impl.hookwrapper:
                         [94mtry[39;49;00m:
                             gen = hook_impl.function(*args)
@@ -1993,7 +1993,7 @@ caller_kwargs = {'pyfuncitem': <Function test_fail_2>}, firstresult = True
                 outcome = _Result(results[[94m0[39;49;00m] [94mif[39;49;00m results [94melse[39;49;00m [94mNone[39;49;00m, excinfo)
             [94melse[39;49;00m:
                 outcome = _Result(results, excinfo)
-    
+
             [90m# run all wrapper post-yield blocks[39;49;00m
             [94mfor[39;49;00m gen [95min[39;49;00m [96mreversed[39;49;00m(teardowns):
                 [94mtry[39;49;00m:
@@ -2001,11 +2001,11 @@ caller_kwargs = {'pyfuncitem': <Function test_fail_2>}, firstresult = True
                     _raise_wrapfail(gen, [33m"[39;49;00m[33mhas second yield[39;49;00m[33m"[39;49;00m)
                 [94mexcept[39;49;00m [96mStopIteration[39;49;00m:
                     [94mpass[39;49;00m
-    
+
 >           [94mreturn[39;49;00m outcome.get_result()
 
-.venv/lib/python3.10/site-packages/pluggy/_callers.py:60: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_callers.py:60:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <pluggy._result._Result object at 0x10cbab010>
 
@@ -2022,8 +2022,8 @@ self = <pluggy._result._Result object at 0x10cbab010>
             ex = [96mself[39;49;00m._excinfo
 >           [94mraise[39;49;00m ex[[94m1[39;49;00m].with_traceback(ex[[94m2[39;49;00m])
 
-.venv/lib/python3.10/site-packages/pluggy/_result.py:60: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_result.py:60:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 hook_name = 'pytest_pyfunc_call'
 hook_impls = [<HookImpl plugin_name='python', plugin=<module '_pytest.python' from '/Users/jwr003/coding/pytest-fold/.venv/lib/python3.10/site-packages/_pytest/python.py'>>]
@@ -2050,7 +2050,7 @@ caller_kwargs = {'pyfuncitem': <Function test_fail_2>}, firstresult = True
                                 [94mraise[39;49;00m HookCallError(
                                     [33mf[39;49;00m[33m"[39;49;00m[33mhook call must provide argument [39;49;00m[33m{[39;49;00margname[33m!r}[39;49;00m[33m"[39;49;00m
                                 )
-    
+
                     [94mif[39;49;00m hook_impl.hookwrapper:
                         [94mtry[39;49;00m:
                             gen = hook_impl.function(*args)
@@ -2061,8 +2061,8 @@ caller_kwargs = {'pyfuncitem': <Function test_fail_2>}, firstresult = True
                     [94melse[39;49;00m:
 >                       res = hook_impl.function(*args)
 
-.venv/lib/python3.10/site-packages/pluggy/_callers.py:39: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_callers.py:39:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 pyfuncitem = <Function test_fail_2>
 
@@ -2075,8 +2075,8 @@ pyfuncitem = <Function test_fail_2>
         testargs = {arg: funcargs[arg] [94mfor[39;49;00m arg [95min[39;49;00m pyfuncitem._fixtureinfo.argnames}
 >       result = testfunction(**testargs)
 
-.venv/lib/python3.10/site-packages/_pytest/python.py:183: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/_pytest/python.py:183:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
     [94mdef[39;49;00m [92mtest_fail_2[39;49;00m():
         a = [94m0[39;49;00m
@@ -2085,13 +2085,13 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 E       assert False
 
 tests/test_pytest_fold.py:80: AssertionError
-===MARKER2===
+==>MARKER2<==
 _______________________________________________________________________ test_fail_3 ________________________________________________________________________
 
 cls = <class '_pytest.runner.CallInfo'>, func = <function call_runtest_hook.<locals>.<lambda> at 0x10cbaf370>, when = 'call'
 reraise = (<class '_pytest.outcomes.Exit'>, <class 'KeyboardInterrupt'>)
 
-===MARKER1===
+==>MARKER1<==
     [37m@classmethod[39;49;00m
     [94mdef[39;49;00m [92mfrom_call[39;49;00m(
         [96mcls[39;49;00m,
@@ -2107,14 +2107,14 @@ reraise = (<class '_pytest.outcomes.Exit'>, <class 'KeyboardInterrupt'>)
         [94mtry[39;49;00m:
 >           result: Optional[TResult] = func()
 
-.venv/lib/python3.10/site-packages/_pytest/runner.py:311: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/_pytest/runner.py:311:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 >       [94mlambda[39;49;00m: ihook(item=item, **kwds), when=when, reraise=reraise
     )
 
-.venv/lib/python3.10/site-packages/_pytest/runner.py:255: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/_pytest/runner.py:255:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <_HookCaller 'pytest_runtest_call'>, args = (), kwargs = {'item': <Function test_fail_3>}, argname = 'item', firstresult = False
 
@@ -2122,7 +2122,7 @@ self = <_HookCaller 'pytest_runtest_call'>, args = (), kwargs = {'item': <Functi
         [94mif[39;49;00m args:
             [94mraise[39;49;00m [96mTypeError[39;49;00m([33m"[39;49;00m[33mhook calling supports only keyword arguments[39;49;00m[33m"[39;49;00m)
         [94massert[39;49;00m [95mnot[39;49;00m [96mself[39;49;00m.is_historic()
-    
+
         [90m# This is written to avoid expensive operations when not needed.[39;49;00m
         [94mif[39;49;00m [96mself[39;49;00m.spec:
             [94mfor[39;49;00m argname [95min[39;49;00m [96mself[39;49;00m.spec.argnames:
@@ -2134,15 +2134,15 @@ self = <_HookCaller 'pytest_runtest_call'>, args = (), kwargs = {'item': <Functi
                         stacklevel=[94m2[39;49;00m,
                     )
                     [94mbreak[39;49;00m
-    
+
             firstresult = [96mself[39;49;00m.spec.opts.get([33m"[39;49;00m[33mfirstresult[39;49;00m[33m"[39;49;00m)
         [94melse[39;49;00m:
             firstresult = [94mFalse[39;49;00m
-    
+
 >       [94mreturn[39;49;00m [96mself[39;49;00m._hookexec([96mself[39;49;00m.name, [96mself[39;49;00m.get_hookimpls(), kwargs, firstresult)
 
-.venv/lib/python3.10/site-packages/pluggy/_hooks.py:265: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_hooks.py:265:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <_pytest.config.PytestPluginManager object at 0x10c6f7910>, hook_name = 'pytest_runtest_call'
 methods = [<HookImpl plugin_name='runner', plugin=<module '_pytest.runner' from '/Users/jwr003/coding/pytest-fold/.venv/lib/pyth...readexception' from '/Users/jwr003/coding/pytest-fold/.venv/lib/python3.10/site-packages/_pytest/threadexception.py'>>]
@@ -2153,8 +2153,8 @@ kwargs = {'item': <Function test_fail_3>}, firstresult = False
         [90m# enable_tracing will set its own wrapping function at self._inner_hookexec[39;49;00m
 >       [94mreturn[39;49;00m [96mself[39;49;00m._inner_hookexec(hook_name, methods, kwargs, firstresult)
 
-.venv/lib/python3.10/site-packages/pluggy/_manager.py:80: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_manager.py:80:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 hook_name = 'pytest_runtest_call'
 hook_impls = [<HookImpl plugin_name='runner', plugin=<module '_pytest.runner' from '/Users/jwr003/coding/pytest-fold/.venv/lib/pyth...readexception' from '/Users/jwr003/coding/pytest-fold/.venv/lib/python3.10/site-packages/_pytest/threadexception.py'>>]
@@ -2181,7 +2181,7 @@ caller_kwargs = {'item': <Function test_fail_3>}, firstresult = False
                                 [94mraise[39;49;00m HookCallError(
                                     [33mf[39;49;00m[33m"[39;49;00m[33mhook call must provide argument [39;49;00m[33m{[39;49;00margname[33m!r}[39;49;00m[33m"[39;49;00m
                                 )
-    
+
                     [94mif[39;49;00m hook_impl.hookwrapper:
                         [94mtry[39;49;00m:
                             gen = hook_impl.function(*args)
@@ -2202,7 +2202,7 @@ caller_kwargs = {'item': <Function test_fail_3>}, firstresult = False
                 outcome = _Result(results[[94m0[39;49;00m] [94mif[39;49;00m results [94melse[39;49;00m [94mNone[39;49;00m, excinfo)
             [94melse[39;49;00m:
                 outcome = _Result(results, excinfo)
-    
+
             [90m# run all wrapper post-yield blocks[39;49;00m
             [94mfor[39;49;00m gen [95min[39;49;00m [96mreversed[39;49;00m(teardowns):
                 [94mtry[39;49;00m:
@@ -2210,11 +2210,11 @@ caller_kwargs = {'item': <Function test_fail_3>}, firstresult = False
                     _raise_wrapfail(gen, [33m"[39;49;00m[33mhas second yield[39;49;00m[33m"[39;49;00m)
                 [94mexcept[39;49;00m [96mStopIteration[39;49;00m:
                     [94mpass[39;49;00m
-    
+
 >           [94mreturn[39;49;00m outcome.get_result()
 
-.venv/lib/python3.10/site-packages/pluggy/_callers.py:60: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_callers.py:60:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <pluggy._result._Result object at 0x10d3a6410>
 
@@ -2231,8 +2231,8 @@ self = <pluggy._result._Result object at 0x10d3a6410>
             ex = [96mself[39;49;00m._excinfo
 >           [94mraise[39;49;00m ex[[94m1[39;49;00m].with_traceback(ex[[94m2[39;49;00m])
 
-.venv/lib/python3.10/site-packages/pluggy/_result.py:60: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_result.py:60:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 hook_name = 'pytest_runtest_call'
 hook_impls = [<HookImpl plugin_name='runner', plugin=<module '_pytest.runner' from '/Users/jwr003/coding/pytest-fold/.venv/lib/pyth...readexception' from '/Users/jwr003/coding/pytest-fold/.venv/lib/python3.10/site-packages/_pytest/threadexception.py'>>]
@@ -2259,7 +2259,7 @@ caller_kwargs = {'item': <Function test_fail_3>}, firstresult = False
                                 [94mraise[39;49;00m HookCallError(
                                     [33mf[39;49;00m[33m"[39;49;00m[33mhook call must provide argument [39;49;00m[33m{[39;49;00margname[33m!r}[39;49;00m[33m"[39;49;00m
                                 )
-    
+
                     [94mif[39;49;00m hook_impl.hookwrapper:
                         [94mtry[39;49;00m:
                             gen = hook_impl.function(*args)
@@ -2270,8 +2270,8 @@ caller_kwargs = {'item': <Function test_fail_3>}, firstresult = False
                     [94melse[39;49;00m:
 >                       res = hook_impl.function(*args)
 
-.venv/lib/python3.10/site-packages/pluggy/_callers.py:39: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_callers.py:39:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 item = <Function test_fail_3>
 
@@ -2294,8 +2294,8 @@ item = <Function test_fail_3>
             sys.last_traceback = e.__traceback__.tb_next
 >           [94mraise[39;49;00m e
 
-.venv/lib/python3.10/site-packages/_pytest/runner.py:170: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/_pytest/runner.py:170:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 item = <Function test_fail_3>
 
@@ -2310,8 +2310,8 @@ item = <Function test_fail_3>
         [94mtry[39;49;00m:
 >           item.runtest()
 
-.venv/lib/python3.10/site-packages/_pytest/runner.py:162: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/_pytest/runner.py:162:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <Function test_fail_3>
 
@@ -2319,8 +2319,8 @@ self = <Function test_fail_3>
         [33m"""Execute the underlying test function."""[39;49;00m
 >       [96mself[39;49;00m.ihook.pytest_pyfunc_call(pyfuncitem=[96mself[39;49;00m)
 
-.venv/lib/python3.10/site-packages/_pytest/python.py:1641: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/_pytest/python.py:1641:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <_HookCaller 'pytest_pyfunc_call'>, args = (), kwargs = {'pyfuncitem': <Function test_fail_3>}, argname = 'pyfuncitem', firstresult = True
 
@@ -2328,7 +2328,7 @@ self = <_HookCaller 'pytest_pyfunc_call'>, args = (), kwargs = {'pyfuncitem': <F
         [94mif[39;49;00m args:
             [94mraise[39;49;00m [96mTypeError[39;49;00m([33m"[39;49;00m[33mhook calling supports only keyword arguments[39;49;00m[33m"[39;49;00m)
         [94massert[39;49;00m [95mnot[39;49;00m [96mself[39;49;00m.is_historic()
-    
+
         [90m# This is written to avoid expensive operations when not needed.[39;49;00m
         [94mif[39;49;00m [96mself[39;49;00m.spec:
             [94mfor[39;49;00m argname [95min[39;49;00m [96mself[39;49;00m.spec.argnames:
@@ -2340,15 +2340,15 @@ self = <_HookCaller 'pytest_pyfunc_call'>, args = (), kwargs = {'pyfuncitem': <F
                         stacklevel=[94m2[39;49;00m,
                     )
                     [94mbreak[39;49;00m
-    
+
             firstresult = [96mself[39;49;00m.spec.opts.get([33m"[39;49;00m[33mfirstresult[39;49;00m[33m"[39;49;00m)
         [94melse[39;49;00m:
             firstresult = [94mFalse[39;49;00m
-    
+
 >       [94mreturn[39;49;00m [96mself[39;49;00m._hookexec([96mself[39;49;00m.name, [96mself[39;49;00m.get_hookimpls(), kwargs, firstresult)
 
-.venv/lib/python3.10/site-packages/pluggy/_hooks.py:265: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_hooks.py:265:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <_pytest.config.PytestPluginManager object at 0x10c6f7910>, hook_name = 'pytest_pyfunc_call'
 methods = [<HookImpl plugin_name='python', plugin=<module '_pytest.python' from '/Users/jwr003/coding/pytest-fold/.venv/lib/python3.10/site-packages/_pytest/python.py'>>]
@@ -2359,8 +2359,8 @@ kwargs = {'pyfuncitem': <Function test_fail_3>}, firstresult = True
         [90m# enable_tracing will set its own wrapping function at self._inner_hookexec[39;49;00m
 >       [94mreturn[39;49;00m [96mself[39;49;00m._inner_hookexec(hook_name, methods, kwargs, firstresult)
 
-.venv/lib/python3.10/site-packages/pluggy/_manager.py:80: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_manager.py:80:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 hook_name = 'pytest_pyfunc_call'
 hook_impls = [<HookImpl plugin_name='python', plugin=<module '_pytest.python' from '/Users/jwr003/coding/pytest-fold/.venv/lib/python3.10/site-packages/_pytest/python.py'>>]
@@ -2387,7 +2387,7 @@ caller_kwargs = {'pyfuncitem': <Function test_fail_3>}, firstresult = True
                                 [94mraise[39;49;00m HookCallError(
                                     [33mf[39;49;00m[33m"[39;49;00m[33mhook call must provide argument [39;49;00m[33m{[39;49;00margname[33m!r}[39;49;00m[33m"[39;49;00m
                                 )
-    
+
                     [94mif[39;49;00m hook_impl.hookwrapper:
                         [94mtry[39;49;00m:
                             gen = hook_impl.function(*args)
@@ -2408,7 +2408,7 @@ caller_kwargs = {'pyfuncitem': <Function test_fail_3>}, firstresult = True
                 outcome = _Result(results[[94m0[39;49;00m] [94mif[39;49;00m results [94melse[39;49;00m [94mNone[39;49;00m, excinfo)
             [94melse[39;49;00m:
                 outcome = _Result(results, excinfo)
-    
+
             [90m# run all wrapper post-yield blocks[39;49;00m
             [94mfor[39;49;00m gen [95min[39;49;00m [96mreversed[39;49;00m(teardowns):
                 [94mtry[39;49;00m:
@@ -2416,11 +2416,11 @@ caller_kwargs = {'pyfuncitem': <Function test_fail_3>}, firstresult = True
                     _raise_wrapfail(gen, [33m"[39;49;00m[33mhas second yield[39;49;00m[33m"[39;49;00m)
                 [94mexcept[39;49;00m [96mStopIteration[39;49;00m:
                     [94mpass[39;49;00m
-    
+
 >           [94mreturn[39;49;00m outcome.get_result()
 
-.venv/lib/python3.10/site-packages/pluggy/_callers.py:60: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_callers.py:60:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <pluggy._result._Result object at 0x10d3a5f00>
 
@@ -2437,8 +2437,8 @@ self = <pluggy._result._Result object at 0x10d3a5f00>
             ex = [96mself[39;49;00m._excinfo
 >           [94mraise[39;49;00m ex[[94m1[39;49;00m].with_traceback(ex[[94m2[39;49;00m])
 
-.venv/lib/python3.10/site-packages/pluggy/_result.py:60: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_result.py:60:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 hook_name = 'pytest_pyfunc_call'
 hook_impls = [<HookImpl plugin_name='python', plugin=<module '_pytest.python' from '/Users/jwr003/coding/pytest-fold/.venv/lib/python3.10/site-packages/_pytest/python.py'>>]
@@ -2465,7 +2465,7 @@ caller_kwargs = {'pyfuncitem': <Function test_fail_3>}, firstresult = True
                                 [94mraise[39;49;00m HookCallError(
                                     [33mf[39;49;00m[33m"[39;49;00m[33mhook call must provide argument [39;49;00m[33m{[39;49;00margname[33m!r}[39;49;00m[33m"[39;49;00m
                                 )
-    
+
                     [94mif[39;49;00m hook_impl.hookwrapper:
                         [94mtry[39;49;00m:
                             gen = hook_impl.function(*args)
@@ -2476,8 +2476,8 @@ caller_kwargs = {'pyfuncitem': <Function test_fail_3>}, firstresult = True
                     [94melse[39;49;00m:
 >                       res = hook_impl.function(*args)
 
-.venv/lib/python3.10/site-packages/pluggy/_callers.py:39: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_callers.py:39:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 pyfuncitem = <Function test_fail_3>
 
@@ -2490,8 +2490,8 @@ pyfuncitem = <Function test_fail_3>
         testargs = {arg: funcargs[arg] [94mfor[39;49;00m arg [95min[39;49;00m pyfuncitem._fixtureinfo.argnames}
 >       result = testfunction(**testargs)
 
-.venv/lib/python3.10/site-packages/_pytest/python.py:183: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/_pytest/python.py:183:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
     [94mdef[39;49;00m [92mtest_fail_3[39;49;00m():
         a = [94m0[39;49;00m
@@ -2500,13 +2500,13 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 E       assert False
 
 tests/test_pytest_fold.py:86: AssertionError
-===MARKER2===
+==>MARKER2<==
 ____________________________________________________________ test_which_fails_and_has_stdout_1 _____________________________________________________________
 
 cls = <class '_pytest.runner.CallInfo'>, func = <function call_runtest_hook.<locals>.<lambda> at 0x10cbaf910>, when = 'call'
 reraise = (<class '_pytest.outcomes.Exit'>, <class 'KeyboardInterrupt'>)
 
-===MARKER1===
+==>MARKER1<==
     [37m@classmethod[39;49;00m
     [94mdef[39;49;00m [92mfrom_call[39;49;00m(
         [96mcls[39;49;00m,
@@ -2522,14 +2522,14 @@ reraise = (<class '_pytest.outcomes.Exit'>, <class 'KeyboardInterrupt'>)
         [94mtry[39;49;00m:
 >           result: Optional[TResult] = func()
 
-.venv/lib/python3.10/site-packages/_pytest/runner.py:311: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/_pytest/runner.py:311:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 >       [94mlambda[39;49;00m: ihook(item=item, **kwds), when=when, reraise=reraise
     )
 
-.venv/lib/python3.10/site-packages/_pytest/runner.py:255: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/_pytest/runner.py:255:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <_HookCaller 'pytest_runtest_call'>, args = (), kwargs = {'item': <Function test_which_fails_and_has_stdout_1>}, argname = 'item'
 firstresult = False
@@ -2538,7 +2538,7 @@ firstresult = False
         [94mif[39;49;00m args:
             [94mraise[39;49;00m [96mTypeError[39;49;00m([33m"[39;49;00m[33mhook calling supports only keyword arguments[39;49;00m[33m"[39;49;00m)
         [94massert[39;49;00m [95mnot[39;49;00m [96mself[39;49;00m.is_historic()
-    
+
         [90m# This is written to avoid expensive operations when not needed.[39;49;00m
         [94mif[39;49;00m [96mself[39;49;00m.spec:
             [94mfor[39;49;00m argname [95min[39;49;00m [96mself[39;49;00m.spec.argnames:
@@ -2550,15 +2550,15 @@ firstresult = False
                         stacklevel=[94m2[39;49;00m,
                     )
                     [94mbreak[39;49;00m
-    
+
             firstresult = [96mself[39;49;00m.spec.opts.get([33m"[39;49;00m[33mfirstresult[39;49;00m[33m"[39;49;00m)
         [94melse[39;49;00m:
             firstresult = [94mFalse[39;49;00m
-    
+
 >       [94mreturn[39;49;00m [96mself[39;49;00m._hookexec([96mself[39;49;00m.name, [96mself[39;49;00m.get_hookimpls(), kwargs, firstresult)
 
-.venv/lib/python3.10/site-packages/pluggy/_hooks.py:265: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_hooks.py:265:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <_pytest.config.PytestPluginManager object at 0x10c6f7910>, hook_name = 'pytest_runtest_call'
 methods = [<HookImpl plugin_name='runner', plugin=<module '_pytest.runner' from '/Users/jwr003/coding/pytest-fold/.venv/lib/pyth...readexception' from '/Users/jwr003/coding/pytest-fold/.venv/lib/python3.10/site-packages/_pytest/threadexception.py'>>]
@@ -2569,8 +2569,8 @@ kwargs = {'item': <Function test_which_fails_and_has_stdout_1>}, firstresult = F
         [90m# enable_tracing will set its own wrapping function at self._inner_hookexec[39;49;00m
 >       [94mreturn[39;49;00m [96mself[39;49;00m._inner_hookexec(hook_name, methods, kwargs, firstresult)
 
-.venv/lib/python3.10/site-packages/pluggy/_manager.py:80: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_manager.py:80:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 hook_name = 'pytest_runtest_call'
 hook_impls = [<HookImpl plugin_name='runner', plugin=<module '_pytest.runner' from '/Users/jwr003/coding/pytest-fold/.venv/lib/pyth...readexception' from '/Users/jwr003/coding/pytest-fold/.venv/lib/python3.10/site-packages/_pytest/threadexception.py'>>]
@@ -2597,7 +2597,7 @@ caller_kwargs = {'item': <Function test_which_fails_and_has_stdout_1>}, firstres
                                 [94mraise[39;49;00m HookCallError(
                                     [33mf[39;49;00m[33m"[39;49;00m[33mhook call must provide argument [39;49;00m[33m{[39;49;00margname[33m!r}[39;49;00m[33m"[39;49;00m
                                 )
-    
+
                     [94mif[39;49;00m hook_impl.hookwrapper:
                         [94mtry[39;49;00m:
                             gen = hook_impl.function(*args)
@@ -2618,7 +2618,7 @@ caller_kwargs = {'item': <Function test_which_fails_and_has_stdout_1>}, firstres
                 outcome = _Result(results[[94m0[39;49;00m] [94mif[39;49;00m results [94melse[39;49;00m [94mNone[39;49;00m, excinfo)
             [94melse[39;49;00m:
                 outcome = _Result(results, excinfo)
-    
+
             [90m# run all wrapper post-yield blocks[39;49;00m
             [94mfor[39;49;00m gen [95min[39;49;00m [96mreversed[39;49;00m(teardowns):
                 [94mtry[39;49;00m:
@@ -2626,11 +2626,11 @@ caller_kwargs = {'item': <Function test_which_fails_and_has_stdout_1>}, firstres
                     _raise_wrapfail(gen, [33m"[39;49;00m[33mhas second yield[39;49;00m[33m"[39;49;00m)
                 [94mexcept[39;49;00m [96mStopIteration[39;49;00m:
                     [94mpass[39;49;00m
-    
+
 >           [94mreturn[39;49;00m outcome.get_result()
 
-.venv/lib/python3.10/site-packages/pluggy/_callers.py:60: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_callers.py:60:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <pluggy._result._Result object at 0x10d4bf910>
 
@@ -2647,8 +2647,8 @@ self = <pluggy._result._Result object at 0x10d4bf910>
             ex = [96mself[39;49;00m._excinfo
 >           [94mraise[39;49;00m ex[[94m1[39;49;00m].with_traceback(ex[[94m2[39;49;00m])
 
-.venv/lib/python3.10/site-packages/pluggy/_result.py:60: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_result.py:60:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 hook_name = 'pytest_runtest_call'
 hook_impls = [<HookImpl plugin_name='runner', plugin=<module '_pytest.runner' from '/Users/jwr003/coding/pytest-fold/.venv/lib/pyth...readexception' from '/Users/jwr003/coding/pytest-fold/.venv/lib/python3.10/site-packages/_pytest/threadexception.py'>>]
@@ -2675,7 +2675,7 @@ caller_kwargs = {'item': <Function test_which_fails_and_has_stdout_1>}, firstres
                                 [94mraise[39;49;00m HookCallError(
                                     [33mf[39;49;00m[33m"[39;49;00m[33mhook call must provide argument [39;49;00m[33m{[39;49;00margname[33m!r}[39;49;00m[33m"[39;49;00m
                                 )
-    
+
                     [94mif[39;49;00m hook_impl.hookwrapper:
                         [94mtry[39;49;00m:
                             gen = hook_impl.function(*args)
@@ -2686,8 +2686,8 @@ caller_kwargs = {'item': <Function test_which_fails_and_has_stdout_1>}, firstres
                     [94melse[39;49;00m:
 >                       res = hook_impl.function(*args)
 
-.venv/lib/python3.10/site-packages/pluggy/_callers.py:39: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_callers.py:39:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 item = <Function test_which_fails_and_has_stdout_1>
 
@@ -2710,8 +2710,8 @@ item = <Function test_which_fails_and_has_stdout_1>
             sys.last_traceback = e.__traceback__.tb_next
 >           [94mraise[39;49;00m e
 
-.venv/lib/python3.10/site-packages/_pytest/runner.py:170: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/_pytest/runner.py:170:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 item = <Function test_which_fails_and_has_stdout_1>
 
@@ -2726,8 +2726,8 @@ item = <Function test_which_fails_and_has_stdout_1>
         [94mtry[39;49;00m:
 >           item.runtest()
 
-.venv/lib/python3.10/site-packages/_pytest/runner.py:162: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/_pytest/runner.py:162:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <Function test_which_fails_and_has_stdout_1>
 
@@ -2735,8 +2735,8 @@ self = <Function test_which_fails_and_has_stdout_1>
         [33m"""Execute the underlying test function."""[39;49;00m
 >       [96mself[39;49;00m.ihook.pytest_pyfunc_call(pyfuncitem=[96mself[39;49;00m)
 
-.venv/lib/python3.10/site-packages/_pytest/python.py:1641: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/_pytest/python.py:1641:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <_HookCaller 'pytest_pyfunc_call'>, args = (), kwargs = {'pyfuncitem': <Function test_which_fails_and_has_stdout_1>}, argname = 'pyfuncitem'
 firstresult = True
@@ -2745,7 +2745,7 @@ firstresult = True
         [94mif[39;49;00m args:
             [94mraise[39;49;00m [96mTypeError[39;49;00m([33m"[39;49;00m[33mhook calling supports only keyword arguments[39;49;00m[33m"[39;49;00m)
         [94massert[39;49;00m [95mnot[39;49;00m [96mself[39;49;00m.is_historic()
-    
+
         [90m# This is written to avoid expensive operations when not needed.[39;49;00m
         [94mif[39;49;00m [96mself[39;49;00m.spec:
             [94mfor[39;49;00m argname [95min[39;49;00m [96mself[39;49;00m.spec.argnames:
@@ -2757,15 +2757,15 @@ firstresult = True
                         stacklevel=[94m2[39;49;00m,
                     )
                     [94mbreak[39;49;00m
-    
+
             firstresult = [96mself[39;49;00m.spec.opts.get([33m"[39;49;00m[33mfirstresult[39;49;00m[33m"[39;49;00m)
         [94melse[39;49;00m:
             firstresult = [94mFalse[39;49;00m
-    
+
 >       [94mreturn[39;49;00m [96mself[39;49;00m._hookexec([96mself[39;49;00m.name, [96mself[39;49;00m.get_hookimpls(), kwargs, firstresult)
 
-.venv/lib/python3.10/site-packages/pluggy/_hooks.py:265: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_hooks.py:265:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <_pytest.config.PytestPluginManager object at 0x10c6f7910>, hook_name = 'pytest_pyfunc_call'
 methods = [<HookImpl plugin_name='python', plugin=<module '_pytest.python' from '/Users/jwr003/coding/pytest-fold/.venv/lib/python3.10/site-packages/_pytest/python.py'>>]
@@ -2776,8 +2776,8 @@ kwargs = {'pyfuncitem': <Function test_which_fails_and_has_stdout_1>}, firstresu
         [90m# enable_tracing will set its own wrapping function at self._inner_hookexec[39;49;00m
 >       [94mreturn[39;49;00m [96mself[39;49;00m._inner_hookexec(hook_name, methods, kwargs, firstresult)
 
-.venv/lib/python3.10/site-packages/pluggy/_manager.py:80: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_manager.py:80:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 hook_name = 'pytest_pyfunc_call'
 hook_impls = [<HookImpl plugin_name='python', plugin=<module '_pytest.python' from '/Users/jwr003/coding/pytest-fold/.venv/lib/python3.10/site-packages/_pytest/python.py'>>]
@@ -2804,7 +2804,7 @@ caller_kwargs = {'pyfuncitem': <Function test_which_fails_and_has_stdout_1>}, fi
                                 [94mraise[39;49;00m HookCallError(
                                     [33mf[39;49;00m[33m"[39;49;00m[33mhook call must provide argument [39;49;00m[33m{[39;49;00margname[33m!r}[39;49;00m[33m"[39;49;00m
                                 )
-    
+
                     [94mif[39;49;00m hook_impl.hookwrapper:
                         [94mtry[39;49;00m:
                             gen = hook_impl.function(*args)
@@ -2825,7 +2825,7 @@ caller_kwargs = {'pyfuncitem': <Function test_which_fails_and_has_stdout_1>}, fi
                 outcome = _Result(results[[94m0[39;49;00m] [94mif[39;49;00m results [94melse[39;49;00m [94mNone[39;49;00m, excinfo)
             [94melse[39;49;00m:
                 outcome = _Result(results, excinfo)
-    
+
             [90m# run all wrapper post-yield blocks[39;49;00m
             [94mfor[39;49;00m gen [95min[39;49;00m [96mreversed[39;49;00m(teardowns):
                 [94mtry[39;49;00m:
@@ -2833,11 +2833,11 @@ caller_kwargs = {'pyfuncitem': <Function test_which_fails_and_has_stdout_1>}, fi
                     _raise_wrapfail(gen, [33m"[39;49;00m[33mhas second yield[39;49;00m[33m"[39;49;00m)
                 [94mexcept[39;49;00m [96mStopIteration[39;49;00m:
                     [94mpass[39;49;00m
-    
+
 >           [94mreturn[39;49;00m outcome.get_result()
 
-.venv/lib/python3.10/site-packages/pluggy/_callers.py:60: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_callers.py:60:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <pluggy._result._Result object at 0x10d4bde70>
 
@@ -2854,8 +2854,8 @@ self = <pluggy._result._Result object at 0x10d4bde70>
             ex = [96mself[39;49;00m._excinfo
 >           [94mraise[39;49;00m ex[[94m1[39;49;00m].with_traceback(ex[[94m2[39;49;00m])
 
-.venv/lib/python3.10/site-packages/pluggy/_result.py:60: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_result.py:60:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 hook_name = 'pytest_pyfunc_call'
 hook_impls = [<HookImpl plugin_name='python', plugin=<module '_pytest.python' from '/Users/jwr003/coding/pytest-fold/.venv/lib/python3.10/site-packages/_pytest/python.py'>>]
@@ -2882,7 +2882,7 @@ caller_kwargs = {'pyfuncitem': <Function test_which_fails_and_has_stdout_1>}, fi
                                 [94mraise[39;49;00m HookCallError(
                                     [33mf[39;49;00m[33m"[39;49;00m[33mhook call must provide argument [39;49;00m[33m{[39;49;00margname[33m!r}[39;49;00m[33m"[39;49;00m
                                 )
-    
+
                     [94mif[39;49;00m hook_impl.hookwrapper:
                         [94mtry[39;49;00m:
                             gen = hook_impl.function(*args)
@@ -2893,8 +2893,8 @@ caller_kwargs = {'pyfuncitem': <Function test_which_fails_and_has_stdout_1>}, fi
                     [94melse[39;49;00m:
 >                       res = hook_impl.function(*args)
 
-.venv/lib/python3.10/site-packages/pluggy/_callers.py:39: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_callers.py:39:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 pyfuncitem = <Function test_which_fails_and_has_stdout_1>
 
@@ -2907,8 +2907,8 @@ pyfuncitem = <Function test_which_fails_and_has_stdout_1>
         testargs = {arg: funcargs[arg] [94mfor[39;49;00m arg [95min[39;49;00m pyfuncitem._fixtureinfo.argnames}
 >       result = testfunction(**testargs)
 
-.venv/lib/python3.10/site-packages/_pytest/python.py:183: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/_pytest/python.py:183:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 capsys = <_pytest.capture.CaptureFixture object at 0x10d4be4d0>
 
@@ -2918,7 +2918,7 @@ capsys = <_pytest.capture.CaptureFixture object at 0x10d4be4d0>
 E       assert 0 == 1
 
 tests/test_pytest_fold.py:109: AssertionError
-===MARKER2===
+==>MARKER2<==
 ------------------------------------------------------------------- Captured stdout call -------------------------------------------------------------------
 this test fails
 _______________________________________________________ test_which_pauses_and_fails_and_has_stdout_1 _______________________________________________________
@@ -2926,7 +2926,7 @@ _______________________________________________________ test_which_pauses_and_fa
 cls = <class '_pytest.runner.CallInfo'>, func = <function call_runtest_hook.<locals>.<lambda> at 0x10d456050>, when = 'call'
 reraise = (<class '_pytest.outcomes.Exit'>, <class 'KeyboardInterrupt'>)
 
-===MARKER1===
+==>MARKER1<==
     [37m@classmethod[39;49;00m
     [94mdef[39;49;00m [92mfrom_call[39;49;00m(
         [96mcls[39;49;00m,
@@ -2942,14 +2942,14 @@ reraise = (<class '_pytest.outcomes.Exit'>, <class 'KeyboardInterrupt'>)
         [94mtry[39;49;00m:
 >           result: Optional[TResult] = func()
 
-.venv/lib/python3.10/site-packages/_pytest/runner.py:311: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/_pytest/runner.py:311:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 >       [94mlambda[39;49;00m: ihook(item=item, **kwds), when=when, reraise=reraise
     )
 
-.venv/lib/python3.10/site-packages/_pytest/runner.py:255: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/_pytest/runner.py:255:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <_HookCaller 'pytest_runtest_call'>, args = (), kwargs = {'item': <Function test_which_pauses_and_fails_and_has_stdout_1>}, argname = 'item'
 firstresult = False
@@ -2958,7 +2958,7 @@ firstresult = False
         [94mif[39;49;00m args:
             [94mraise[39;49;00m [96mTypeError[39;49;00m([33m"[39;49;00m[33mhook calling supports only keyword arguments[39;49;00m[33m"[39;49;00m)
         [94massert[39;49;00m [95mnot[39;49;00m [96mself[39;49;00m.is_historic()
-    
+
         [90m# This is written to avoid expensive operations when not needed.[39;49;00m
         [94mif[39;49;00m [96mself[39;49;00m.spec:
             [94mfor[39;49;00m argname [95min[39;49;00m [96mself[39;49;00m.spec.argnames:
@@ -2970,15 +2970,15 @@ firstresult = False
                         stacklevel=[94m2[39;49;00m,
                     )
                     [94mbreak[39;49;00m
-    
+
             firstresult = [96mself[39;49;00m.spec.opts.get([33m"[39;49;00m[33mfirstresult[39;49;00m[33m"[39;49;00m)
         [94melse[39;49;00m:
             firstresult = [94mFalse[39;49;00m
-    
+
 >       [94mreturn[39;49;00m [96mself[39;49;00m._hookexec([96mself[39;49;00m.name, [96mself[39;49;00m.get_hookimpls(), kwargs, firstresult)
 
-.venv/lib/python3.10/site-packages/pluggy/_hooks.py:265: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_hooks.py:265:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <_pytest.config.PytestPluginManager object at 0x10c6f7910>, hook_name = 'pytest_runtest_call'
 methods = [<HookImpl plugin_name='runner', plugin=<module '_pytest.runner' from '/Users/jwr003/coding/pytest-fold/.venv/lib/pyth...readexception' from '/Users/jwr003/coding/pytest-fold/.venv/lib/python3.10/site-packages/_pytest/threadexception.py'>>]
@@ -2989,8 +2989,8 @@ kwargs = {'item': <Function test_which_pauses_and_fails_and_has_stdout_1>}, firs
         [90m# enable_tracing will set its own wrapping function at self._inner_hookexec[39;49;00m
 >       [94mreturn[39;49;00m [96mself[39;49;00m._inner_hookexec(hook_name, methods, kwargs, firstresult)
 
-.venv/lib/python3.10/site-packages/pluggy/_manager.py:80: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_manager.py:80:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 hook_name = 'pytest_runtest_call'
 hook_impls = [<HookImpl plugin_name='runner', plugin=<module '_pytest.runner' from '/Users/jwr003/coding/pytest-fold/.venv/lib/pyth...readexception' from '/Users/jwr003/coding/pytest-fold/.venv/lib/python3.10/site-packages/_pytest/threadexception.py'>>]
@@ -3017,7 +3017,7 @@ caller_kwargs = {'item': <Function test_which_pauses_and_fails_and_has_stdout_1>
                                 [94mraise[39;49;00m HookCallError(
                                     [33mf[39;49;00m[33m"[39;49;00m[33mhook call must provide argument [39;49;00m[33m{[39;49;00margname[33m!r}[39;49;00m[33m"[39;49;00m
                                 )
-    
+
                     [94mif[39;49;00m hook_impl.hookwrapper:
                         [94mtry[39;49;00m:
                             gen = hook_impl.function(*args)
@@ -3038,7 +3038,7 @@ caller_kwargs = {'item': <Function test_which_pauses_and_fails_and_has_stdout_1>
                 outcome = _Result(results[[94m0[39;49;00m] [94mif[39;49;00m results [94melse[39;49;00m [94mNone[39;49;00m, excinfo)
             [94melse[39;49;00m:
                 outcome = _Result(results, excinfo)
-    
+
             [90m# run all wrapper post-yield blocks[39;49;00m
             [94mfor[39;49;00m gen [95min[39;49;00m [96mreversed[39;49;00m(teardowns):
                 [94mtry[39;49;00m:
@@ -3046,11 +3046,11 @@ caller_kwargs = {'item': <Function test_which_pauses_and_fails_and_has_stdout_1>
                     _raise_wrapfail(gen, [33m"[39;49;00m[33mhas second yield[39;49;00m[33m"[39;49;00m)
                 [94mexcept[39;49;00m [96mStopIteration[39;49;00m:
                     [94mpass[39;49;00m
-    
+
 >           [94mreturn[39;49;00m outcome.get_result()
 
-.venv/lib/python3.10/site-packages/pluggy/_callers.py:60: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_callers.py:60:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <pluggy._result._Result object at 0x10cbab5b0>
 
@@ -3067,8 +3067,8 @@ self = <pluggy._result._Result object at 0x10cbab5b0>
             ex = [96mself[39;49;00m._excinfo
 >           [94mraise[39;49;00m ex[[94m1[39;49;00m].with_traceback(ex[[94m2[39;49;00m])
 
-.venv/lib/python3.10/site-packages/pluggy/_result.py:60: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_result.py:60:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 hook_name = 'pytest_runtest_call'
 hook_impls = [<HookImpl plugin_name='runner', plugin=<module '_pytest.runner' from '/Users/jwr003/coding/pytest-fold/.venv/lib/pyth...readexception' from '/Users/jwr003/coding/pytest-fold/.venv/lib/python3.10/site-packages/_pytest/threadexception.py'>>]
@@ -3095,7 +3095,7 @@ caller_kwargs = {'item': <Function test_which_pauses_and_fails_and_has_stdout_1>
                                 [94mraise[39;49;00m HookCallError(
                                     [33mf[39;49;00m[33m"[39;49;00m[33mhook call must provide argument [39;49;00m[33m{[39;49;00margname[33m!r}[39;49;00m[33m"[39;49;00m
                                 )
-    
+
                     [94mif[39;49;00m hook_impl.hookwrapper:
                         [94mtry[39;49;00m:
                             gen = hook_impl.function(*args)
@@ -3106,8 +3106,8 @@ caller_kwargs = {'item': <Function test_which_pauses_and_fails_and_has_stdout_1>
                     [94melse[39;49;00m:
 >                       res = hook_impl.function(*args)
 
-.venv/lib/python3.10/site-packages/pluggy/_callers.py:39: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_callers.py:39:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 item = <Function test_which_pauses_and_fails_and_has_stdout_1>
 
@@ -3130,8 +3130,8 @@ item = <Function test_which_pauses_and_fails_and_has_stdout_1>
             sys.last_traceback = e.__traceback__.tb_next
 >           [94mraise[39;49;00m e
 
-.venv/lib/python3.10/site-packages/_pytest/runner.py:170: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/_pytest/runner.py:170:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 item = <Function test_which_pauses_and_fails_and_has_stdout_1>
 
@@ -3146,8 +3146,8 @@ item = <Function test_which_pauses_and_fails_and_has_stdout_1>
         [94mtry[39;49;00m:
 >           item.runtest()
 
-.venv/lib/python3.10/site-packages/_pytest/runner.py:162: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/_pytest/runner.py:162:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <Function test_which_pauses_and_fails_and_has_stdout_1>
 
@@ -3155,8 +3155,8 @@ self = <Function test_which_pauses_and_fails_and_has_stdout_1>
         [33m"""Execute the underlying test function."""[39;49;00m
 >       [96mself[39;49;00m.ihook.pytest_pyfunc_call(pyfuncitem=[96mself[39;49;00m)
 
-.venv/lib/python3.10/site-packages/_pytest/python.py:1641: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/_pytest/python.py:1641:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <_HookCaller 'pytest_pyfunc_call'>, args = (), kwargs = {'pyfuncitem': <Function test_which_pauses_and_fails_and_has_stdout_1>}
 argname = 'pyfuncitem', firstresult = True
@@ -3165,7 +3165,7 @@ argname = 'pyfuncitem', firstresult = True
         [94mif[39;49;00m args:
             [94mraise[39;49;00m [96mTypeError[39;49;00m([33m"[39;49;00m[33mhook calling supports only keyword arguments[39;49;00m[33m"[39;49;00m)
         [94massert[39;49;00m [95mnot[39;49;00m [96mself[39;49;00m.is_historic()
-    
+
         [90m# This is written to avoid expensive operations when not needed.[39;49;00m
         [94mif[39;49;00m [96mself[39;49;00m.spec:
             [94mfor[39;49;00m argname [95min[39;49;00m [96mself[39;49;00m.spec.argnames:
@@ -3177,15 +3177,15 @@ argname = 'pyfuncitem', firstresult = True
                         stacklevel=[94m2[39;49;00m,
                     )
                     [94mbreak[39;49;00m
-    
+
             firstresult = [96mself[39;49;00m.spec.opts.get([33m"[39;49;00m[33mfirstresult[39;49;00m[33m"[39;49;00m)
         [94melse[39;49;00m:
             firstresult = [94mFalse[39;49;00m
-    
+
 >       [94mreturn[39;49;00m [96mself[39;49;00m._hookexec([96mself[39;49;00m.name, [96mself[39;49;00m.get_hookimpls(), kwargs, firstresult)
 
-.venv/lib/python3.10/site-packages/pluggy/_hooks.py:265: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_hooks.py:265:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <_pytest.config.PytestPluginManager object at 0x10c6f7910>, hook_name = 'pytest_pyfunc_call'
 methods = [<HookImpl plugin_name='python', plugin=<module '_pytest.python' from '/Users/jwr003/coding/pytest-fold/.venv/lib/python3.10/site-packages/_pytest/python.py'>>]
@@ -3196,8 +3196,8 @@ kwargs = {'pyfuncitem': <Function test_which_pauses_and_fails_and_has_stdout_1>}
         [90m# enable_tracing will set its own wrapping function at self._inner_hookexec[39;49;00m
 >       [94mreturn[39;49;00m [96mself[39;49;00m._inner_hookexec(hook_name, methods, kwargs, firstresult)
 
-.venv/lib/python3.10/site-packages/pluggy/_manager.py:80: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_manager.py:80:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 hook_name = 'pytest_pyfunc_call'
 hook_impls = [<HookImpl plugin_name='python', plugin=<module '_pytest.python' from '/Users/jwr003/coding/pytest-fold/.venv/lib/python3.10/site-packages/_pytest/python.py'>>]
@@ -3224,7 +3224,7 @@ caller_kwargs = {'pyfuncitem': <Function test_which_pauses_and_fails_and_has_std
                                 [94mraise[39;49;00m HookCallError(
                                     [33mf[39;49;00m[33m"[39;49;00m[33mhook call must provide argument [39;49;00m[33m{[39;49;00margname[33m!r}[39;49;00m[33m"[39;49;00m
                                 )
-    
+
                     [94mif[39;49;00m hook_impl.hookwrapper:
                         [94mtry[39;49;00m:
                             gen = hook_impl.function(*args)
@@ -3245,7 +3245,7 @@ caller_kwargs = {'pyfuncitem': <Function test_which_pauses_and_fails_and_has_std
                 outcome = _Result(results[[94m0[39;49;00m] [94mif[39;49;00m results [94melse[39;49;00m [94mNone[39;49;00m, excinfo)
             [94melse[39;49;00m:
                 outcome = _Result(results, excinfo)
-    
+
             [90m# run all wrapper post-yield blocks[39;49;00m
             [94mfor[39;49;00m gen [95min[39;49;00m [96mreversed[39;49;00m(teardowns):
                 [94mtry[39;49;00m:
@@ -3253,11 +3253,11 @@ caller_kwargs = {'pyfuncitem': <Function test_which_pauses_and_fails_and_has_std
                     _raise_wrapfail(gen, [33m"[39;49;00m[33mhas second yield[39;49;00m[33m"[39;49;00m)
                 [94mexcept[39;49;00m [96mStopIteration[39;49;00m:
                     [94mpass[39;49;00m
-    
+
 >           [94mreturn[39;49;00m outcome.get_result()
 
-.venv/lib/python3.10/site-packages/pluggy/_callers.py:60: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_callers.py:60:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 self = <pluggy._result._Result object at 0x10cbaa6e0>
 
@@ -3274,8 +3274,8 @@ self = <pluggy._result._Result object at 0x10cbaa6e0>
             ex = [96mself[39;49;00m._excinfo
 >           [94mraise[39;49;00m ex[[94m1[39;49;00m].with_traceback(ex[[94m2[39;49;00m])
 
-.venv/lib/python3.10/site-packages/pluggy/_result.py:60: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_result.py:60:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 hook_name = 'pytest_pyfunc_call'
 hook_impls = [<HookImpl plugin_name='python', plugin=<module '_pytest.python' from '/Users/jwr003/coding/pytest-fold/.venv/lib/python3.10/site-packages/_pytest/python.py'>>]
@@ -3302,7 +3302,7 @@ caller_kwargs = {'pyfuncitem': <Function test_which_pauses_and_fails_and_has_std
                                 [94mraise[39;49;00m HookCallError(
                                     [33mf[39;49;00m[33m"[39;49;00m[33mhook call must provide argument [39;49;00m[33m{[39;49;00margname[33m!r}[39;49;00m[33m"[39;49;00m
                                 )
-    
+
                     [94mif[39;49;00m hook_impl.hookwrapper:
                         [94mtry[39;49;00m:
                             gen = hook_impl.function(*args)
@@ -3313,8 +3313,8 @@ caller_kwargs = {'pyfuncitem': <Function test_which_pauses_and_fails_and_has_std
                     [94melse[39;49;00m:
 >                       res = hook_impl.function(*args)
 
-.venv/lib/python3.10/site-packages/pluggy/_callers.py:39: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/pluggy/_callers.py:39:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 pyfuncitem = <Function test_which_pauses_and_fails_and_has_stdout_1>
 
@@ -3327,8 +3327,8 @@ pyfuncitem = <Function test_which_pauses_and_fails_and_has_stdout_1>
         testargs = {arg: funcargs[arg] [94mfor[39;49;00m arg [95min[39;49;00m pyfuncitem._fixtureinfo.argnames}
 >       result = testfunction(**testargs)
 
-.venv/lib/python3.10/site-packages/_pytest/python.py:183: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.10/site-packages/_pytest/python.py:183:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 capsys = <_pytest.capture.CaptureFixture object at 0x10cbaafb0>
 
@@ -3339,7 +3339,7 @@ capsys = <_pytest.capture.CaptureFixture object at 0x10cbaafb0>
 E       assert 0 == -11
 
 tests/test_pytest_fold.py:115: AssertionError
-===MARKER2===
+==>MARKER2<==
 ------------------------------------------------------------------- Captured stdout call -------------------------------------------------------------------
 this test pauses, then fails
 ================================================================= short test summary info ==================================================================

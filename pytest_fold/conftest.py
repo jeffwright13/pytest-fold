@@ -1,7 +1,9 @@
 import pytest
 import tempfile
+
 from _pytest.config import Config
 from pathlib import Path
+from pytest_fold import utils
 
 OUTFILE = Path.cwd() / "console_output.fold"
 
