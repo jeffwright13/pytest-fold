@@ -2,8 +2,8 @@
 platform darwin -- Python 3.10.0b2, pytest-6.2.5, py-1.10.0, pluggy-1.0.0
 rootdir: /Users/jwr003/coding/pytest-fold, configfile: pyproject.toml, testpaths: tests
 plugins: session2file-0.1.11
-collecting ... 
-collected 18 items                                                                                                                                         
+collecting ...
+collected 18 items
 
 tests/test_pytest_fold.py .F.F.F.FFF...FF..E                                                                                                         [100%]
 
@@ -19,54 +19,54 @@ E       fixture 'fixture_for_fun' not found
 ========================================================================= FAILURES =========================================================================
 ____________________________________________________________________ test_which_fails_1 ____________________________________________________________________
 tests/test_pytest_fold.py:18: in test_which_fails_1
-===MARKER1===
+==>MARKER1<==
     [94massert[39;49;00m [94m0[39;49;00m
 E   assert 0
-===MARKER2===
+==>MARKER2<==
 ____________________________________________________________________ test_which_fails_2 ____________________________________________________________________
 tests/test_pytest_fold.py:26: in test_which_fails_2
-===MARKER1===
+==>MARKER1<==
     [94massert[39;49;00m [94m0[39;49;00m
 E   assert 0
-===MARKER2===
+==>MARKER2<==
 ____________________________________________________________________ test_which_fails_3 ____________________________________________________________________
 tests/test_pytest_fold.py:34: in test_which_fails_3
-===MARKER1===
+==>MARKER1<==
     [94massert[39;49;00m [94m0[39;49;00m
 E   assert 0
-===MARKER2===
+==>MARKER2<==
 _______________________________________________________________________ test_fail_1 ________________________________________________________________________
 tests/test_pytest_fold.py:74: in test_fail_1
-===MARKER1===
+==>MARKER1<==
     [94massert[39;49;00m [94mFalse[39;49;00m
 E   assert False
-===MARKER2===
+==>MARKER2<==
 _______________________________________________________________________ test_fail_2 ________________________________________________________________________
 tests/test_pytest_fold.py:80: in test_fail_2
-===MARKER1===
+==>MARKER1<==
     [94massert[39;49;00m [94mFalse[39;49;00m
 E   assert False
-===MARKER2===
+==>MARKER2<==
 _______________________________________________________________________ test_fail_3 ________________________________________________________________________
 tests/test_pytest_fold.py:86: in test_fail_3
-===MARKER1===
+==>MARKER1<==
     [94massert[39;49;00m [94mFalse[39;49;00m
 E   assert False
-===MARKER2===
+==>MARKER2<==
 ____________________________________________________________ test_which_fails_and_has_stdout_1 _____________________________________________________________
 tests/test_pytest_fold.py:109: in test_which_fails_and_has_stdout_1
-===MARKER1===
+==>MARKER1<==
     [94massert[39;49;00m [94m0[39;49;00m == [94m1[39;49;00m
 E   assert 0 == 1
-===MARKER2===
+==>MARKER2<==
 ------------------------------------------------------------------- Captured stdout call -------------------------------------------------------------------
 this test fails
 _______________________________________________________ test_which_pauses_and_fails_and_has_stdout_1 _______________________________________________________
 tests/test_pytest_fold.py:115: in test_which_pauses_and_fails_and_has_stdout_1
-===MARKER1===
+==>MARKER1<==
     [94massert[39;49;00m [94m0[39;49;00m == -[94m11[39;49;00m
 E   assert 0 == -11
-===MARKER2===
+==>MARKER2<==
 ------------------------------------------------------------------- Captured stdout call -------------------------------------------------------------------
 this test pauses, then fails
 ================================================================= short test summary info ==================================================================

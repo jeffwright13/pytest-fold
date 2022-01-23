@@ -2,8 +2,8 @@
 platform darwin -- Python 3.10.0b2, pytest-6.2.5, py-1.10.0, pluggy-1.0.0
 rootdir: /Users/jwr003/coding/pytest-fold, configfile: pyproject.toml, testpaths: tests
 plugins: session2file-0.1.11
-collecting ... 
-collected 18 items                                                                                                                                         
+collecting ...
+collected 18 items
 
 tests/test_pytest_fold.py .F.F.F.FFF...FF..E                                                                                                         [100%]
 
@@ -19,34 +19,34 @@ E       fixture 'fixture_for_fun' not found
 ========================================================================= FAILURES =========================================================================
 ____________________________________________________________________ test_which_fails_1 ____________________________________________________________________
 
-===MARKER1===
+==>MARKER1<==
     [94mdef[39;49;00m [92mtest_which_fails_1[39;49;00m():
 >       [94massert[39;49;00m [94m0[39;49;00m
 E       assert 0
 
 tests/test_pytest_fold.py:18: AssertionError
-===MARKER2===
+==>MARKER2<==
 ____________________________________________________________________ test_which_fails_2 ____________________________________________________________________
 
-===MARKER1===
+==>MARKER1<==
     [94mdef[39;49;00m [92mtest_which_fails_2[39;49;00m():
 >       [94massert[39;49;00m [94m0[39;49;00m
 E       assert 0
 
 tests/test_pytest_fold.py:26: AssertionError
-===MARKER2===
+==>MARKER2<==
 ____________________________________________________________________ test_which_fails_3 ____________________________________________________________________
 
-===MARKER1===
+==>MARKER1<==
     [94mdef[39;49;00m [92mtest_which_fails_3[39;49;00m():
 >       [94massert[39;49;00m [94m0[39;49;00m
 E       assert 0
 
 tests/test_pytest_fold.py:34: AssertionError
-===MARKER2===
+==>MARKER2<==
 _______________________________________________________________________ test_fail_1 ________________________________________________________________________
 
-===MARKER1===
+==>MARKER1<==
     [94mdef[39;49;00m [92mtest_fail_1[39;49;00m():
         a = [94m0[39;49;00m
         time.sleep([94m0.05[39;49;00m)
@@ -54,10 +54,10 @@ _______________________________________________________________________ test_fai
 E       assert False
 
 tests/test_pytest_fold.py:74: AssertionError
-===MARKER2===
+==>MARKER2<==
 _______________________________________________________________________ test_fail_2 ________________________________________________________________________
 
-===MARKER1===
+==>MARKER1<==
     [94mdef[39;49;00m [92mtest_fail_2[39;49;00m():
         a = [94m0[39;49;00m
         time.sleep([94m0.05[39;49;00m)
@@ -65,10 +65,10 @@ _______________________________________________________________________ test_fai
 E       assert False
 
 tests/test_pytest_fold.py:80: AssertionError
-===MARKER2===
+==>MARKER2<==
 _______________________________________________________________________ test_fail_3 ________________________________________________________________________
 
-===MARKER1===
+==>MARKER1<==
     [94mdef[39;49;00m [92mtest_fail_3[39;49;00m():
         a = [94m0[39;49;00m
         time.sleep([94m0.05[39;49;00m)
@@ -76,26 +76,26 @@ _______________________________________________________________________ test_fai
 E       assert False
 
 tests/test_pytest_fold.py:86: AssertionError
-===MARKER2===
+==>MARKER2<==
 ____________________________________________________________ test_which_fails_and_has_stdout_1 _____________________________________________________________
 
 capsys = <_pytest.capture.CaptureFixture object at 0x1102a9a20>
 
-===MARKER1===
+==>MARKER1<==
     [94mdef[39;49;00m [92mtest_which_fails_and_has_stdout_1[39;49;00m(capsys):
         [96mprint[39;49;00m([33m"[39;49;00m[33mthis test fails[39;49;00m[33m"[39;49;00m)
 >       [94massert[39;49;00m [94m0[39;49;00m == [94m1[39;49;00m
 E       assert 0 == 1
 
 tests/test_pytest_fold.py:109: AssertionError
-===MARKER2===
+==>MARKER2<==
 ------------------------------------------------------------------- Captured stdout call -------------------------------------------------------------------
 this test fails
 _______________________________________________________ test_which_pauses_and_fails_and_has_stdout_1 _______________________________________________________
 
 capsys = <_pytest.capture.CaptureFixture object at 0x110393a30>
 
-===MARKER1===
+==>MARKER1<==
     [94mdef[39;49;00m [92mtest_which_pauses_and_fails_and_has_stdout_1[39;49;00m(capsys):
         [96mprint[39;49;00m([33m"[39;49;00m[33mthis test pauses, then fails[39;49;00m[33m"[39;49;00m)
         time.sleep([94m2[39;49;00m)
@@ -103,7 +103,7 @@ capsys = <_pytest.capture.CaptureFixture object at 0x110393a30>
 E       assert 0 == -11
 
 tests/test_pytest_fold.py:115: AssertionError
-===MARKER2===
+==>MARKER2<==
 ------------------------------------------------------------------- Captured stdout call -------------------------------------------------------------------
 this test pauses, then fails
 ================================================================= short test summary info ==================================================================
