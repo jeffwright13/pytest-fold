@@ -35,14 +35,14 @@ E       fixture 'fixture_for_fun' not found
 
 /Users/jwr003/coding/pytest-fold/tests/test_pytest_fold.py:135
 ========================================================================= FAILURES =========================================================================
-____________________________________________________________________ test_which_fails_1 ____________________________________________________________________
+____________________________________________________________________ test_which_fails_1 _____________________________________________________________Header
 
 ==>MARKER1<==
     [94mdef[39;49;00m [92mtest_which_fails_1[39;49;00m():
 >       [94massert[39;49;00m [94m0[39;49;00m
 E       assert 0
 
-tests/test_pytest_fold.py:18: AssertionError
+tests/test_pytest_fold.py:18: AssertionError Sect1
 ==>MARKER2<==
 ____________________________________________________________________ test_which_fails_2 ____________________________________________________________________
 
@@ -51,7 +51,7 @@ ____________________________________________________________________ test_which_
 >       [94massert[39;49;00m [94m0[39;49;00m
 E       assert 0
 
-tests/test_pytest_fold.py:26: AssertionError
+tests/test_pytest_fold.py:26: AssertionError Sect2
 ==>MARKER2<==
 ____________________________________________________________________ test_which_fails_3 ____________________________________________________________________
 
@@ -60,7 +60,7 @@ ____________________________________________________________________ test_which_
 >       [94massert[39;49;00m [94m0[39;49;00m
 E       assert 0
 
-tests/test_pytest_fold.py:34: AssertionError
+tests/test_pytest_fold.py:34: AssertionError Sect3
 ==>MARKER2<==
 _______________________________________________________________________ test_fail_1 ________________________________________________________________________
 
@@ -71,7 +71,7 @@ _______________________________________________________________________ test_fai
 >       [94massert[39;49;00m [94mFalse[39;49;00m
 E       assert False
 
-tests/test_pytest_fold.py:74: AssertionError
+tests/test_pytest_fold.py:74: AssertionError Sect4
 ==>MARKER2<==
 _______________________________________________________________________ test_fail_2 ________________________________________________________________________
 
@@ -82,7 +82,7 @@ _______________________________________________________________________ test_fai
 >       [94massert[39;49;00m [94mFalse[39;49;00m
 E       assert False
 
-tests/test_pytest_fold.py:80: AssertionError
+tests/test_pytest_fold.py:80: AssertionError Sect5
 ==>MARKER2<==
 _______________________________________________________________________ test_fail_3 ________________________________________________________________________
 
@@ -93,7 +93,7 @@ _______________________________________________________________________ test_fai
 >       [94massert[39;49;00m [94mFalse[39;49;00m
 E       assert False
 
-tests/test_pytest_fold.py:86: AssertionError
+tests/test_pytest_fold.py:86: AssertionError Sect1-6
 ==>MARKER2<==
 ____________________________________________________________ test_which_fails_and_has_stdout_1 _____________________________________________________________
 
@@ -107,7 +107,7 @@ E       assert 0 == 1
 E         +0
 E         -1
 
-tests/test_pytest_fold.py:109: AssertionError
+tests/test_pytest_fold.py:109: AssertionError Sect7
 ==>MARKER2<==
 ------------------------------------------------------------------- Captured stdout call -------------------------------------------------------------------
 this test fails
@@ -124,7 +124,7 @@ E       assert 0 == -11
 E         +0
 E         --11
 
-tests/test_pytest_fold.py:115: AssertionError
+tests/test_pytest_fold.py:115: AssertionError Sect8
 ==>MARKER2<==
 ------------------------------------------------------------------- Captured stdout call -------------------------------------------------------------------
 this test pauses, then fails
@@ -138,4 +138,4 @@ FAILED tests/test_pytest_fold.py::test_fail_3 - assert False
 FAILED tests/test_pytest_fold.py::test_which_fails_and_has_stdout_1 - assert 0 == 1
 FAILED tests/test_pytest_fold.py::test_which_pauses_and_fails_and_has_stdout_1 - assert 0 == -11
 ERROR tests/test_pytest_fold.py::test_fixture_for_fun_fail
-=========================================================== [31m[1m8 failed[0m, [32m9 passed[0m, [31m[1m1 error[0m[31m in 2.48s[0m[31m ===========================================================
+=========================================================== [31m[1m8 failed[0m, [32m9 passed[0m, [31m[1m1 error[0m[31m in 2.48s[0m[31m ========================================================End===
