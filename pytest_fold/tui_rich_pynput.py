@@ -37,31 +37,18 @@ def main():
         console.print(Panel(results_data.sections[_], height=0, title=f"▶ Pytest test {_}", border_style=BORDER_COLOR, title_align="left"))
     console.print(Panel(results_data.sections[-1], title="▶ Pytest finish info", border_style=BORDER_COLOR, title_align="left"))
 
-
-
-    def on_move(x, y):
-        print('Pointer moved to {0}'.format(
-            (x, y)))
-
-    def on_click(x, y, button, pressed):
-        print('{0} at {1}'.format(
-            'Pressed' if pressed else 'Released',
-            (x, y)))
-        if not pressed:
-            # Stop listener
-            return False
-
-    def on_scroll(x, y, dx, dy):
-        print('Scrolled {0} at {1}'.format(
-            'down' if dy < 0 else 'up',
-            (x, y)))
-
-    # Collect events until released
-    with mouse.Listener(
-            on_move=None,
-            on_click=on_click,
-            on_scroll=None) as listener:
-        listener.join()
+    # def on_click(x, y, button, pressed):
+    #     print('{0} at {1}'.format(
+    #         'Pressed' if pressed else 'Released',
+    #         (x, y)))
+    #     if not pressed:
+    #         # Stop listener
+    #         return False
+    # with mouse.Listener(
+    #         on_move=None,
+    #         on_click=on_click,
+    #         on_scroll=None) as listener:
+    #     listener.join()
 
 
 if __name__ == "__main__":
