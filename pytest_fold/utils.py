@@ -1,7 +1,6 @@
-starter = "==>MARKER1<=="
-stopper = "==>MARKER2<=="
+from plugin import MARKER1, MARKER2
 
-def tokenize(lines: str, marker1: str=starter, marker2: str=stopper) -> list[str]:
+def tokenize(lines: str, marker1: str=MARKER1, marker2: str=MARKER2) -> list[str]:
     sections = []
     section_content = ""
     marker1_seen = False
