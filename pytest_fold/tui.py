@@ -25,7 +25,6 @@ class ResultsData:
         self.results_file = path
         self.sections = []
         self.parsed_sections = []
-        self.parser = AnsiTerminalParser()
 
     def _tokenize_results(self) -> None:
         with open(self.results_file, "r") as results_file:
@@ -66,6 +65,7 @@ class ResultsLayout(Layout):
         self.textboxheight = textboxheight
         self.value = value
         self.folded = folded
+        self.parser = AnsiTerminalParser()
 
     def add_widgets(self) -> None:
         cb = CheckBox(text="", on_change=self._toggle_checkbox)
@@ -113,28 +113,28 @@ class ResultsFrame(Frame):
         # sections to the ResultsFrame
         results_data = ResultsData()
         sections = results_data.get_results()
-        parsed_generators = results_data.parse_results_ansi()
-        for gen in parsed_generators:
-            parsed_section = "".join([])
+        # parsed_generators = results_data.parse_results_ansi()
+        # for gen in parsed_generators:
+        #     parsed_section = "".join([])
 
         # First layout section: "header" info from Pytest
         self.add_layout(
             ResultsLayout(
                 screen=screen,
                 folded=False,
-                textboxheight=ceil(len(parsed_sections[0]) / screen.width) + 10,
-                value=parsed_sections[0],
+                textboxheight=ceil(len(sections[0]) / screen.width) + 10,
+                value=sections[0],
             )
         )
 
         # Individual folded layouts, one per failure section from Pytest run
-        for _ in range(1, len(parsed_sections) - 1):
+        for _ in range(1, len(sections) - 1):
             self.add_layout(
                 ResultsLayout(
                     screen=screen,
                     folded=True,
-                    textboxheight=ceil(len(parsed_sections[_]) / screen.width) + 10,
-                    value=parsed_sections[_],
+                    textboxheight=ceil(len(sections[_]) / screen.width) + 10,
+                    value=sections[_],
                 )
             )
 
@@ -143,8 +143,8 @@ class ResultsFrame(Frame):
             ResultsLayout(
                 screen=screen,
                 folded=False,
-                textboxheight=ceil(len(parsed_sections[-1]) / screen.width) + 10,
-                value=parsed_sections[-1],
+                textboxheight=ceil(len(sections[-1]) / screen.width) + 10,
+                value=sections[-1],
             )
         )
         self.add_layout(QuitterLayout(screen))
