@@ -115,7 +115,7 @@ class ResultsFrame(Frame):
         sections = results_data.get_results()
         parsed_generators = results_data.parse_results_ansi()
         for gen in parsed_generators:
-            pass
+            parsed_section = "".join([])
 
         # First layout section: "header" info from Pytest
         self.add_layout(

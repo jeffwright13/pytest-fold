@@ -3,7 +3,7 @@ import tempfile
 
 from _pytest.config import Config
 from pathlib import Path
-from pytest_fold import utils
+import utils
 
 OUTFILE = Path.cwd() / "console_output.fold"
 
@@ -47,16 +47,14 @@ def pytest_runtest_logreport(report):
         report.longrepr.chain[0][0].extraline = MARKER2
 
 
-# Write console output to a file for use by TUI. Stolen from Pytest's pastebin.py
-# Tip of the hat to pytest_session2file:
+# The following two methods pytest_configure and pytest_unconfigure here will write
+# console output to a file for use by TUI. This code inspired by Pytest's pastebin.py.
+# Tip of the hat to pytest_session2file, as well.
 # (https://github.com/BuhtigithuB/pytest_session2file/blob/master/pytest_session2file/pytest_session2file.py)
 @pytest.hookimpl(trylast=True)
 def pytest_configure(config: Config) -> None:
     if config.option.fold:
         tr = config.pluginmanager.getplugin("terminalreporter")
-        # If no terminal reporter plugin is present, nothing we can do here;
-        # this can happen when this function executes in a worker node
-        # when using pytest-xdist, for example.
         if tr is not None:
             config._pyfoldoutputfile = tempfile.TemporaryFile("wb+")
             oldwrite = tr._tw.write
