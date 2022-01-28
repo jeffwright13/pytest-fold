@@ -1,0 +1,15 @@
+.
+├── LICENSE
+├── MANIFEST.in
+├── README.rst
+├── pytest_clarity
+│   ├── __init__.py
+│   ├── diff.py
+│   ├── plugin.py
+│   └── util.py
+├── requirements.txt
+├── setup.py
+└── testing
+    ├── __init__.py
+    ├── test_diff.py
+    └── test_util.py
