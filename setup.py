@@ -23,10 +23,10 @@ setup(
     packages=["pytest_fold"],
     py_modules=["pytest_fold"],
     python_requires=">=3.7",
-    install_requires=["pytest>=6.5.2, "asciimatics>=1.13.0,"],
+    install_requires=["pytest>=6.2.5", "asciimatics>=1.13.0",],
     classifiers=[
         "Framework :: Pytest",
-        "Development Status :: 4 - Beta",
+        "Development Status :: 3 - Alpha",
         "Intended Audience :: Developers",
         "Topic :: Software Development :: Testing",
         "Programming Language :: Python :: 3.7",
@@ -35,6 +35,6 @@ setup(
         "Operating System :: OS Independent",
         "License :: OSI Approved :: MIT License",
     ],
-    keywords="pytest fold output logs fail asciimatics single-source",
-    entry_points={"pytest11": ["fold = pytest_fold.plugin"],
+    keywords="pytest testing fold output logs fail asciimatics single-source",
+    entry_points={"pytest11": ["pytest_fold = pytest_fold.plugin"]},
 )
