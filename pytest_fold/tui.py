@@ -1,6 +1,6 @@
 from pathlib import Path
 from math import ceil
-# from utils import tokenize
+from utils import tokenize
 from plugin import MARKER1, MARKER2
 from asciimatics.exceptions import ResizeScreenError, StopApplication
 from asciimatics.event import KeyboardEvent
@@ -11,33 +11,9 @@ from asciimatics.widgets import Frame, TextBox, Layout, CheckBox, Button
 
 
 RESULTS_FILE = (
-    "/Users/jwr003/coding/pytest-fold/output_files_to_analyze/outputvvfold.ansi"
+    "/Users/jwr003/coding/pytest-fold/console_output.fold"
 )
 DEBUG = True
-
-
-def tokenize(lines: str, marker1: str=MARKER1, marker2: str=MARKER2) -> list[str]:
-    sections = []
-    section_content = ""
-    marker1_seen = False
-    for line in lines:
-        if not marker1_seen:
-            if marker1 in line:
-                marker1_seen = True
-                sections.append(section_content)
-                section_content = ""
-                continue
-            section_content += line
-            continue
-        if marker1 in line:
-            continue
-        if marker2 in line:
-            sections.append(section_content)
-            section_content = ""
-            continue
-        section_content += line
-    sections.append(section_content)
-    return sections
 
 
 class ResultsData:
@@ -77,6 +53,7 @@ class ResultsLayout(Layout):
         textboxheight: int = 4,
         value: str = "No data!",
     ) -> None:
+        # 4 to make room for '[ ]' plus a space; -6 to offset from end of line in frame
         super(ResultsLayout, self).__init__(columns=[4, screen.width - 6])
         self.textboxheight = textboxheight
         self.value = value
@@ -90,7 +67,7 @@ class ResultsLayout(Layout):
         wrap = not self.folded
         tb = TextBox(
             height=ht,
-            line_wrap=wrap,
+            line_wrap=False,
             readonly=True,
             as_string=True,
             parser=self.parser,
@@ -122,9 +99,12 @@ class QuitterLayout(Layout):
 
 
 class ResultsFrame(Frame):
+    """
+    Asciimatics Frame class to display layouts & their widgets
+    """
     def __init__(self, screen: Screen) -> None:
         super(ResultsFrame, self).__init__(
-            screen=screen, height=screen.height, width=screen.width, can_scroll=True
+            screen=screen, height=screen.height, width=screen.width, can_scroll=True, hover_focus=True
         )
 
         # Snarf data from results file, tokenize, then add Layout for the resulting
