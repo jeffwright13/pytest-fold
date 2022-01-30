@@ -23,7 +23,7 @@ class Fold:
         with open(self.resultsfile, "r") as results_file:
             self.results_lines = results_file.readlines()
         self.section_points = []
-        self.sections = utils.tokenize(self.results_lines)
+        self.sections = utils.sectionize(self.results_lines)
 
     def render(self, screen):
         screen.clear()

@@ -7,10 +7,10 @@ from _pytest.config import Config
 OUTFILE = Path.cwd() / "console_output.fold"
 MARKERS = {
     "pytest_fold_experiment": "~@~@~@ EXPERIMENT @~@~@~",
-    "pytest_fold_session_start_begin": "==>PYTEST_FOLD_MARKER_SESSION_START_BEGIN<==",
-    "pytest_fold_session_start_end": "==>PYTEST_FOLD_MARKER_SESSION_START_END<==",
-    "pytest_fold_session_finish_begin": "==>PYTEST_FOLD_MARKER_SESSION_FINISH_BEGIN<==",
-    "pytest_fold_session_finish_end": "==>PYTEST_FOLD_MARKER_SESSION_FINISH_END<==",
+    "pytest_fold_SESSIONSTART_begin": "==>PYTEST_FOLD_MARKER_SESSIONSTART_BEGIN<==",
+    "pytest_fold_SESSIONSTART_end": "==>PYTEST_FOLD_MARKER_SESSIONSTART_END<==",
+    "pytest_fold_SESSIONFINISH_begin": "==>PYTEST_FOLD_MARKER_SESSIONFINISH_BEGIN<==",
+    "pytest_fold_SESSIONFINISH_end": "==>PYTEST_FOLD_MARKER_SESSIONFINISH_END<==",
     "pytest_fold_runtest_logreport_begin": "==>PYTEST_FOLD_MARKER_SESSION_RUNTEST_LOGREPORT_BEGIN<==",
     "pytest_fold_runtest_logreport_end": "==>PYTEST_FOLD_MARKER_SESSION_RUNTEST_LOGREPORT_END<==",
     "pytest_fold_terminal_summary_begin": "==>PYTEST_FOLD_MARKER_TERMINAL_SUMMARY_BEGIN<==",
@@ -44,14 +44,24 @@ def fold(request):
     return request.config.getoption("--fold")
 
 
-@pytest.hookimpl(hookwrapper=True)
+# @pytest.hookimpl(hookwrapper=True)
+# def pytest_runtest_logstart(item, call):
+#     """
+#     Attach session info to report for later use in pytest_runtest_logreport
+#     https://stackoverflow.com/questions/54717786/access-pytest-session-or-arguments-in-pytest-runtest-logreport
+#     """
+#     out = yield
+#     report = out.get_result()
+#     report.session = item.session
+
+@pytest.hookimpl(hookwrapper=True, trylast=True)
 def pytest_sessionstart(session):
     """
     Write pyfold section-begin marker before session starts
     """
-    print(MARKERS["pytest_fold_session_start_begin"])
+    print(MARKERS["pytest_fold_SESSIONSTART_begin"])
     out = yield
-    print(MARKERS["pytest_fold_session_start_end"])
+    print(MARKERS["pytest_fold_SESSIONSTART_end"])
 
 
 @pytest.hookimpl(hookwrapper=True)
@@ -59,9 +69,10 @@ def pytest_sessionfinish(session):
     """
     Write pyfold section-end marker after session finishes
     """
-    print(MARKERS["pytest_fold_session_finish_begin"])
+    print("\n")
+    print(MARKERS["pytest_fold_SESSIONFINISH_begin"])
     out = yield
-    print(MARKERS["pytest_fold_session_finish_end"])
+    print(MARKERS["pytest_fold_SESSIONFINISH_end"])
 
 
 @pytest.hookimpl(hookwrapper=True)
@@ -108,9 +119,9 @@ def pytest_configure(config: Config) -> None:
 
             def tee_write(s, **kwargs):
                 oldwrite(s, **kwargs)
-                # if isinstance(s, str):
-                #     s = s.encode("utf-8")
-                config._pyfoldoutputfile.write(s.encode("utf-8"))
+                if isinstance(s, str):
+                    s = s.encode("utf-8")
+                config._pyfoldoutputfile.write(s)
 
             tr._tw.write = tee_write
 
@@ -128,7 +139,8 @@ def pytest_unconfigure(config: Config) -> None:
         # del config._pyfoldoutputfile
         # Undo our patching in the terminal reporter.
         tr = config.pluginmanager.getplugin("terminalreporter")
-        del tr._tw.__dict__["write"]
+        print("")
+        # del tr._tw.__dict__["write"]
         # write out to file
         with open(OUTFILE, "wb") as outfile:
             outfile.write(sessionlog)
@@ -136,7 +148,7 @@ def pytest_unconfigure(config: Config) -> None:
 
 
 def run_it():
-    """Stub file for possible use to auto-launch TUI"""
+    """Stub file for possible later use to auto-launch TUI"""
     pass
 
 
@@ -146,12 +158,12 @@ def run_it():
 #     print("")
 
 
-# @pytest.hookimpl(hookwrapper=True)
+# @pytest.hookimpl(trylast=True, hookwrapper=True)
 # def pytest_terminal_summary(terminalreporter, exitstatus, config):
+#     print(MARKERS["pytest_fold_terminal_summary_begin"])
 #     out = yield
-#     print(MARKERS["pytest_terminal_summary_begin"])
 #     print(out)
-#     print(MARKERS["pytest_terminal_summary_end"])
+#     print(MARKERS["pytest_fold_terminal_summary_end"])
 
 
 # @pytest.hookimpl(hookwrapper=True)

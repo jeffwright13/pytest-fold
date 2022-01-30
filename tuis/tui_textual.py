@@ -35,13 +35,13 @@ class ResultsData:
         self.results_file = path
         self.sections = []
 
-    def _tokenize_results(self) -> None:
+    def _sectionize_results(self) -> None:
         with open(self.results_file, "r") as results_file:
             results_lines = results_file.readlines()
-        self.sections = utils.tokenize(results_lines)
+        self.sections = utils.sectionize(results_lines)
 
     def get_results(self) -> list:
-        self._tokenize_results()
+        self._sectionize_results()
         return self.sections
 
 
