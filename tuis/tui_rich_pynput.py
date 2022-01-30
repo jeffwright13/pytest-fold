@@ -23,7 +23,7 @@ class ResultsData:
     def get_results(self):
         with open(self.results_file, "r") as results_file:
             results_lines = results_file.readlines()
-        self.sections = utils.tokenize(results_lines)
+        self.sections = utils.sectionize(results_lines)
 
 
 def main():
