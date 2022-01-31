@@ -11,7 +11,7 @@ from asciimatics.widgets import Frame, TextBox, Layout, CheckBox, Button
 
 
 RESULTS_FILE = (
-    "/Users/jwr003/coding/pytest-fold/fold_output.fold"
+    "/Users/jwr003/coding/pytest-fold/console_output.fold"
 )
 DEBUG = True
 
