@@ -1,7 +1,6 @@
 from pathlib import Path
-from math import ceil
 from utils import sectionize
-from plugin import MARKERS
+from plugin import MARKERS, OUTFILE
 from asciimatics.exceptions import ResizeScreenError, StopApplication
 from asciimatics.event import KeyboardEvent
 from asciimatics.parsers import AnsiTerminalParser
@@ -10,11 +9,7 @@ from asciimatics.scene import Scene
 from asciimatics.widgets import Frame, TextBox, Layout, CheckBox, Button
 
 
-RESULTS_FILE = (
-    "/Users/jwr003/coding/pytest-fold/console_output.fold"
-)
 DEBUG = True
-
 
 class ResultsData:
     """
@@ -23,7 +18,7 @@ class ResultsData:
     display on the TUI
     """
 
-    def __init__(self, path: Path = RESULTS_FILE) -> None:
+    def __init__(self, path: Path = OUTFILE) -> None:
         self.results_file = path
         self.sections = []
         self.parsed_sections = []
@@ -98,6 +93,12 @@ class QuitterLayout(Layout):
         raise StopApplication("User requested exit by clicking 'Quit'")
 
 
+"""
+    "pytest_fold_firstline": "~~>PYTEST_FOLD_MARKER_FIRSTLINE<~~",
+    "pytest_fold_failures": "~~>PYTEST_FOLD_MARKER_FAILURES<~~",
+    "pytest_fold_lastline": "~~>PYTEST_FOLD_MARKER_LASTLINE<~~",
+"""
+
 class ResultsFrame(Frame):
     """
     Asciimatics Frame class to display layouts & their widgets
@@ -113,14 +114,13 @@ class ResultsFrame(Frame):
         sections = results_data.get_results()
 
         for section in sections:
-            if section["name"] in ["SESSION_START", "Final"]:
-                # First and last sections of Pytest output are unfolded by default
+            if section["name"] in [MARKERS["pytest_fold_firstline"], MARKERS["pytest_fold_failures"], MARKERS["pytest_fold_lastline"]]:
+                # Unfolded layouts: first & last sections, and "--- FAILURES ---" banner
                 self.add_layout(
                     ResultsLayout(
                         screen=screen,
                         folded=False,
                         # textboxheight=-135792468,
-                        # textboxheight=ceil(len(section["content"]) / screen.width),
                         textboxheight=section["content"].count("\n") + 1,
                         value=section["content"],
                     )
@@ -139,40 +139,6 @@ class ResultsFrame(Frame):
 
         # Last layout sections is the Quitter
         self.add_layout(QuitterLayout(screen))
-
-
-
-        # # First layout section: "header" info from Pytest
-        # self.add_layout(
-        #     ResultsLayout(
-        #         screen=screen,
-        #         folded=False,
-        #         textboxheight=ceil(len(sections[0]) / screen.width),
-        #         value=sections[0],
-        #     )
-        # )
-
-        # # Individual folded layouts, one per failure section from Pytest run
-        # for _ in range(1, len(sections) - 1):
-        #     self.add_layout(
-        #         ResultsLayout(
-        #             screen=screen,
-        #             folded=True,
-        #             textboxheight=ceil(len(sections[_]) / screen.width),
-        #             value=sections[_],
-        #         )
-        #     )
-
-        # # Last layout sections: "summary" info from Pytest, plus the quit button
-        # self.add_layout(
-        #     ResultsLayout(
-        #         screen=screen,
-        #         folded=False,
-        #         textboxheight=ceil(len(sections[-1]) / screen.width),
-        #         value=sections[-1],
-        #     )
-        # )
-        # self.add_layout(QuitterLayout(screen))
 
         # Add widgets to all layouts (needs to be done after layouts are added to frame)
         for layout in self._layouts:
