@@ -14,12 +14,12 @@ def test_version():
     assert __version__ == "0.1.0"
 
 
-def test_which_fails_1():
-    assert 0
+# def test_which_fails_1():
+#     assert 0
 
 
-def test_which_passes_1():
-    assert 1 == 1
+# def test_which_passes_1():
+#     assert 1 == 1
 
 
 # def test_which_fails_2():
@@ -132,8 +132,8 @@ def test_which_passes_1():
 # def test_fixture_for_fun_pass(fixture_for_fun):
 #     assert 1
 
-def test_fixture_for_fun_fail(fixture_for_fun):
-    assert 0
+# def test_fixture_for_fun_fail(fixture_for_fun):
+#     assert 0
 
 
 # def test_hello(hello):
