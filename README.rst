@@ -32,7 +32,7 @@ Should be captured in `requirements.txt` and `setup.py`
 Installation
 ------------
 
-For now, this is manually installable as a Pytest plugin. Cone the project, make a venv, then install in editable mode:
+For now, this is manually installable as a Pytest plugin. Clone the project, create a venv, then install in editable mode:
 
 * `git clone git@github.com:jeffwright13/pytest-fold.git`
 * `cd pytest-fold`
