@@ -34,19 +34,19 @@ Installation
 
 For now, this is manually installable as a Pytest plugin. Cone the project, make a venv, then install in editable mode:
 
-`git clone git@github.com:jeffwright13/pytest-fold.git`
-`cd pytest-fold`
-`python -m venv venv`
-`source venv/bin/activate`
-`pip install -e .`
+* `git clone git@github.com:jeffwright13/pytest-fold.git`
+* `cd pytest-fold`
+* `python -m venv venv`
+* `source venv/bin/activate`
+* `pip install -e .`
 
 
 Usage
 -----
 
 From top-level directory:
-`pytest --fold <other-pytest-options>`
-`python pytest_fold/tui.py`
+* `pytest --fold <other-pytest-options>`
+* `python pytest_fold/tui.py`
 
 
 Known Limitations / Issues
