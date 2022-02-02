@@ -45,6 +45,7 @@ Usage
 -----
 
 From top-level directory:
+
 * `pytest --fold <other-pytest-options>`
 * `python pytest_fold/tui.py`
 
