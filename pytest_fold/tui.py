@@ -11,6 +11,7 @@ from asciimatics.widgets import Frame, TextBox, Layout, CheckBox, Button
 
 DEBUG = True
 
+
 class ResultsData:
     """
     Class to read in results from a 'pytest --fold' session (which inserts markers
@@ -50,6 +51,7 @@ class ResultsLayout(Layout):
     ) -> None:
         # 4 to make room for '[ ]' plus a space; -6 to offset from end of line in frame
         super(ResultsLayout, self).__init__(columns=[4, screen.width - 6])
+        self.screen = screen
         self.textboxheight = textboxheight
         self.value = value
         self.folded = folded
@@ -59,7 +61,6 @@ class ResultsLayout(Layout):
         cb = CheckBox(text="", on_change=self._toggle_checkbox)
         self.add_widget(cb, column=0)
         ht = 1 if self.folded else self.textboxheight
-        wrap = not self.folded
         tb = TextBox(
             height=ht,
             line_wrap=False,
@@ -67,7 +68,7 @@ class ResultsLayout(Layout):
             as_string=True,
             parser=self.parser,
         )
-        tb.value = self.value
+        tb.value = self.value if not self.folded else self.value[: self.screen.width]
         self.add_widget(tb, column=1)
 
     def _toggle_checkbox(self) -> None:
@@ -99,13 +100,19 @@ class QuitterLayout(Layout):
     "pytest_fold_lastline": "~~>PYTEST_FOLD_MARKER_LASTLINE<~~",
 """
 
+
 class ResultsFrame(Frame):
     """
     Asciimatics Frame class to display layouts & their widgets
     """
+
     def __init__(self, screen: Screen) -> None:
         super(ResultsFrame, self).__init__(
-            screen=screen, height=screen.height, width=screen.width, can_scroll=True, hover_focus=True
+            screen=screen,
+            height=screen.height,
+            width=screen.width,
+            can_scroll=True,
+            hover_focus=True,
         )
 
         # Snarf data from results file, sectionize, then add Layout for the resulting
@@ -114,7 +121,11 @@ class ResultsFrame(Frame):
         sections = results_data.get_results()
 
         for section in sections:
-            if section["name"] in [MARKERS["pytest_fold_firstline"], MARKERS["pytest_fold_failures"], MARKERS["pytest_fold_lastline"]]:
+            if section["name"] in [
+                MARKERS["pytest_fold_firstline"],
+                MARKERS["pytest_fold_failures"],
+                MARKERS["pytest_fold_lastline"],
+            ]:
                 # Unfolded layouts: first & last sections, and "--- FAILURES ---" banner
                 self.add_layout(
                     ResultsLayout(

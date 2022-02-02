@@ -1,8 +1,27 @@
 import re
 from plugin import MARKERS
 
-foldmark_matcher = re.compile(r".*(~~>PYTEST_FOLD_MARKER_)+(.*)<==")
+foldmark_matcher = re.compile(r".*(~~>PYTEST_FOLD_MARKER_)+(.*)<~~")
 fail_begin_end_matcher = re.compile(r"(.+)((_BEGIN)|(_END))")
+section_name_matcher = re.compile(r"~~>PYTEST_FOLD_MARKER_(\w+)")
+
+
+def line_is_a_marker(line: str) -> bool:
+    if line.strip() == "":
+        return False
+    return line.strip() in (
+        MARKERS["pytest_fold_firstline"],
+        MARKERS["pytest_fold_errors"],
+        MARKERS["pytest_fold_failures"],
+        MARKERS["pytest_fold_failed_test_begin"],
+        MARKERS["pytest_fold_terminal_summary_begin"],
+    )
+
+
+def line_is_lastline(line: str) -> bool:
+    if line.strip() == "":
+        return False
+    return line.strip() in MARKERS["pytest_fold_lastline"]
 
 
 def sectionize(lines: str) -> dict:
@@ -14,36 +33,24 @@ def sectionize(lines: str) -> dict:
     """
     sections = []
     section = {"name": None, "content": ""}
+    lastline = False
 
-    for _, line in enumerate(lines):
-        search1 = re.search(foldmark_matcher, line)
-        # check if line contains a section marker
-        if search1:
-            # check if line contains a failure being or end marker
-            search2 = re.search(fail_begin_end_matcher, search1.groups()[1])
-            if "BEGIN" in search2.groups()[1]:
-                if section["name"] == "Unmarked":
-                    sections.append(section.copy())
-                section["name"] = search2.groups()[0]
-                section["content"] = ""
-                continue
-            if "END" in search2.groups()[1]:
-                sections.append(section.copy())
-                section["name"] = None
-                section["content"] = ""
-                continue
+    for line in lines:
+        if line_is_a_marker(line):
+            sections.append(section.copy()) if section["name"] else None
+            section["content"] = ""
+            section["name"] = re.search(section_name_matcher, line).groups()[0]
+        elif line_is_lastline(line):
+            lastline = True
+            sections.append(section.copy())
+            section["content"] = ""
+            section["name"] = re.search(section_name_matcher, line).groups()[0]
         else:
-            if not section["name"]:
-                section["name"] = "Unmarked"
             section["content"] += line
-            if _ == len(lines) - 1:
-                section["name"] = "Final"
-                sections.append(section.copy())
-                break
-            continue
+            sections.append(section.copy()) if lastline else None
 
+    # Combine sections for display in TUI
     sections2 = []
-    temp_name = None
     temp_content = ""
     for section in sections:
         if section["name"] in ["SESSION_START", "Final"]:
