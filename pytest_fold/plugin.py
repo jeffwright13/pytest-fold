@@ -21,21 +21,12 @@ MARKERS = {
     "pytest_fold_lastline": "~~>PYTEST_FOLD_MARKER_LASTLINE<~~",
     "pytest_fold_collectreport_begin": "~~>PYTEST_FOLD_MARKER_COLLECTREPORT_BEGIN<~~",
     "pytest_fold_collectreport_end": "~~>PYTEST_FOLD_MARKER_COLLECTREPORT_END<~~",
-    "pytest_fold_sessionstart_begin": "~~>PYTEST_FOLD_MARKER_SESSIONSTART_BEGIN<~~",
-    "pytest_fold_sessionstart_end": "~~>PYTEST_FOLD_MARKER_SESSIONSTART_END<~~",
-    "pytest_fold_sessionfinish_begin": "~~>PYTEST_FOLD_MARKER_SESSIONFINISH_BEGIN<~~",
-    "pytest_fold_sessionfinish_end": "~~>PYTEST_FOLD_MARKER_SESSIONFINISH_END<~~",
-    "pytest_fold_runtest_logreport_begin": "~~>PYTEST_FOLD_MARKER_SESSION_RUNTEST_LOGREPORT_BEGIN<~~",
-    "pytest_fold_runtest_logreport_end": "~~>PYTEST_FOLD_MARKER_SESSION_RUNTEST_LOGREPORT_END<~~",
     "pytest_fold_terminal_summary_begin": "~~>PYTEST_FOLD_MARKER_TERMINAL_SUMMARY_BEGIN<~~",
 }
 
 collect_ignore = [
     "setup.py",
     "plugin.py",
-    "test_small.py",
-    "test_something.py",
-    "test_capture.py",
 ]
 
 

@@ -49,16 +49,4 @@ def sectionize(lines: str) -> dict:
             section["content"] += line
             sections.append(section.copy()) if lastline else None
 
-    # Combine sections for display in TUI
-    sections2 = []
-    temp_content = ""
-    for section in sections:
-        if section["name"] in ["SESSION_START", "Final"]:
-            sections2.append(section.copy())
-        else:
-            temp_content += section["content"]
-            if section["name"] != "Unmarked":
-                sections2.append({"name": section["name"], "content": temp_content})
-                temp_content = ""
-
-    return sections2
+    return sections
