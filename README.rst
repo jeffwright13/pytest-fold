@@ -14,58 +14,60 @@ pytest-fold
     :target: https://www.travis-ci.com/github/jeffwright13/pytest-fold
     :alt: See Build Status on Travis CI
 
-A Pytest plugin to make console output more manageable
+A Pytest plugin to make multi-failure console output more manageable
+
 
 Features
 --------
 
-- PHASE 1:
- - Marks failing tests with a special "folding" mark
-
-- PHASE 2:
- - Folds console output for failing tests so they only take up a single line each
- - Allows unfolding with user interaction
+TBD
 
 
 Requirements
 ------------
 
-- [poetry](https://python-poetry.org/)
+Should be captured in `requirements.txt` and `setup.py`
 
 
 Installation
 ------------
 
-You can install "pytest-fold" via `pip`_ from `PyPI`_::
+For now, this is manually installable as a Pytest plugin. Cone the project, make a venv, then install in editable mode:
 
-    $ pip install pytest-fold
+`git clone git@github.com:jeffwright13/pytest-fold.git`
+`cd pytest-fold`
+`python -m venv venv`
+`source venv/bin/activate`
+`pip install -e .`
 
 
 Usage
 -----
 
-    pytest --fold ...
+From top-level directory:
+`pytest --fold <other-pytest-options>`
+`python pytest_fold/tui.py`
 
 
-Discussion
-----------
-`pytest-fold` does not mark ERROR output sections for folding. It is assumed that
-the tester will want to see full text output from pytest when their tests cause
-an error to be asserted. (TODO: make this configurable?)
+Known Limitations / Issues
+--------------------------
 
-`pytest-fold` does not mark stderr or stdout sections for folding. It is assumed
-that the tester is interested in seeing such output. (TODO: make this configurable?)
-
-`pytest-fold` is currently incompatible with `--tb=native` and will cause an
-INTERNALERROR if run together. (TODO: Fix this.)
+- Rudimentary user interface; needs a lot of love.
+- Most ANSI color codes don't make it yet, meaning the tests are not color coded like they are on console (I have not yet figured out why some sections have ANSI control codes in them and some don't).
+- Not fully tested with all combinations of output formats. Probably some use-cases where things won't work right.
+- Need to figure out how to auto-launch the TUI after a Pytest run, so it is an 'end to end' solution
+- It's a plugin, but not tied up and polished yet, and not on PyPi.
+- ERROR output sections are treated just like FAILURES sections. It is assumed that the tester will want to see full text output from pytest when their tests cause an error to be asserted.
+- `pytest-fold` does not mark stderr or stdout sections for folding. It is assumed that the tester is interested in seeing such output.
+- `pytest-fold` is currently incompatible with `--tb=native` and will cause an INTERNALERROR if run together. (TODO: Fix this.)
 
 
 Contributing
 ------------
-Contributions are very welcome. Please run flake8 and black on your code before
-submitting (at some point I will implement [pre-commit](https://pypi.org/project/pre-commit/)
-in this project). Tests can be run with `tox`_; please ensure the coverage at
-least stays the same before you submit a pull request.
+
+Contributions are very welcome.
+Please run pylakes and black on your code before submitting a PR (at some point I will implement [pre-commit](https://pypi.org/project/pre-commit/) in this project). Tests can be run with `tox`_; please ensure the coverage at least stays the same before you submit a pull request. (Although I haven't run these tests in 7 months, so who knows what condition they're in lol)
+
 
 License
 -------
@@ -76,4 +78,4 @@ Distributed under the terms of the `MIT`_ license, "pytest-fold" is free and ope
 Issues
 ------
 
-If you encounter any problems, please `file an issue`_ along with a detailed description.
+If you encounter any problems, have feedback or requests, or anything else, please `file an issue`, along with a detailed description.

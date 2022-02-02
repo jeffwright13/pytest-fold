@@ -10,8 +10,8 @@ logger.propagate = True
 stdout_handler = logging.StreamHandler(sys.stdout)
 logger.addHandler(stdout_handler)
 
-# def test_version():
-#     assert __version__ == "0.1.0"
+def test_version():
+    assert __version__ == "0.1.0"
 
 
 def test_which_fails_1():
@@ -22,20 +22,20 @@ def test_which_passes_1():
     assert 1 == 1
 
 
-# def test_which_fails_2():
-#     assert 0
+def test_which_fails_2():
+    assert 0
 
 
-# def test_which_passes_2():
-#     assert 1 == 1
+def test_which_passes_2():
+    assert 1 == 1
 
 
-# def test_which_fails_3():
-#     assert 0
+def test_which_fails_3():
+    assert 0
 
 
-# def test_which_passes_3():
-#     assert 1 == 1
+def test_which_passes_3():
+    assert 1 == 1
 
 
 # These two tests are helpful in showing how pytest deals with various types
