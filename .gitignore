@@ -1,3 +1,6 @@
+# Pyfold
+console_output.fold
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
