@@ -25,6 +25,8 @@ From top-level directory:
 * `pytest --fold <other-pytest-options>`
 * `python pytest_fold/tui.py`
 
+To quit, either click the Quit button, or press `Ctrl-X`.
+
 ## Known Limitations / Issues
 - Rudimentary user interface; needs a lot of love.
 - Most ANSI color codes don't make it yet, meaning the tests are not color coded like they are on console (I have not yet figured out why some sections have ANSI control codes in them and some don't).
