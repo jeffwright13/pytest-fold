@@ -1,39 +1,16 @@
-pytest-fold
-
+# pytest-fold
+### A Pytest plugin to make console output more manageable
 
 https://user-images.githubusercontent.com/4308435/152137495-3752b9fa-1831-495c-afbb-a24043c602ef.mp4
 
-
-.. image:: https://img.shields.io/pypi/v/pytest-fold.svg
-    :target: https://pypi.org/project/pytest-fold
-    :alt: PyPI version
-
-.. image:: https://img.shields.io/pypi/pyversions/pytest-fold.svg
-    :target: https://pypi.org/project/pytest-fold
-    :alt: Python versions
-
-.. image:: https://travis-ci.com/jeffwright13/pytest-fold.svg?token=h2yU59uvx7ZpWMRdRGi8&branch=main
-    :target: https://www.travis-ci.com/github/jeffwright13/pytest-fold
-    :alt: See Build Status on Travis CI
-
-A Pytest plugin to make multi-failure console output more manageable
-
-
-Features
---------
+## Features
 
 TBD
 
-
-Requirements
-------------
-
+## Requirements
 Should be captured in `requirements.txt` and `setup.py`
 
-
-Installation
-------------
-
+## Installation
 For now, this is manually installable as a Pytest plugin. Clone the project, create a venv, then install in editable mode:
 
 * `git clone git@github.com:jeffwright13/pytest-fold.git`
@@ -42,19 +19,13 @@ For now, this is manually installable as a Pytest plugin. Clone the project, cre
 * `source venv/bin/activate`
 * `pip install -e .`
 
-
-Usage
------
-
+## Usage
 From top-level directory:
 
 * `pytest --fold <other-pytest-options>`
 * `python pytest_fold/tui.py`
 
-
-Known Limitations / Issues
---------------------------
-
+## Known Limitations / Issues
 - Rudimentary user interface; needs a lot of love.
 - Most ANSI color codes don't make it yet, meaning the tests are not color coded like they are on console (I have not yet figured out why some sections have ANSI control codes in them and some don't).
 - Not fully tested with all combinations of output formats. Probably some use-cases where things won't work right.
@@ -64,21 +35,12 @@ Known Limitations / Issues
 - `pytest-fold` does not mark stderr or stdout sections for folding. It is assumed that the tester is interested in seeing such output.
 - `pytest-fold` is currently incompatible with `--tb=native` and will cause an INTERNALERROR if run together. (TODO: Fix this.)
 
-
-Contributing
-------------
-
+## Contributing
 Contributions are very welcome.
 Please run pylakes and black on your code before submitting a PR (at some point I will implement [pre-commit](https://pypi.org/project/pre-commit/) in this project). Tests can be run with `tox`_; please ensure the coverage at least stays the same before you submit a pull request. (Although I haven't run these tests in 7 months, so who knows what condition they're in lol)
 
-
-License
--------
-
+## License
 Distributed under the terms of the `MIT`_ license, "pytest-fold" is free and open source software.
 
-
-Issues
-------
-
+## Issues
 If you encounter any problems, have feedback or requests, or anything else, please `file an issue`, along with a detailed description.
