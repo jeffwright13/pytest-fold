@@ -142,17 +142,10 @@ def pytest_unconfigure(config: Config) -> None:
         config._pyfoldoutputfile.seek(0)
         sessionlog = config._pyfoldoutputfile.read()
         config._pyfoldoutputfile.close()
-        # del config._pyfoldoutputfile
+
         # Undo our patching in the terminal reporter.
         config.pluginmanager.getplugin("terminalreporter")
-        print("")
-        # del tr._tw.__dict__["write"]
+
         # write out to file
         with open(OUTFILE, "wb") as outfile:
             outfile.write(sessionlog)
-        run_it()
-
-
-def run_it():
-    """Stub file for possible later use to auto-launch TUI"""
-    pass
