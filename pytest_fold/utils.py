@@ -13,8 +13,8 @@ def line_is_a_marker(line: str) -> bool:
         MARKERS["pytest_fold_firstline"],
         MARKERS["pytest_fold_errors"],
         MARKERS["pytest_fold_failures"],
-        MARKERS["pytest_fold_failed_test_begin"],
-        MARKERS["pytest_fold_terminal_summary_begin"],
+        MARKERS["pytest_fold_failed_test"],
+        MARKERS["pytest_fold_terminal_summary"],
     )
 
 

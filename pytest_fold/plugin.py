@@ -16,12 +16,9 @@ MARKERS = {
     "pytest_fold_firstline": "~~>PYTEST_FOLD_MARKER_FIRSTLINE<~~",
     "pytest_fold_errors": "~~>PYTEST_FOLD_MARKER_ERRORS<~~",
     "pytest_fold_failures": "~~>PYTEST_FOLD_MARKER_FAILURES<~~",
-    "pytest_fold_failed_test_begin": "~~>PYTEST_FOLD_MARKER_FAILED_TEST_BEGIN<~~",
-    "pytest_fold_failure_end": "~~>PYTEST_FOLD_MARKER_FAILURE_END<~~",
+    "pytest_fold_failed_test": "~~>PYTEST_FOLD_MARKER_FAILED_TEST<~~",
     "pytest_fold_lastline": "~~>PYTEST_FOLD_MARKER_LASTLINE<~~",
-    "pytest_fold_collectreport_begin": "~~>PYTEST_FOLD_MARKER_COLLECTREPORT_BEGIN<~~",
-    "pytest_fold_collectreport_end": "~~>PYTEST_FOLD_MARKER_COLLECTREPORT_END<~~",
-    "pytest_fold_terminal_summary_begin": "~~>PYTEST_FOLD_MARKER_TERMINAL_SUMMARY_BEGIN<~~",
+    "pytest_fold_terminal_summary": "~~>PYTEST_FOLD_MARKER_TERMINAL_SUMMARY<~~",
 }
 
 collect_ignore = [
@@ -55,19 +52,6 @@ def pytest_runtest_makereport(item, call):
     report.session = item.session
 
 
-@pytest.hookimpl(trylast=True, hookwrapper=True)
-def pytest_runtest_logreport(report):  # sourcery skip: merge-nested-ifs
-    """
-    Write pytest-fold markers around all failed testcases
-    """
-    yield
-    # if report.failed and report.session.config.option.fold:
-    #     report.longrepr.chain[0][0].reprentries[0].lines.insert(
-    #         0, MARKERS["pytest_fold_failed_test_begin"]
-    #     )
-    # report.longrepr.chain[0][0].extraline = MARKERS["pytest_fold_failure_end"]
-
-
 @pytest.hookimpl(trylast=True)
 def pytest_configure(config: Config) -> None:
     """
@@ -89,7 +73,7 @@ def pytest_configure(config: Config) -> None:
 
             def tee_write(s, **kwargs):
                 if config._pyfoldfirsttime:
-                    oldwrite(MARKERS["pytest_fold_firstline"] + "\n")
+                    # oldwrite(MARKERS["pytest_fold_firstline"] + "\n")
                     config._pyfoldoutputfile.write(
                         (MARKERS["pytest_fold_firstline"] + "\n").encode("utf-8")
                     )
@@ -98,7 +82,7 @@ def pytest_configure(config: Config) -> None:
                 # identify and mark the beginning of the errors section
                 search = re.search(errors_matcher, s)
                 if search:
-                    oldwrite(MARKERS["pytest_fold_errors"] + "\n")
+                    # oldwrite(MARKERS["pytest_fold_errors"] + "\n")
                     config._pyfoldoutputfile.write(
                         (MARKERS["pytest_fold_errors"] + "\n").encode("utf-8")
                     )
@@ -106,7 +90,7 @@ def pytest_configure(config: Config) -> None:
                 # identify and mark the beginning of the failures section
                 search = re.search(failures_matcher, s)
                 if search:
-                    oldwrite(MARKERS["pytest_fold_failures"] + "\n")
+                    # oldwrite(MARKERS["pytest_fold_failures"] + "\n")
                     config._pyfoldoutputfile.write(
                         (MARKERS["pytest_fold_failures"] + "\n").encode("utf-8")
                     )
@@ -115,9 +99,9 @@ def pytest_configure(config: Config) -> None:
                 # failed test is identified/marked in 'pytest_runtest_logreport' method)
                 search = re.search(failed_test_start_marker, s)
                 if search:
-                    oldwrite(MARKERS["pytest_fold_failed_test_begin"] + "\n")
+                    # oldwrite(MARKERS["pytest_fold_failed_test"] + "\n")
                     config._pyfoldoutputfile.write(
-                        (MARKERS["pytest_fold_failed_test_begin"] + "\n").encode(
+                        (MARKERS["pytest_fold_failed_test"] + "\n").encode(
                             "utf-8"
                         )
                     )
@@ -125,9 +109,9 @@ def pytest_configure(config: Config) -> None:
                 # identify and mark the beginning of the final summary info line
                 search = re.search(summary_matcher, s)
                 if search:
-                    oldwrite(MARKERS["pytest_fold_terminal_summary_begin"] + "\n")
+                    # oldwrite(MARKERS["pytest_fold_terminal_summary"] + "\n")
                     config._pyfoldoutputfile.write(
-                        (MARKERS["pytest_fold_terminal_summary_begin"] + "\n").encode(
+                        (MARKERS["pytest_fold_terminal_summary"] + "\n").encode(
                             "utf-8"
                         )
                     )
@@ -135,7 +119,7 @@ def pytest_configure(config: Config) -> None:
                 # identify and mark the very last line of terminal output
                 search = re.search(lastline_matcher, s)
                 if search:
-                    oldwrite(MARKERS["pytest_fold_lastline"] + "\n")
+                    # oldwrite(MARKERS["pytest_fold_lastline"] + "\n")
                     config._pyfoldoutputfile.write(
                         (MARKERS["pytest_fold_lastline"] + "\n").encode("utf-8")
                     )
