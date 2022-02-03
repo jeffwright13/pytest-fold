@@ -94,13 +94,6 @@ class QuitterLayout(Layout):
         raise StopApplication("User requested exit by clicking 'Quit'")
 
 
-"""
-    "pytest_fold_firstline": "~~>PYTEST_FOLD_MARKER_FIRSTLINE<~~",
-    "pytest_fold_failures": "~~>PYTEST_FOLD_MARKER_FAILURES<~~",
-    "pytest_fold_lastline": "~~>PYTEST_FOLD_MARKER_LASTLINE<~~",
-"""
-
-
 class ResultsFrame(Frame):
     """
     Asciimatics Frame class to display layouts & their widgets
