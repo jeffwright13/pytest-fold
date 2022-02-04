@@ -4,6 +4,7 @@ import re
 
 from pathlib import Path
 from _pytest.config import Config
+from _pytest._io.terminalwriter import TerminalWriter
 
 failures_matcher = re.compile(r"^==.*\sFAILURES\s==+")
 errors_matcher = re.compile(r"^==.*\sERRORS\s==+")
@@ -101,9 +102,7 @@ def pytest_configure(config: Config) -> None:
                 if search:
                     # oldwrite(MARKERS["pytest_fold_failed_test"] + "\n")
                     config._pyfoldoutputfile.write(
-                        (MARKERS["pytest_fold_failed_test"] + "\n").encode(
-                            "utf-8"
-                        )
+                        (MARKERS["pytest_fold_failed_test"] + "\n").encode("utf-8")
                     )
 
                 # identify and mark the beginning of the final summary info line
@@ -111,9 +110,7 @@ def pytest_configure(config: Config) -> None:
                 if search:
                     # oldwrite(MARKERS["pytest_fold_terminal_summary"] + "\n")
                     config._pyfoldoutputfile.write(
-                        (MARKERS["pytest_fold_terminal_summary"] + "\n").encode(
-                            "utf-8"
-                        )
+                        (MARKERS["pytest_fold_terminal_summary"] + "\n").encode("utf-8")
                     )
 
                 # identify and mark the very last line of terminal output
@@ -124,10 +121,18 @@ def pytest_configure(config: Config) -> None:
                         (MARKERS["pytest_fold_lastline"] + "\n").encode("utf-8")
                     )
 
+                # Write this line's text along with its markup info to console
                 oldwrite(s, **kwargs)
-                if isinstance(s, str):
-                    s = s.encode("utf-8")
-                config._pyfoldoutputfile.write(s)
+
+                # Mark up this line's text by passing it to an instance of TerminalWriter's
+                # 'markup' method. Do not pass "flush" to the method or it wil throw an error.
+                s1 = s
+                kwargs.pop("flush") if "flush" in kwargs.keys() else None
+                s1 = TerminalWriter().markup(s, **kwargs)
+
+                if isinstance(s1, str):
+                    marked_up = s1.encode("utf-8")
+                config._pyfoldoutputfile.write(marked_up)
 
             tr._tw.write = tee_write
 
