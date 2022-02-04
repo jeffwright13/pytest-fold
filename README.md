@@ -1,14 +1,25 @@
 # pytest-fold
-### A Pytest plugin to make console output more manageable
+## A Pytest plugin to make console output more manageable
 
 https://user-images.githubusercontent.com/4308435/152137495-3752b9fa-1831-495c-afbb-a24043c602ef.mp4
 
-## Features
+## Introduction
+Do you run long Pytest campaigns and get lots of failures? And then spend the next 15 minutes scrolling back in your console to find the one traceback that you're interested in drilling down into? Well, maybe `pytest-fold` can help. `pytest-fold` is a simple plugin that captures the output from your test runs, and redirects it into an interactive Text User Interface (TUI), where all your failed tests are "folded up" by default, showing only their titles and their status. Simply click on any test title to open it up and show its traceback information. Click again and it folds away once more.
 
-TBD
+## Features
+- ANSI text markup support - hatever the output on your console looks like is how things are going to show up in the TUI
+- Mouse and keyboard support 
+- Support for all output formats/modes:
+  - `-v`, `-vv`, `-no-header, `--showlocals`, `--color=<yes|no|auto>`
+  - all variants of `--tb` except "native"
+- Support for other, simple output-manipulating plugins:
+  - `pytest-clarity`
+- Not supported: plugins that completely take over the console:
+  - `pytest-sugar`
 
 ## Requirements
-Should be captured in `requirements.txt` and `setup.py`
+- Works on Mac, Linux, Windows
+- Requires Pytest >= 6.2.5
 
 ## Installation
 For now, this is manually installable as a Pytest plugin. Clone the project, create a venv, then install in editable mode:
