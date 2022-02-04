@@ -12,7 +12,7 @@ Do you run long Pytest campaigns and get lots of failures? And then spend the ne
 - ANSI text markup support - hatever the output on your console looks like is how things are going to show up in the TUI
 - Mouse and keyboard support 
 - Support for all output formats/modes:
-  - `-v`, `-vv`, `-no-header, `--showlocals`, `--color=<yes|no|auto>`
+  - `-v`, `-vv`, `-no-header`, `--showlocals`, `--color=<yes|no|auto>`
   - all variants of `--tb` except "native"
 - Support for other, simple output-manipulating plugins:
   - `pytest-clarity`
