@@ -1,4 +1,5 @@
 import pytest
+import subprocess
 import tempfile
 import re
 
@@ -72,7 +73,7 @@ def pytest_configure(config: Config) -> None:
             config._pyfoldoutputfile = tempfile.TemporaryFile("wb+")
             oldwrite = tr._tw.write
 
-            def tee_write(s, **kwargs):
+            def tee_write(s, **kwargs):  # sourcery skip: use-named-expression
                 if config._pyfoldfirsttime:
                     # oldwrite(MARKERS["pytest_fold_firstline"] + "\n")
                     config._pyfoldoutputfile.write(
@@ -137,7 +138,7 @@ def pytest_configure(config: Config) -> None:
             tr._tw.write = tee_write
 
 
-def pytest_unconfigure(config: Config) -> None:
+def pytest_unconfigure(config: Config):
     """
     Write console output to a file for use by TUI
     (part 2; used in conjunction with pytest_configure, above)
@@ -154,3 +155,16 @@ def pytest_unconfigure(config: Config) -> None:
         # write out to file
         with open(OUTFILE, "wb") as outfile:
             outfile.write(sessionlog)
+
+        # Call TUI
+        pyfold_sessionfinish()
+
+
+def pyfold_sessionfinish():
+    """
+    Final invocation after Pytest rnun has completed.
+    This method calls the Pyfold TUI for results display.
+    """
+    path = Path.cwd()
+    print(f"Path: {path}")
+    subprocess.run(["python", f"{Path.cwd()}/pytest_fold/tui.py"])
