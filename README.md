@@ -33,18 +33,18 @@ For now, this is manually installable as a Pytest plugin. Clone the project, cre
 * `pip install -e .`
 
 ## Usage
+**Suppressing of Pytest's stdout/stderr capture (using the `-s` flag) is temorarily required. Otherwise the TUI's display will be corrupted.**
+
 From top-level directory:
 
-* `pytest --fold <other-pytest-options>`
-* `python pytest_fold/tui.py`
+* `pytest --fold -s <other-pytest-options>`
 
-To quit, either click the Quit button, or press `Ctrl-X`.
+To quit the TUI, either click the Quit button, or press `Ctrl-X`.
 
 ## Known Limitations / Issues
+- You must invoke your Pytest test runs with the `--fold` option **plus** `-s` (see "Usage" above)
 - Rudimentary user interface; needs a lot of love.
-- Most ANSI color codes don't make it yet, meaning the tests are not color coded like they are on console (I have not yet figured out why some sections have ANSI control codes in them and some don't).
 - Not fully tested with all combinations of output formats. Probably some use-cases where things won't work right.
-- Need to figure out how to auto-launch the TUI after a Pytest run, so it is an 'end to end' solution
 - It's a plugin, but not tied up and polished yet, and not on PyPi.
 - ERROR output sections are treated just like FAILURES sections. It is assumed that the tester will want to see full text output from pytest when their tests cause an error to be asserted.
 - `pytest-fold` does not mark stderr or stdout sections for folding. It is assumed that the tester is interested in seeing such output.
