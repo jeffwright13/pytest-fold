@@ -19,7 +19,7 @@ setup(
     license="MIT",
     url="https://github.com/jeffwright13/pytest-fold",
     description="Fold console output and drop user into interactive text user interface",
-    long_description=read("README.rst"),
+    long_description=read("README.md"),
     packages=["pytest_fold"],
     py_modules=["pytest_fold"],
     python_requires=">=3.7",
