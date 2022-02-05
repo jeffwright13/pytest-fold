@@ -1,9 +1,7 @@
 # pytest-fold
 ## A Pytest plugin to make console output more manageable
 
-
-https://user-images.githubusercontent.com/4308435/152477806-e78ed2f9-4646-4b0b-bb21-90c097a1e73c.mp4
-
+https://user-images.githubusercontent.com/4308435/152653413-acba6882-e930-4d61-ba9c-032bedefe508.mp4
 
 ## Introduction
 Do you run long Pytest campaigns and get lots of failures? And then spend the next 15 minutes scrolling back in your console to find the one traceback that you're interested in drilling down into? Well, maybe `pytest-fold` can help. `pytest-fold` is a simple plugin that captures the output from your test runs, and redirects it into an interactive Text User Interface (TUI), where all your failed tests are "folded up" by default, showing only their titles and their status. Simply click on any test title to open it up and show its traceback information. Click again and it folds away once more.
