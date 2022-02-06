@@ -8,7 +8,7 @@ Do you run long Pytest campaigns and get lots of failures? And then spend the ne
 
 ## Features
 - ANSI text markup support - whatever the output on your console looks like is how things are going to show up in the TUI
-- Mouse and keyboard support 
+- Mouse and keyboard support
 - Support for all output formats/modes:
   - `-v`, `-vv`, `-no-header`, `--showlocals`, `--color=<yes|no|auto>`
   - all variants of `--tb` except "native"
@@ -22,16 +22,10 @@ Do you run long Pytest campaigns and get lots of failures? And then spend the ne
 - Requires Pytest >= 6.2.5
 
 ## Installation
-For now, this is manually installable as a Pytest plugin. Clone the project, create a venv, then install in editable mode:
-
-* `git clone git@github.com:jeffwright13/pytest-fold.git`
-* `cd pytest-fold`
-* `python -m venv venv`
-* `source venv/bin/activate`
-* `pip install -e .`
+`pip install pytest-fold`
 
 ## Usage
-**Suppressing of Pytest's stdout/stderr capture (using the `-s` flag) is temorarily required. Otherwise the TUI's display will be corrupted.**
+**Suppressing of Pytest's stdout/stderr capture (using the `-s` flag) is temporarily required. Otherwise the TUI's display will be corrupted.**
 
 From top-level directory:
 

@@ -5,6 +5,7 @@ import re
 
 from pathlib import Path
 from _pytest.config import Config
+from _pytest.main import Session
 from _pytest._io.terminalwriter import TerminalWriter
 
 failures_matcher = re.compile(r"^==.*\sFAILURES\s==+")
@@ -30,7 +31,7 @@ collect_ignore = [
 
 
 def pytest_addoption(parser):
-    """These two methods register the pytest-fold option (--fold)"""
+    """Registers the pytest-fold option (--fold)"""
     group = parser.getgroup("fold")
     group.addoption(
         "--fold", action="store_true", help="fold: fold failed test output sections"
@@ -39,7 +40,7 @@ def pytest_addoption(parser):
 
 @pytest.fixture(autouse=True)
 def fold(request):
-    """These two methods register the pytest-fold option (--fold)"""
+    """Checks to see if the --fold is enabled"""
     return request.config.getoption("--fold")
 
 
@@ -63,7 +64,6 @@ def pytest_configure(config: Config) -> None:
     if config.option.fold:
         tr = config.pluginmanager.getplugin("terminalreporter")
         if tr is not None:
-
             # identify and mark the very first line of terminal output
             try:
                 config._pyfoldfirsttime

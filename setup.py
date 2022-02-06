@@ -20,6 +20,7 @@ setup(
     url="https://github.com/jeffwright13/pytest-fold",
     description="Fold console output and drop user into interactive text user interface",
     long_description=read("README.md"),
+    long_description_content_type="text/markdown",
     packages=["pytest_fold"],
     py_modules=["pytest_fold"],
     python_requires=">=3.7",
