@@ -4,25 +4,13 @@ import tempfile
 import re
 
 from pathlib import Path
+
 from _pytest.config import Config
 from _pytest.main import Session
 from _pytest._io.terminalwriter import TerminalWriter
 
-failures_matcher = re.compile(r"^==.*\sFAILURES\s==+")
-errors_matcher = re.compile(r"^==.*\sERRORS\s==+")
-failed_test_start_marker = re.compile(r"^__.*\s(.*)\s__+")
-summary_matcher = re.compile(r"^==.*short test summary info\s.*==+")
-lastline_matcher = re.compile(r"^==.*in\s\d+.\d+s.*==+")
-
-OUTFILE = Path.cwd() / "console_output.fold"
-MARKERS = {
-    "pytest_fold_firstline": "~~>PYTEST_FOLD_MARKER_FIRSTLINE<~~",
-    "pytest_fold_errors": "~~>PYTEST_FOLD_MARKER_ERRORS<~~",
-    "pytest_fold_failures": "~~>PYTEST_FOLD_MARKER_FAILURES<~~",
-    "pytest_fold_failed_test": "~~>PYTEST_FOLD_MARKER_FAILED_TEST<~~",
-    "pytest_fold_lastline": "~~>PYTEST_FOLD_MARKER_LASTLINE<~~",
-    "pytest_fold_terminal_summary": "~~>PYTEST_FOLD_MARKER_TERMINAL_SUMMARY<~~",
-}
+from pytest_fold.tui import main as tui
+from pytest_fold.utils import failures_matcher, errors_matcher, failed_test_start_marker, summary_matcher, lastline_matcher, OUTFILE, MARKERS
 
 collect_ignore = [
     "setup.py",
@@ -131,6 +119,7 @@ def pytest_configure(config: Config) -> None:
                 kwargs.pop("flush") if "flush" in kwargs.keys() else None
                 s1 = TerminalWriter().markup(s, **kwargs)
 
+                # Encode the marked up line so it can be written to the config pbject
                 if isinstance(s1, str):
                     marked_up = s1.encode("utf-8")
                 config._pyfoldoutputfile.write(marked_up)
@@ -162,9 +151,8 @@ def pytest_unconfigure(config: Config):
 
 def pyfold_sessionfinish():
     """
-    Final invocation after Pytest rnun has completed.
-    This method calls the Pyfold TUI for results display.
+    Final code invocation after Pytest run has completed.
+    This method calls the Pyfold TUI to display final results.
     """
     path = Path.cwd()
-    print(f"Path: {path}")
-    subprocess.run(["python", f"{Path.cwd()}/pytest_fold/tui.py"])
+    tui()
