@@ -1,12 +1,11 @@
 from pathlib import Path
-from utils import sectionize
-from plugin import MARKERS, OUTFILE
 from asciimatics.exceptions import ResizeScreenError, StopApplication
 from asciimatics.event import KeyboardEvent
 from asciimatics.parsers import AnsiTerminalParser
 from asciimatics.screen import Screen
 from asciimatics.scene import Scene
 from asciimatics.widgets import Frame, TextBox, Layout, CheckBox, Button
+from pytest_fold.utils import MARKERS, OUTFILE, sectionize
 
 
 DEBUG = True

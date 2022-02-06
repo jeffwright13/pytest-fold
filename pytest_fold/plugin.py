@@ -1,26 +1,16 @@
 import pytest
+import subprocess
 import tempfile
 import re
 
 from pathlib import Path
+
 from _pytest.config import Config
+from _pytest.main import Session
 from _pytest._io.terminalwriter import TerminalWriter
 
-failures_matcher = re.compile(r"^==.*\sFAILURES\s==+")
-errors_matcher = re.compile(r"^==.*\sERRORS\s==+")
-failed_test_start_marker = re.compile(r"^__.*\s(.*)\s__+")
-summary_matcher = re.compile(r"^==.*short test summary info\s.*==+")
-lastline_matcher = re.compile(r"^==.*in\s\d+.\d+s.*==+")
-
-OUTFILE = Path.cwd() / "console_output.fold"
-MARKERS = {
-    "pytest_fold_firstline": "~~>PYTEST_FOLD_MARKER_FIRSTLINE<~~",
-    "pytest_fold_errors": "~~>PYTEST_FOLD_MARKER_ERRORS<~~",
-    "pytest_fold_failures": "~~>PYTEST_FOLD_MARKER_FAILURES<~~",
-    "pytest_fold_failed_test": "~~>PYTEST_FOLD_MARKER_FAILED_TEST<~~",
-    "pytest_fold_lastline": "~~>PYTEST_FOLD_MARKER_LASTLINE<~~",
-    "pytest_fold_terminal_summary": "~~>PYTEST_FOLD_MARKER_TERMINAL_SUMMARY<~~",
-}
+from pytest_fold.tui import main as tui
+from pytest_fold.utils import failures_matcher, errors_matcher, failed_test_start_marker, summary_matcher, lastline_matcher, OUTFILE, MARKERS
 
 collect_ignore = [
     "setup.py",
@@ -29,7 +19,7 @@ collect_ignore = [
 
 
 def pytest_addoption(parser):
-    """These two methods register the pytest-fold option (--fold)"""
+    """Registers the pytest-fold option (--fold)"""
     group = parser.getgroup("fold")
     group.addoption(
         "--fold", action="store_true", help="fold: fold failed test output sections"
@@ -38,7 +28,7 @@ def pytest_addoption(parser):
 
 @pytest.fixture(autouse=True)
 def fold(request):
-    """These two methods register the pytest-fold option (--fold)"""
+    """Checks to see if the --fold is enabled"""
     return request.config.getoption("--fold")
 
 
@@ -62,7 +52,6 @@ def pytest_configure(config: Config) -> None:
     if config.option.fold:
         tr = config.pluginmanager.getplugin("terminalreporter")
         if tr is not None:
-
             # identify and mark the very first line of terminal output
             try:
                 config._pyfoldfirsttime
@@ -72,7 +61,7 @@ def pytest_configure(config: Config) -> None:
             config._pyfoldoutputfile = tempfile.TemporaryFile("wb+")
             oldwrite = tr._tw.write
 
-            def tee_write(s, **kwargs):
+            def tee_write(s, **kwargs):  # sourcery skip: use-named-expression
                 if config._pyfoldfirsttime:
                     # oldwrite(MARKERS["pytest_fold_firstline"] + "\n")
                     config._pyfoldoutputfile.write(
@@ -130,6 +119,7 @@ def pytest_configure(config: Config) -> None:
                 kwargs.pop("flush") if "flush" in kwargs.keys() else None
                 s1 = TerminalWriter().markup(s, **kwargs)
 
+                # Encode the marked up line so it can be written to the config pbject
                 if isinstance(s1, str):
                     marked_up = s1.encode("utf-8")
                 config._pyfoldoutputfile.write(marked_up)
@@ -137,7 +127,7 @@ def pytest_configure(config: Config) -> None:
             tr._tw.write = tee_write
 
 
-def pytest_unconfigure(config: Config) -> None:
+def pytest_unconfigure(config: Config):
     """
     Write console output to a file for use by TUI
     (part 2; used in conjunction with pytest_configure, above)
@@ -154,3 +144,15 @@ def pytest_unconfigure(config: Config) -> None:
         # write out to file
         with open(OUTFILE, "wb") as outfile:
             outfile.write(sessionlog)
+
+        # Call TUI
+        pyfold_sessionfinish()
+
+
+def pyfold_sessionfinish():
+    """
+    Final code invocation after Pytest run has completed.
+    This method calls the Pyfold TUI to display final results.
+    """
+    path = Path.cwd()
+    tui()

@@ -1,0 +1,24 @@
+RELEASE_INSTRUCTIONS
+--------------------
+- Verify package installs and run correctly locally (from toplevel):
+  pip install -e .
+- Install/upgrade build & release tools:
+  pip install --upgrade setuptools wheel twine
+- Build:
+  python setup.py sdist bdist_wheel
+- Publish to TestPyPi:
+  python -m twince publish testpypi dist/*
+- Test the installation:
+  pip uninstall -y pytest-fold
+  python -m pip install --index-url https://test.pypi.org/simple/ pytest-fold
+- Run a test run to make sure it works (verify TUI):
+  pytest --fold -s
+- Unistall again:
+  pip uninstall -y pytest-fold
+- Publish to Pypi:
+  python -m twine upload dist/*
+- Test the installation:
+  pip uninstall -y pytest-fold
+  pip install pytest-fold
+- Run a test run to make sure it works (verify TUI):
+  pytest --fold -s
