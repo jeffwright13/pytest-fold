@@ -4,10 +4,12 @@ RELEASE_INSTRUCTIONS
   pip install -e .
 - Install/upgrade build & release tools:
   pip install --upgrade setuptools wheel twine
+- Clear out old builds:
+  rm dist/*
 - Build:
   python setup.py sdist bdist_wheel
 - Publish to TestPyPi:
-  python -m twince publish testpypi dist/*
+  python -m twine upload --repository testpypi dist/*
 - Test the installation:
   pip uninstall -y pytest-fold
   python -m pip install --index-url https://test.pypi.org/simple/ pytest-fold
