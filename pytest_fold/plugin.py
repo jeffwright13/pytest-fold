@@ -155,4 +155,5 @@ def pyfold_sessionfinish():
     This method calls the Pyfold TUI to display final results.
     """
     path = Path.cwd()
-    tui()
+    # tui()
+    subprocess.run(["python", "/Users/jwr003/coding/pytest-fold/pytest_fold/tui-textual.py"])
