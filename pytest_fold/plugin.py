@@ -6,10 +6,11 @@ import re
 from pathlib import Path
 
 from _pytest.config import Config
-from _pytest.main import Session
+# from _pytest.main import Session
 from _pytest._io.terminalwriter import TerminalWriter
 
-from pytest_fold.tui import main as tui
+from pytest_fold.tuit import main as tuit
+from pytest_fold.tuit import MyApp
 from pytest_fold.utils import failures_matcher, errors_matcher, failed_test_start_marker, summary_matcher, lastline_matcher, OUTFILE, MARKERS
 
 collect_ignore = [
@@ -146,14 +147,15 @@ def pytest_unconfigure(config: Config):
             outfile.write(sessionlog)
 
         # Call TUI
-        pyfold_sessionfinish()
+        pyfold_tui()
 
 
-def pyfold_sessionfinish():
+def pyfold_tui():
     """
     Final code invocation after Pytest run has completed.
     This method calls the Pyfold TUI to display final results.
     """
-    path = Path.cwd()
-    # tui()
-    subprocess.run(["python", "/Users/jwr003/coding/pytest-fold/pytest_fold/tui-textual.py"])
+    # MyApp.run()
+    tuit()
+    # path = Path.cwd()
+    # subprocess.run(["python", f"{path}/pytest_fold/tui2.py"])
