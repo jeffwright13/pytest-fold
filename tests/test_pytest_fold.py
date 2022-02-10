@@ -40,104 +40,104 @@ def test_which_passes_3():
 
 # # These two tests are helpful in showing how pytest deals with various types
 # # of output (stdout, stderr, log)
-# def test_fail_capturing(capsys):
-#     print("FAIL this stdout is captured")
-#     print("FAIL this stderr is captured", file=sys.stderr)
-#     logger.warning("FAIL this log is captured")
-#     with capsys.disabled():
-#         print("FAIL stdout not captured, going directly to sys.stdout")
-#         print("FAIL stderr not captured, going directly to sys.stderr", file=sys.stderr)
-#         logger.warning("FAIL is this log captured?")
-#     print("FAIL this stdout is also captured")
-#     print("FAIL this stderr is also captured", file=sys.stderr)
-#     logger.warning("FAIL this log is also captured")
-#     assert False
+def test_fail_capturing(capsys):
+    print("FAIL this stdout is captured")
+    print("FAIL this stderr is captured", file=sys.stderr)
+    logger.warning("FAIL this log is captured")
+    with capsys.disabled():
+        print("FAIL stdout not captured, going directly to sys.stdout")
+        print("FAIL stderr not captured, going directly to sys.stderr", file=sys.stderr)
+        logger.warning("FAIL is this log captured?")
+    print("FAIL this stdout is also captured")
+    print("FAIL this stderr is also captured", file=sys.stderr)
+    logger.warning("FAIL this log is also captured")
+    assert False
 
 
-# def test_pass_capturing(capsys):
-#     print("\nPASS this stdout is captured")
-#     print("PASS this stderr is captured", file=sys.stderr)
-#     logger.warning("PASS this log is captured")
-#     with capsys.disabled():
-#         print("PASS stdout not captured, going directly to sys.stdout")
-#         print("PASS stderr not captured, going directly to sys.stderr", file=sys.stderr)
-#         logger.warning("is this log captured?")
-#     print("PASS this stdout is also captured")
-#     print("PASS this stderr is also captured", file=sys.stderr)
-#     logger.warning("PASS this log is also captured")
-#     assert True
+def test_pass_capturing(capsys):
+    print("\nPASS this stdout is captured")
+    print("PASS this stderr is captured", file=sys.stderr)
+    logger.warning("PASS this log is captured")
+    with capsys.disabled():
+        print("PASS stdout not captured, going directly to sys.stdout")
+        print("PASS stderr not captured, going directly to sys.stderr", file=sys.stderr)
+        logger.warning("is this log captured?")
+    print("PASS this stdout is also captured")
+    print("PASS this stderr is also captured", file=sys.stderr)
+    logger.warning("PASS this log is also captured")
+    assert True
 
 
-# def test_fail_1():
-#     a = 0
-#     time.sleep(0.05)
-#     assert False
+def test_fail_1():
+    a = 0
+    time.sleep(0.05)
+    assert False
 
 
-# def test_pass_1():
-#     a = 0
-#     time.sleep(0.05)
-#     assert True
+def test_pass_1():
+    a = 0
+    time.sleep(0.05)
+    assert True
 
 
-# def test_fail_2():
-#     a = 0
-#     time.sleep(0.05)
-#     assert False
+def test_fail_2():
+    a = 0
+    time.sleep(0.05)
+    assert False
 
 
-# def test_pass_2():
-#     a = 0
-#     time.sleep(0.05)
-#     assert True
+def test_pass_2():
+    a = 0
+    time.sleep(0.05)
+    assert True
 
 
-# def test_fail_3():
-#     a = 0
-#     time.sleep(0.05)
-#     assert False
+def test_fail_3():
+    a = 0
+    time.sleep(0.05)
+    assert False
 
 
-# def test_pass_3():
-#     a = 0
-#     time.sleep(0.05)
-#     assert True
+def test_pass_3():
+    a = 0
+    time.sleep(0.05)
+    assert True
 
 
-# def test_which_fails_and_has_stdout_1(capsys):
-#     print("this test fails")
-#     assert 0 == 1
+def test_which_fails_and_has_stdout_1(capsys):
+    print("this test fails")
+    assert 0 == 1
 
 
-# def test_which_pauses_and_fails_and_has_stdout_1(capsys):
-#     print("this test pauses, then fails")
-#     time.sleep(2)
-#     assert 0 == -11
+def test_which_pauses_and_fails_and_has_stdout_1(capsys):
+    print("this test pauses, then fails")
+    # time.sleep(2)
+    assert 0 == -11
 
 
-# def test_which_passes_and_has_stdout_2(capsys):
-#     print("this test passes")  # stdout is consumed by pytest
-#     assert "a" == "a"
+def test_which_passes_and_has_stdout_2(capsys):
+    print("this test passes")  # stdout is consumed by pytest
+    assert "a" == "a"
 
 
-# def test_summary():
-#     assert "a" == "a"
+def test_summary():
+    assert "a" == "a"
 
 # This test can intentionally cause an error - useful for testing output of
 # folding - if the fixture is commented out, the test throws an error at setup.
-# @pytest.fixture()
-# def fixture_for_fun():
-#     pass
+@pytest.fixture()
+def fixture_for_fun():
+    pass
 
-# def test_fixture_for_fun_pass(fixture_for_fun):
-#     assert 1
+def test_fixture_for_fun_pass(fixture_for_fun):
+    assert 1
 
-# def test_fixture_for_fun_fail(fixture_for_fun):
-#     assert 0
+def test_fixture_for_fun_fail(fixture_for_fun):
+    assert 0
 
 
-# def test_hello(hello):
-#     assert "hello" == "hello"
+def test_hello(hello):
+    assert "hello" == "hello"
 
 # ### Following few tests takn from Okken's book
 # @pytest.fixture()

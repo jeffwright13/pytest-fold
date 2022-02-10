@@ -1,3 +1,4 @@
+from collections import Counter
 from pathlib import Path
 from asciimatics.exceptions import ResizeScreenError, StopApplication
 from asciimatics.event import KeyboardEvent
@@ -113,6 +114,8 @@ class ResultsFrame(Frame):
         sections = results_data.get_results()
 
         for section in sections:
+            c = Counter(section["content"])
+
             if section["name"] in [
                 MARKERS["pytest_fold_firstline"],
                 MARKERS["pytest_fold_failures"],
@@ -123,8 +126,7 @@ class ResultsFrame(Frame):
                     ResultsLayout(
                         screen=screen,
                         folded=False,
-                        # textboxheight=-135792468,
-                        textboxheight=section["content"].count("\n") + 1,
+                        textboxheight=c["\n"] + 1,
                         value=section["content"],
                     )
                 )
@@ -134,8 +136,7 @@ class ResultsFrame(Frame):
                     ResultsLayout(
                         screen=screen,
                         folded=True,
-                        textboxheight=section["content"].count("\n") + 1,
-                        # textboxheight=ceil(len(section["content"]) / screen.width),
+                        textboxheight=c["\n"] + 1,
                         value=section["content"],
                     )
                 )

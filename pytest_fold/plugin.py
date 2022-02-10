@@ -10,7 +10,6 @@ from _pytest.config import Config
 from _pytest._io.terminalwriter import TerminalWriter
 
 from pytest_fold.tuit import main as tuit
-from pytest_fold.tuit import MyApp
 from pytest_fold.utils import failures_matcher, errors_matcher, failed_test_start_marker, summary_matcher, lastline_matcher, OUTFILE, MARKERS
 
 collect_ignore = [
@@ -146,7 +145,6 @@ def pytest_unconfigure(config: Config):
         with open(OUTFILE, "wb") as outfile:
             outfile.write(sessionlog)
 
-        # Call TUI
         pyfold_tui()
 
 
@@ -155,7 +153,4 @@ def pyfold_tui():
     Final code invocation after Pytest run has completed.
     This method calls the Pyfold TUI to display final results.
     """
-    # MyApp.run()
     tuit()
-    # path = Path.cwd()
-    # subprocess.run(["python", f"{path}/pytest_fold/tui2.py"])
