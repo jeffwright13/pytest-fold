@@ -47,12 +47,15 @@ class Hover(Widget):
         return Panel(self.text, style=("dim italic" if not self.mouse_over else ""))
 
     def on_enter(self) -> None:
+        # self._update_size((0, 20))
         self.mouse_over = True
 
-    def on_click(self) -> None:
-        self._update_size((0, 20))
+    # def on_click(self) -> None:
+    #     width = 20 if self._size[1] == 1 else 1
+    #     self._update_size((0, width))
 
     def on_leave(self) -> None:
+        # self._update_size((0, 1))
         self.mouse_over = False
 
 
@@ -67,7 +70,7 @@ class HoverApp(App):
         await self.view.dock(Header(), edge="top", size=1)
         await self.view.dock(Footer(), edge="bottom")
         sections = ResultsData().get_results()
-        hovers = [Hover(text=Text(section["content"]), size=(10,20)) for section in sections]
+        hovers = [Hover(text=Text.from_ansi(section["content"]), size=(10,20)) for section in sections]
         await self.view.dock(*hovers, edge="top", size=6)
 
 
