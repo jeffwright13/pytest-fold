@@ -1,14 +1,13 @@
 import pytest
-import subprocess
 import tempfile
 import re
 
 from pathlib import Path
 
 from _pytest.config import Config
-# from _pytest.main import Session
 from _pytest._io.terminalwriter import TerminalWriter
 
+from pytest_fold.tui import main as tui
 from pytest_fold.tuit import main as tuit
 from pytest_fold.utils import failures_matcher, errors_matcher, failed_test_start_marker, summary_matcher, lastline_matcher, OUTFILE, MARKERS
 
