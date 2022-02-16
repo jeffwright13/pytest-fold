@@ -54,6 +54,7 @@ def sectionize(lines: str) -> dict:
     for line in lines:
         if line_is_a_marker(line):
             sections.append(section.copy()) if section["name"] else None
+            section["test_title"] = ""
             section["content"] = ""
             section["name"] = re.search(section_name_matcher, line).groups()[0]
         elif line_is_lastline(line):

@@ -2,6 +2,9 @@ from pathlib import Path
 
 from rich.console import RenderableType
 from rich.text import Text
+from rich import print
+from rich.panel import Panel
+from rich.style import Style
 
 from textual import events
 from textual.app import App
