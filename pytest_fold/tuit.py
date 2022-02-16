@@ -81,6 +81,7 @@ class HoverApp(App):
 
 def main():
     HoverApp.run(log="textual.log")
+    # HoverApp.run(css_file="tuit.css", watch_css=True, log="textual.log")
 
 
 if __name__ == "__main__":

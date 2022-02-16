@@ -3,13 +3,13 @@ from pathlib import Path
 
 failures_matcher = re.compile(r"^==.*\sFAILURES\s==+")
 errors_matcher = re.compile(r"^==.*\sERRORS\s==+")
-failed_test_start_marker = re.compile(r"^__.*\s(.*)\s__+")
+failed_test_marker = re.compile(r"^__.*\s(.*)\s__+")
 summary_matcher = re.compile(r"^==.*short test summary info\s.*==+")
 lastline_matcher = re.compile(r"^==.*in\s\d+.\d+s.*==+")
 
 foldmark_matcher = re.compile(r".*(~~>PYTEST_FOLD_MARKER_)+(.*)<~~")
-fail_begin_end_matcher = re.compile(r"(.+)((_BEGIN)|(_END))")
 section_name_matcher = re.compile(r"~~>PYTEST_FOLD_MARKER_(\w+)")
+test_title_matcher = re.compile(r"__.*\s(.*)\s__+")
 
 OUTFILE = Path.cwd() / "console_output.fold"
 MARKERS = {
@@ -48,7 +48,7 @@ def sectionize(lines: str) -> dict:
     TUI for interactive display.
     """
     sections = []
-    section = {"name": None, "content": ""}
+    section = {"name": None, "test_title": "", "content": ""}
     lastline = False
 
     for line in lines:
@@ -63,6 +63,8 @@ def sectionize(lines: str) -> dict:
             section["name"] = re.search(section_name_matcher, line).groups()[0]
         else:
             section["content"] += line
+            if re.search(test_title_matcher, line):
+                section["test_title"] =  re.search(test_title_matcher, line).groups()[0]
             sections.append(section.copy()) if lastline else None
 
     return sections

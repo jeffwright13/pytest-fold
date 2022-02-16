@@ -9,7 +9,8 @@ from _pytest._io.terminalwriter import TerminalWriter
 
 from pytest_fold.tui import main as tui
 from pytest_fold.tuit import main as tuit
-from pytest_fold.utils import failures_matcher, errors_matcher, failed_test_start_marker, summary_matcher, lastline_matcher, OUTFILE, MARKERS
+from pytest_fold.tuit2 import main as tuit2
+from pytest_fold.utils import failures_matcher, errors_matcher, failed_test_marker, summary_matcher, lastline_matcher, OUTFILE, MARKERS
 
 collect_ignore = [
     "setup.py",
@@ -86,7 +87,7 @@ def pytest_configure(config: Config) -> None:
 
                 # identify and mark the beginning of each failed test (the end of each
                 # failed test is identified/marked in 'pytest_runtest_logreport' method)
-                search = re.search(failed_test_start_marker, s)
+                search = re.search(failed_test_marker, s)
                 if search:
                     # oldwrite(MARKERS["pytest_fold_failed_test"] + "\n")
                     config._pyfoldoutputfile.write(
@@ -113,7 +114,7 @@ def pytest_configure(config: Config) -> None:
                 oldwrite(s, **kwargs)
 
                 # Mark up this line's text by passing it to an instance of TerminalWriter's
-                # 'markup' method. Do not pass "flush" to the method or it wil throw an error.
+                # 'markup' method. Do not pass "flush" to the method or it will throw an error.
                 s1 = s
                 kwargs.pop("flush") if "flush" in kwargs.keys() else None
                 s1 = TerminalWriter().markup(s, **kwargs)
@@ -152,4 +153,4 @@ def pyfold_tui():
     Final code invocation after Pytest run has completed.
     This method calls the Pyfold TUI to display final results.
     """
-    tuit()
+    tuit2()
