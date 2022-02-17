@@ -1,3 +1,4 @@
+import re
 from pathlib import Path
 
 from rich.console import RenderableType
@@ -57,6 +58,7 @@ class PytestFoldApp(App):
         await self.bind("q", "quit", "Quit")
 
     async def on_mount(self) -> None:
+        footer_title = re.sub('=', '', self.results["LASTLINE"])
         await self.view.dock(Header(tall=False), edge="top", size=1)
         await self.view.dock(Footer(), edge="bottom")
 
@@ -83,7 +85,7 @@ class PytestFoldApp(App):
 
 
 def main():
-    PytestFoldApp().run()
+    PytestFoldApp(title="pytest --fold results").run()
 
 
 if __name__ == "__main__":
