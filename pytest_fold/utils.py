@@ -4,6 +4,7 @@ from pathlib import Path
 failures_matcher = re.compile(r"^==.*\sFAILURES\s==+")
 errors_matcher = re.compile(r"^==.*\sERRORS\s==+")
 failed_test_marker = re.compile(r"^__.*\s(.*)\s__+")
+warnings_summary_matcher = re.compile(r"^==.*warnings summary\s.*==+")
 summary_matcher = re.compile(r"^==.*short test summary info\s.*==+")
 lastline_matcher = re.compile(r"^==.*in\s\d+.\d+s.*==+")
 
@@ -17,6 +18,7 @@ MARKERS = {
     "pytest_fold_errors": "~~>PYTEST_FOLD_MARKER_ERRORS<~~",
     "pytest_fold_failures": "~~>PYTEST_FOLD_MARKER_FAILURES<~~",
     "pytest_fold_failed_test": "~~>PYTEST_FOLD_MARKER_FAILED_TEST<~~",
+    "pytest_fold_warnings_summary": "~~>PYTEST_FOLD_MARKER_WARNINGS_SUMMARY<~~",
     "pytest_fold_lastline": "~~>PYTEST_FOLD_MARKER_LASTLINE<~~",
     "pytest_fold_terminal_summary": "~~>PYTEST_FOLD_MARKER_TERMINAL_SUMMARY<~~",
 }
@@ -30,6 +32,7 @@ def line_is_a_marker(line: str) -> bool:
         MARKERS["pytest_fold_errors"],
         MARKERS["pytest_fold_failures"],
         MARKERS["pytest_fold_failed_test"],
+        MARKERS["pytest_fold_warnings_summary"],
         MARKERS["pytest_fold_terminal_summary"],
     )
 

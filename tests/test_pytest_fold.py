@@ -38,6 +38,15 @@ def test_which_passes_3():
     assert 1 == 1
 
 
+# Method and its test that causes warnings
+def api_v1():
+    import warnings
+    warnings.warn(UserWarning("api v1, should use functions from v2"))
+    return 1
+def test_which_causes_a_warning():
+    assert api_v1() == 1
+
+
 # # These two tests are helpful in showing how pytest deals with various types
 # # of output (stdout, stderr, log)
 def test_fail_capturing(capsys):

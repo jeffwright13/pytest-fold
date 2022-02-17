@@ -10,7 +10,16 @@ from _pytest._io.terminalwriter import TerminalWriter
 from pytest_fold.tui import main as tui
 from pytest_fold.tuit import main as tuit
 from pytest_fold.tuit2 import main as tuit2
-from pytest_fold.utils import failures_matcher, errors_matcher, failed_test_marker, summary_matcher, lastline_matcher, OUTFILE, MARKERS
+from pytest_fold.utils import (
+    failures_matcher,
+    errors_matcher,
+    failed_test_marker,
+    warnings_summary_matcher,
+    summary_matcher,
+    lastline_matcher,
+    OUTFILE,
+    MARKERS,
+)
 
 collect_ignore = [
     "setup.py",
@@ -92,6 +101,14 @@ def pytest_configure(config: Config) -> None:
                     # oldwrite(MARKERS["pytest_fold_failed_test"] + "\n")
                     config._pyfoldoutputfile.write(
                         (MARKERS["pytest_fold_failed_test"] + "\n").encode("utf-8")
+                    )
+
+                # identify and mark the beginning of the warnings summary section
+                search = re.search(warnings_summary_matcher, s)
+                if search:
+                    # oldwrite(MARKERS["warnings_summary_matcher"] + "\n")
+                    config._pyfoldoutputfile.write(
+                        (MARKERS["pytest_fold_warnings_summary"] + "\n").encode("utf-8")
                     )
 
                 # identify and mark the beginning of the final summary info line
