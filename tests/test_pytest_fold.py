@@ -38,8 +38,17 @@ def test_which_passes_3():
     assert 1 == 1
 
 
-# These two tests are helpful in showing how pytest deals with various types
-# of output (stdout, stderr, log)
+# Method and its test that causes warnings
+def api_v1():
+    import warnings
+    warnings.warn(UserWarning("api v1, should use functions from v2"))
+    return 1
+def test_which_causes_a_warning():
+    assert api_v1() == 1
+
+
+# # These two tests are helpful in showing how pytest deals with various types
+# # of output (stdout, stderr, log)
 def test_fail_capturing(capsys):
     print("FAIL this stdout is captured")
     print("FAIL this stderr is captured", file=sys.stderr)
@@ -111,7 +120,7 @@ def test_which_fails_and_has_stdout_1(capsys):
 
 def test_which_pauses_and_fails_and_has_stdout_1(capsys):
     print("this test pauses, then fails")
-    time.sleep(2)
+    # time.sleep(2)
     assert 0 == -11
 
 
@@ -125,9 +134,9 @@ def test_summary():
 
 # This test can intentionally cause an error - useful for testing output of
 # folding - if the fixture is commented out, the test throws an error at setup.
-# @pytest.fixture()
-# def fixture_for_fun():
-#     pass
+@pytest.fixture()
+def fixture_for_fun():
+    pass
 
 def test_fixture_for_fun_pass(fixture_for_fun):
     assert 1
@@ -139,44 +148,44 @@ def test_fixture_for_fun_fail(fixture_for_fun):
 def test_hello(hello):
     assert "hello" == "hello"
 
-# ### Following few tests takn from Okken's book
-# @pytest.fixture()
-# def sample_test(pytester):
-#     pytester.makepyfile(
-#         """
-#         def test_pass():
-#             assert 1 == 1
-#             def test_fail():
-#             assert 1 == 2
-#         """
-#     )
-#     return pytester
+### Following few tests takn from Okken's book
+@pytest.fixture()
+def sample_test(pytester):
+    pytester.makepyfile(
+        """
+        def test_pass():
+            assert 1 == 1
+            def test_fail():
+            assert 1 == 2
+        """
+    )
+    return pytester
 
 
-# def test_with_fold(sample_test):
-#     result = sample_test.runpytest("--fold")
-#     result.stdout.fnmatch_lines(
-#         [
-#             "*",
-#         ]
-#     )
-#     assert result.ret == 1
+def test_with_fold(sample_test):
+    result = sample_test.runpytest("--fold")
+    result.stdout.fnmatch_lines(
+        [
+            "*",
+        ]
+    )
+    assert result.ret == 1
 
 
-# def test_with_fold_verbose(sample_test):
-#     result = sample_test.runpytest("-v", "--fold")
-#     result.stdout.fnmatch_lines(
-#         [
-#             "▶",
-#         ]
-#     )
-#     assert result.ret == 1
+def test_with_fold_verbose(sample_test):
+    result = sample_test.runpytest("-v", "--fold")
+    result.stdout.fnmatch_lines(
+        [
+            "▶",
+        ]
+    )
+    assert result.ret == 1
 
 
-# def test_no_fold_verbose(sample_test):
-#     result = sample_test.runpytest("-v")
-#     result.stdout.fnmatch_lines(["*"])
-#     assert result.ret == 1
+def test_no_fold_verbose(sample_test):
+    result = sample_test.runpytest("-v")
+    result.stdout.fnmatch_lines(["*"])
+    assert result.ret == 1
 
 
 # ### <END> Okken's stuff

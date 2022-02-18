@@ -1,16 +1,22 @@
 import pytest
-import subprocess
 import tempfile
 import re
 
-from pathlib import Path
-
 from _pytest.config import Config
-from _pytest.main import Session
 from _pytest._io.terminalwriter import TerminalWriter
 
-from pytest_fold.tui import main as tui
-from pytest_fold.utils import failures_matcher, errors_matcher, failed_test_start_marker, summary_matcher, lastline_matcher, OUTFILE, MARKERS
+from pytest_fold.tui import main as tui_asciimatics
+from pytest_fold.tuit2 import main as tui_textual
+from pytest_fold.utils import (
+    failures_matcher,
+    errors_matcher,
+    failed_test_marker,
+    warnings_summary_matcher,
+    summary_matcher,
+    lastline_matcher,
+    OUTFILE,
+    MARKERS,
+)
 
 collect_ignore = [
     "setup.py",
@@ -19,17 +25,30 @@ collect_ignore = [
 
 
 def pytest_addoption(parser):
-    """Registers the pytest-fold option (--fold)"""
+    """Registers the pytest-fold and pytest-fold-tui options (--fold | --fold-tui)"""
     group = parser.getgroup("fold")
     group.addoption(
         "--fold", action="store_true", help="fold: fold failed test output sections"
+    )
+    group = parser.getgroup("fold-tui")
+    group.addoption(
+        "--fold-tui",
+        action="store",
+        default="asciimatics",
+        help="fold-tui: 'asciimatics' | 'textual'",
     )
 
 
 @pytest.fixture(autouse=True)
 def fold(request):
-    """Checks to see if the --fold is enabled"""
+    """Checks to see if the --fold option is enabled"""
     return request.config.getoption("--fold")
+
+
+@pytest.fixture(autouse=True)
+def fold_tui(request):
+    """Checks to see if the --fold-tui option is enabled"""
+    return request.config.getoption("--fold-tui")
 
 
 @pytest.hookimpl(hookwrapper=True)
@@ -87,11 +106,19 @@ def pytest_configure(config: Config) -> None:
 
                 # identify and mark the beginning of each failed test (the end of each
                 # failed test is identified/marked in 'pytest_runtest_logreport' method)
-                search = re.search(failed_test_start_marker, s)
+                search = re.search(failed_test_marker, s)
                 if search:
                     # oldwrite(MARKERS["pytest_fold_failed_test"] + "\n")
                     config._pyfoldoutputfile.write(
                         (MARKERS["pytest_fold_failed_test"] + "\n").encode("utf-8")
+                    )
+
+                # identify and mark the beginning of the warnings summary section
+                search = re.search(warnings_summary_matcher, s)
+                if search:
+                    # oldwrite(MARKERS["warnings_summary_matcher"] + "\n")
+                    config._pyfoldoutputfile.write(
+                        (MARKERS["pytest_fold_warnings_summary"] + "\n").encode("utf-8")
                     )
 
                 # identify and mark the beginning of the final summary info line
@@ -114,7 +141,7 @@ def pytest_configure(config: Config) -> None:
                 oldwrite(s, **kwargs)
 
                 # Mark up this line's text by passing it to an instance of TerminalWriter's
-                # 'markup' method. Do not pass "flush" to the method or it wil throw an error.
+                # 'markup' method. Do not pass "flush" to the method or it will throw an error.
                 s1 = s
                 kwargs.pop("flush") if "flush" in kwargs.keys() else None
                 s1 = TerminalWriter().markup(s, **kwargs)
@@ -145,14 +172,12 @@ def pytest_unconfigure(config: Config):
         with open(OUTFILE, "wb") as outfile:
             outfile.write(sessionlog)
 
-        # Call TUI
-        pyfold_sessionfinish()
+        pyfold_tui(config.getoption("--fold-tui"))
 
 
-def pyfold_sessionfinish():
+def pyfold_tui(tui: str = "asciimatics"):
     """
     Final code invocation after Pytest run has completed.
     This method calls the Pyfold TUI to display final results.
     """
-    path = Path.cwd()
-    tui()
+    tui_asciimatics() if tui == "asciimatics" else tui_textual()
