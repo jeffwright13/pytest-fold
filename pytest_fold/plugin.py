@@ -2,14 +2,11 @@ import pytest
 import tempfile
 import re
 
-from pathlib import Path
-
 from _pytest.config import Config
 from _pytest._io.terminalwriter import TerminalWriter
 
-from pytest_fold.tui import main as tui
-from pytest_fold.tuit import main as tuit
-from pytest_fold.tuit2 import main as tuit2
+from pytest_fold.tui import main as tui_asciimatics
+from pytest_fold.tuit2 import main as tui_textual
 from pytest_fold.utils import (
     failures_matcher,
     errors_matcher,
@@ -28,17 +25,30 @@ collect_ignore = [
 
 
 def pytest_addoption(parser):
-    """Registers the pytest-fold option (--fold)"""
+    """Registers the pytest-fold and pytest-fold-tui options (--fold | --fold-tui)"""
     group = parser.getgroup("fold")
     group.addoption(
         "--fold", action="store_true", help="fold: fold failed test output sections"
+    )
+    group = parser.getgroup("fold-tui")
+    group.addoption(
+        "--fold-tui",
+        action="store",
+        default="asciimatics",
+        help="fold-tui: 'asciimatics' | 'textual'",
     )
 
 
 @pytest.fixture(autouse=True)
 def fold(request):
-    """Checks to see if the --fold is enabled"""
+    """Checks to see if the --fold option is enabled"""
     return request.config.getoption("--fold")
+
+
+@pytest.fixture(autouse=True)
+def fold_tui(request):
+    """Checks to see if the --fold-tui option is enabled"""
+    return request.config.getoption("--fold-tui")
 
 
 @pytest.hookimpl(hookwrapper=True)
@@ -162,12 +172,12 @@ def pytest_unconfigure(config: Config):
         with open(OUTFILE, "wb") as outfile:
             outfile.write(sessionlog)
 
-        pyfold_tui()
+        pyfold_tui(config.getoption("--fold-tui"))
 
 
-def pyfold_tui():
+def pyfold_tui(tui: str = "asciimatics"):
     """
     Final code invocation after Pytest run has completed.
     This method calls the Pyfold TUI to display final results.
     """
-    tuit2()
+    tui_asciimatics() if tui == "asciimatics" else tui_textual()
