@@ -1,14 +1,19 @@
 # pytest-fold
 ## A Pytest plugin to make console output more manageable
 
+### ...using Asciimatics TUI (default):
 https://user-images.githubusercontent.com/4308435/152653413-acba6882-e930-4d61-ba9c-032bedefe508.mp4
 
+### ...using Textual TUI (Mac only):
+https://user-images.githubusercontent.com/4308435/154608486-19b8c931-45c9-4c00-991f-f3a7274d0925.mov
+
 ## Introduction
-Do you run long Pytest campaigns and get lots of failures? And then spend the next 15 minutes scrolling back in your console to find the one traceback that you're interested in drilling down into? Well, maybe `pytest-fold` can help. `pytest-fold` is a simple plugin that captures the output from your test runs, and redirects it into an interactive Text User Interface (TUI), where all your failed tests are "folded up" by default, showing only their titles and their status. Simply click on any test title to open it up and show its traceback information. Click again and it folds away once more.
+Do you run long Pytest campaigns and get lots of failures? And then spend the next 15 minutes scrolling back in your console to find the one traceback that you're interested in drilling down into? Well, maybe `pytest-fold` can help. `pytest-fold` is a simple plugin that captures the output from your test runs, and redirects it into an interactive Text User Interface (TUI), where all your failed tests are "folded up" by default, showing only their titles and their status. Simply click on any test title to open it up and show its traceback information.
 
 ## Features
 - ANSI text markup support - whatever the output on your console looks like is how things are going to show up in the TUI
-- Mouse and keyboard support
+- Mouse and keyboard support (including scrolling in the Textual TUI)
+- Support for FAILURES & ERRORS sections, as well as initial "test session starts", 'warnings summary', 'short test summary info' sections
 - Support for all output formats/modes:
   - `-v`, `-vv`, `-no-header`, `--showlocals`, `--color=<yes|no|auto>`
   - all variants of `--tb` except "native"
@@ -18,7 +23,7 @@ Do you run long Pytest campaigns and get lots of failures? And then spend the ne
   - `pytest-sugar`
 
 ## Requirements
-- Works on Mac, Linux, Windows
+- Works on Mac, Linux, Windows (using Asciimatics TUI); and Mac (using Textual TUI)
 - Requires Pytest >= 6.2.5
 
 ## Installation
@@ -29,22 +34,22 @@ Do you run long Pytest campaigns and get lots of failures? And then spend the ne
 
 From top-level directory:
 
-* `pytest --fold -s <other-pytest-options>`
+* `pytest --fold -s [--fold-tui asciimatics|textual] <other-pytest-options>`
 
-To quit the TUI, either click the Quit button, or press `Ctrl-X`.
+To quit the Ascimatics TUI, either click the Quit button, or press `Ctrl-X`. To quit the Textual TUI, either click the Quit button, or press `Q`.
 
 ## Known Limitations / Issues
-- You must invoke your Pytest test runs with the `--fold` option **plus** `-s` (see "Usage" above)
-- Rudimentary user interface; needs a lot of love.
+- `pytest-fold` does not display passed tests (that's not really the use case).
+- You must invoke your Pytest test runs with the `--fold` option **plus** `-s` (see "Usage" above).
+- Rudimentary user interfaces; both need a lot of love.
 - Not fully tested with all combinations of output formats. Probably some use-cases where things won't work right.
-- It's a plugin, but not tied up and polished yet, and not on PyPi.
 - ERROR output sections are treated just like FAILURES sections. It is assumed that the tester will want to see full text output from pytest when their tests cause an error to be asserted.
 - `pytest-fold` does not mark stderr or stdout sections for folding. It is assumed that the tester is interested in seeing such output.
 - `pytest-fold` is currently incompatible with `--tb=native` and will cause an INTERNALERROR if run together. (TODO: Fix this.)
 
 ## Contributing
 Contributions are very welcome.
-Please run pylakes and black on your code before submitting a PR (at some point I will implement [pre-commit](https://pypi.org/project/pre-commit/) in this project). Tests can be run with `tox`_; please ensure the coverage at least stays the same before you submit a pull request. (Although I haven't run these tests in 7 months, so who knows what condition they're in lol)
+Please run pyflakes and black on your code before submitting a PR (at some point I will implement [pre-commit](https://pypi.org/project/pre-commit/) in this project).
 
 ## License
 Distributed under the terms of the `MIT`_ license, "pytest-fold" is free and open source software.
