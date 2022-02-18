@@ -13,8 +13,10 @@ RELEASE_INSTRUCTIONS
 - Test the installation:
   pip uninstall -y pytest-fold
   python -m pip install --index-url https://test.pypi.org/simple/ pytest-fold
-- Run a test run to make sure it works (verify TUI):
+- Verify Asciimatics TUI:
   pytest --fold -s
+- Verify Textual TUI:
+  pytest --fold -s --fold-tui textual
 - Unistall again:
   pip uninstall -y pytest-fold
 - Publish to Pypi:
