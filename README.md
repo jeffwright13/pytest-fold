@@ -38,6 +38,10 @@ From top-level directory:
 
 To quit the Ascimatics TUI, either click the Quit button, or press `Ctrl-X`. To quit the Textual TUI, either click the Quit button, or press `Q`.
 
+If you have already exited the TUI and would like to re-enter it with the same data generated from the last Pytest run, type:
+
+* `pytest --fold-now -s [--fold-tui asciimatics|textual]
+
 ## Known Limitations / Issues
 - `pytest-fold` does not display passed tests (that's not really the use case).
 - You must invoke your Pytest test runs with the `--fold` option **plus** `-s` (see "Usage" above).
