@@ -3,6 +3,7 @@ import tempfile
 import re
 
 from _pytest.config import Config
+from _pytest.main import Session
 from _pytest._io.terminalwriter import TerminalWriter
 
 from pytest_fold.tui import main as tui_asciimatics
@@ -30,6 +31,13 @@ def pytest_addoption(parser):
     group.addoption(
         "--fold", action="store_true", help="fold: fold failed test output sections"
     )
+    group = parser.getgroup("fold-now")
+    group.addoption(
+        "--fold-now",
+        action="store_true",
+        default="False",
+        help="fold-now: run TUI from existing .fold file, bypassing pytest execution",
+    )
     group = parser.getgroup("fold-tui")
     group.addoption(
         "--fold-tui",
@@ -49,6 +57,14 @@ def fold(request):
 def fold_tui(request):
     """Checks to see if the --fold-tui option is enabled"""
     return request.config.getoption("--fold-tui")
+
+
+@pytest.hookimpl(hookwrapper=True)
+def pytest_sessionstart(session: Session) -> None:
+    if session.config.getoption("--fold-now"):
+        pyfold_tui(session.config.getoption("--fold-tui"))
+        pytest.exit(msg="Quit TUI")
+    yield
 
 
 @pytest.hookimpl(hookwrapper=True)
