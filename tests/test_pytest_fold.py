@@ -19,7 +19,7 @@ def test_which_fails_1():
 
 
 def test_which_passes_1():
-    assert 1 == 1
+    assert True
 
 
 def test_which_fails_2():
@@ -27,7 +27,7 @@ def test_which_fails_2():
 
 
 def test_which_passes_2():
-    assert 1 == 1
+    assert True
 
 
 def test_which_fails_3():
@@ -35,7 +35,7 @@ def test_which_fails_3():
 
 
 def test_which_passes_3():
-    assert 1 == 1
+    assert True
 
 
 # Method and its test that causes warnings
@@ -126,11 +126,11 @@ def test_which_pauses_and_fails_and_has_stdout_1(capsys):
 
 def test_which_passes_and_has_stdout_2(capsys):
     print("this test passes")  # stdout is consumed by pytest
-    assert "a" == "a"
+    assert True
 
 
 def test_summary():
-    assert "a" == "a"
+    assert True
 
 # This test can intentionally cause an error - useful for testing output of
 # folding - if the fixture is commented out, the test throws an error at setup.
@@ -146,7 +146,7 @@ def test_fixture_for_fun_fail(fixture_for_fun):
 
 
 def test_hello(hello):
-    assert "hello" == "hello"
+    assert True
 
 ### Following few tests takn from Okken's book
 @pytest.fixture()
