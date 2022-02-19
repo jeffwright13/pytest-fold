@@ -50,6 +50,7 @@ If you have already exited the TUI and would like to re-enter it with the same d
 - ERROR output sections are treated just like FAILURES sections. It is assumed that the tester will want to see full text output from pytest when their tests cause an error to be asserted.
 - `pytest-fold` does not mark stderr or stdout sections for folding. It is assumed that the tester is interested in seeing such output.
 - `pytest-fold` is currently incompatible with `--tb=native` and will cause an INTERNALERROR if run together. (TODO: Fix this.)
+- `pytest-fold` may crash in the Asciimatics TUI if the console is resized.
 
 ## Contributing
 Contributions are very welcome.
