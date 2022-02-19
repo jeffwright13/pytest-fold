@@ -19,6 +19,7 @@ Do you run long Pytest campaigns and get lots of failures? And then spend the ne
   - all variants of `--tb` except "native"
 - Support for other, simple output-manipulating plugins:
   - `pytest-clarity`
+  - `pytest-emoji`
 - Not supported: plugins that completely take over the console:
   - `pytest-sugar`
 

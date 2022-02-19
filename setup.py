@@ -27,7 +27,7 @@ setup(
     install_requires=["pytest>=6.2.5", "asciimatics>=1.13.0", "textual>=0.1.15", "single-source>=0.2.0"],
     classifiers=[
         "Framework :: Pytest",
-        "Development Status :: 3 - Alpha",
+        "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
         "Topic :: Software Development :: Testing",
         "Programming Language :: Python :: 3.7",
