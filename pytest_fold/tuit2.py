@@ -50,16 +50,12 @@ class ResultsData:
 
 
 class PytestFoldApp(App):
-
-    results = None
-
     async def on_load(self, event: events.Load) -> None:
         self.results = ResultsData().get_results_dict()
         await self.bind("b", "view.toggle('sidebar')", "Toggle sidebar")
         await self.bind("q", "quit", "Quit")
 
     async def on_mount(self) -> None:
-        footer_title = re.sub("=", "", self.results["LASTLINE"])
         await self.view.dock(Header(tall=False), edge="top", size=1)
         await self.view.dock(Footer(), edge="bottom")
 

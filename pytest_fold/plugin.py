@@ -4,7 +4,7 @@ import re
 from pathlib import Path
 from typing import Union
 
-from _pytest.config import Config
+from _pytest.config import Config, _PluggyPlugin
 from _pytest.main import Session
 from _pytest._io.terminalwriter import TerminalWriter
 from pytest_fold.tui import main as tui_asciimatics
@@ -49,13 +49,9 @@ def pytest_addoption(parser):
 
 @pytest.hookimpl(hookwrapper=True)
 def pytest_sessionstart(session: Session) -> None:
-    # do not optimize the following line, as pytest populates session.config.option.fold_now
-    # with True (a boolean) if the '--fold-now' flag is set; or "False" (a string) which
-    # always evaluates to True if the flag is not set
-    # session.config.option.__setattr__("capture", "no")  <== Y U NO PERSIST??
     if session.config.getoption("--fold-now") == True:
         if Path(OUTFILE).exists():
-            pyfold_tui(session.config.getoption("--fold-tui"))
+            pyfold_tui(session.config, session.config.getoption("--fold-tui"))
             pytest.exit(msg="Quitting TUI")
         else:
             pytest.exit(msg="No previous results to display!")
@@ -183,13 +179,19 @@ def pytest_unconfigure(config: Config):
         with open(OUTFILE, "wb") as outfile:
             outfile.write(sessionlog)
 
-        pyfold_tui(config.getoption("--fold-tui"))
+        pyfold_tui(config, config.getoption("--fold-tui"))
 
 
-def pyfold_tui(tui: str = "asciimatics") -> None:
+def pyfold_tui(config: Config, tui: str = "asciimatics") -> None:
     """
     Final code invocation after Pytest run has completed.
     This method calls the Pyfold TUI to display final results.
     """
-    pass
-    tui_asciimatics() if tui == "asciimatics" else tui_textual()
+    # disable capturing while TUI runs to avoid error `redirected stdin is pseudofile, has no fileno()`;
+    # adapted from https://githubmemory.com/repo/jsbueno/terminedia/issues/25
+    capmanager = config.pluginmanager.getplugin("capturemanager")
+    try:
+        capmanager.suspend_global_capture(in_=True)
+    finally:
+        tui_asciimatics() if tui == "asciimatics" else tui_textual()
+        capmanager.resume_global_capture()
