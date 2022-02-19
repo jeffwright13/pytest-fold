@@ -26,7 +26,7 @@ class Hover(Widget):
     mouse_over = Reactive(False)
     folded = Reactive(False)
 
-    def __init__(self, size: tuple = (0,0), text: str = "") -> None:
+    def __init__(self, size: tuple = (0, 0), text: str = "") -> None:
         super().__init__(size)
         self.text = text
         self.panel = Panel(self.text)
@@ -69,6 +69,7 @@ class HoverApp(App):
 
 def main():
     HoverApp.run(log="textual.log")
+
 
 if __name__ == "__main__":
     main()

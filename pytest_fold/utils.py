@@ -68,7 +68,7 @@ def sectionize(lines: str) -> dict:
         else:
             section["content"] += line
             if re.search(test_title_matcher, line):
-                section["test_title"] =  re.search(test_title_matcher, line).groups()[0]
+                section["test_title"] = re.search(test_title_matcher, line).groups()[0]
             sections.append(section.copy()) if lastline else None
 
     return sections

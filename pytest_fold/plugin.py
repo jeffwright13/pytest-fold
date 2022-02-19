@@ -1,11 +1,12 @@
 import pytest
 import tempfile
 import re
+from pathlib import Path
+from typing import Union
 
 from _pytest.config import Config
 from _pytest.main import Session
 from _pytest._io.terminalwriter import TerminalWriter
-
 from pytest_fold.tui import main as tui_asciimatics
 from pytest_fold.tuit2 import main as tui_textual
 from pytest_fold.utils import (
@@ -26,7 +27,6 @@ collect_ignore = [
 
 
 def pytest_addoption(parser):
-    """Registers the pytest-fold and pytest-fold-tui options (--fold | --fold-tui)"""
     group = parser.getgroup("fold")
     group.addoption(
         "--fold", action="store_true", help="fold: fold failed test output sections"
@@ -43,27 +43,22 @@ def pytest_addoption(parser):
         "--fold-tui",
         action="store",
         default="asciimatics",
-        help="fold-tui: 'asciimatics' | 'textual'",
+        help="fold-tui: pick your user interface ('asciimatics' | 'textual')",
     )
-
-
-@pytest.fixture(autouse=True)
-def fold(request):
-    """Checks to see if the --fold option is enabled"""
-    return request.config.getoption("--fold")
-
-
-@pytest.fixture(autouse=True)
-def fold_tui(request):
-    """Checks to see if the --fold-tui option is enabled"""
-    return request.config.getoption("--fold-tui")
 
 
 @pytest.hookimpl(hookwrapper=True)
 def pytest_sessionstart(session: Session) -> None:
-    if session.config.getoption("--fold-now"):
-        pyfold_tui(session.config.getoption("--fold-tui"))
-        pytest.exit(msg="Quit TUI")
+    # do not optimize the following line, as pytest populates session.config.option.fold_now
+    # with True (a boolean) if the '--fold-now' flag is set; or "False" (a string) which
+    # always evaluates to True if the flag is not set
+    # session.config.option.__setattr__("capture", "no")  <== Y U NO PERSIST??
+    if session.config.getoption("--fold-now") == True:
+        if Path(OUTFILE).exists():
+            pyfold_tui(session.config.getoption("--fold-tui"))
+            pytest.exit(msg="Quitting TUI")
+        else:
+            pytest.exit(msg="No previous results to display!")
     yield
 
 
@@ -191,9 +186,10 @@ def pytest_unconfigure(config: Config):
         pyfold_tui(config.getoption("--fold-tui"))
 
 
-def pyfold_tui(tui: str = "asciimatics"):
+def pyfold_tui(tui: str = "asciimatics") -> None:
     """
     Final code invocation after Pytest run has completed.
     This method calls the Pyfold TUI to display final results.
     """
+    pass
     tui_asciimatics() if tui == "asciimatics" else tui_textual()
