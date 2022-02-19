@@ -30,21 +30,15 @@ Do you run long Pytest campaigns and get lots of failures? And then spend the ne
 `pip install pytest-fold`
 
 ## Usage
-**Suppressing of Pytest's stdout/stderr capture (using the `-s` flag) is temporarily required. Otherwise the TUI's display will be corrupted.**
 
 From top-level directory:
 
-* `pytest --fold -s [--fold-tui asciimatics|textual] <other-pytest-options>`
+* `pytest --fold [--fold-tui asciimatics|textual] <other-pytest-options>`
 
 To quit the Ascimatics TUI, either click the Quit button, or press `Ctrl-X`. To quit the Textual TUI, either click the Quit button, or press `Q`.
 
-If you have already exited the TUI and would like to re-enter it with the same data generated from the last Pytest run, type:
-
-* `pytest --fold-now -s [--fold-tui asciimatics|textual]
-
 ## Known Limitations / Issues
 - `pytest-fold` does not display passed tests (that's not really the use case).
-- You must invoke your Pytest test runs with the `--fold` option **plus** `-s` (see "Usage" above).
 - Rudimentary user interfaces; both need a lot of love.
 - Not fully tested with all combinations of output formats. Probably some use-cases where things won't work right.
 - ERROR output sections are treated just like FAILURES sections. It is assumed that the tester will want to see full text output from pytest when their tests cause an error to be asserted.
