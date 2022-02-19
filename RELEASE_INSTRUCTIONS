@@ -14,9 +14,9 @@ RELEASE_INSTRUCTIONS
   pip uninstall -y pytest-fold
   python -m pip install --index-url https://test.pypi.org/simple/ pytest-fold
 - Verify Asciimatics TUI:
-  pytest --fold -s
+  pytest --fold
 - Verify Textual TUI:
-  pytest --fold -s --fold-tui textual
+  pytest --fold --fold-tui textual
 - Unistall again:
   pip uninstall -y pytest-fold
 - Publish to Pypi:
