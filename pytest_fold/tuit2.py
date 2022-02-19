@@ -10,7 +10,6 @@ from rich.style import Style
 from textual import events
 from textual.app import App
 from textual.reactive import Reactive
-
 from textual.views import DockView
 from textual.widgets import Header, Footer, TreeControl, ScrollView, TreeClick
 
@@ -56,25 +55,42 @@ class PytestFoldApp(App):
         await self.bind("q", "quit", "Quit")
 
     async def on_mount(self) -> None:
-        await self.view.dock(Header(tall=False), edge="top", size=1)
-        await self.view.dock(Footer(), edge="bottom")
+        header = Header(tall=False)
+        header.__setattr__("title", "Howdy")
+        footer = Footer()
+        await self.view.dock(header, edge="top", size=1)
+        await self.view.dock(footer, edge="bottom")
+        print("")
+
+        tree = TreeControl("SESSION RESULTS:", {})
+        for results_key in self.results.keys():
+            await tree.add(tree.root.id, Text(results_key), {"results": self.results})
+            if tree.nodes[tree.id].label.plain == "FIRSTLINE":
+                tree.nodes[tree.id].label.stylize("bold blue")
+            elif tree.nodes[tree.id].label.plain == "FAILURES":
+                tree.nodes[tree.id].label.stylize("bold red")
+            elif tree.nodes[tree.id].label.plain == "ERRORS":
+                tree.nodes[tree.id].label.stylize("bold magenta")
+            elif tree.nodes[tree.id].label.plain == "WARNINGS_SUMMARY":
+                tree.nodes[tree.id].label.stylize("bold yellow")
+            elif tree.nodes[tree.id].label.plain == "TERMINAL_SUMMARY":
+                tree.nodes[tree.id].label.stylize("bold green")
+            elif tree.nodes[tree.id].label.plain == "LASTLINE":
+                tree.nodes[tree.id].label.stylize("bold blue")
+            else:
+                tree.nodes[tree.id].label.stylize("italic")
+        await tree.root.expand()
 
         self.body = ScrollView()
         self.dock_view = DockView()
-
-        tree = TreeControl("pytest --fold", {})
-        for results_key in self.results.keys():
-            await tree.add(tree.root.id, results_key, {"results": self.results})
-        await tree.root.expand()
-
         await self.view.dock(ScrollView(tree), edge="left", size=48, name="sidebar")
         await self.view.dock(self.dock_view)
         await self.dock_view.dock(self.body, edge="top", size=48)
 
     async def handle_tree_click(self, message: TreeClick[dict]) -> None:
         """Called in response to a tree click."""
-        label = self.text = message.node.label
-        self.text = message.node.data.get("results")[label]
+        label = message.node.label
+        self.text = message.node.data.get("results")[label._text[0]]
 
         text: RenderableType
         text = Text.from_ansi(self.text)
