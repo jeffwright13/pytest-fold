@@ -2,7 +2,7 @@ import sys
 import time
 import logging
 import pytest
-from . import __version__
+# from . import __version__
 
 logger = logging.getLogger()
 logger.setLevel(logging.WARNING)
@@ -10,8 +10,8 @@ logger.propagate = True
 stdout_handler = logging.StreamHandler(sys.stdout)
 logger.addHandler(stdout_handler)
 
-def test_version():
-    assert __version__ == "0.1.0"
+# def test_version():
+#     assert __version__ == "0.1.0"
 
 
 def test_which_fails_1():
