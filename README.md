@@ -24,8 +24,9 @@ Do you run long Pytest campaigns and get lots of failures? And then spend the ne
   - `pytest-sugar`
 
 ## Requirements
+- Pytest >= 6.2.5
+- Python >= 3.8
 - Works on Mac, Linux, Windows (using Asciimatics TUI); and Mac (using Textual TUI)
-- Requires Pytest >= 6.2.5
 
 ## Installation
 `pip install pytest-fold`
@@ -37,6 +38,10 @@ From top-level directory:
 * `pytest --fold [--fold-tui asciimatics|textual] <other-pytest-options>`
 
 To quit the Ascimatics TUI, either click the Quit button, or press `Ctrl-X`. To quit the Textual TUI, either click the Quit button, or press `Q`.
+
+If you have already exited the TUI and would like to re-enter it with the same data generated from the last Pytest run, type:
+
+* `pytest --fold-now -s [--fold-tui asciimatics|textual]`
 
 ## Known Limitations / Issues
 - `pytest-fold` does not display passed tests (that's not really the use case).

@@ -60,15 +60,15 @@ def pytest_sessionstart(session: Session) -> None:
     yield
 
 
-@pytest.hookimpl(hookwrapper=True)
-def pytest_runtest_makereport(item, call):
-    """
-    Attach session info to report for later use in pytest_runtest_logreport
-    https://stackoverflow.com/questions/54717786/access-pytest-session-or-arguments-in-pytest-runtest-logreport
-    """
-    out = yield
-    report = out.get_result()
-    report.session = item.session
+# @pytest.hookimpl(hookwrapper=True)
+# def pytest_runtest_makereport(item, call):
+#     """
+#     Attach session info to report for later use in pytest_runtest_logreport
+#     https://stackoverflow.com/questions/54717786/access-pytest-session-or-arguments-in-pytest-runtest-logreport
+#     """
+#     out = yield
+#     report = out.get_result()
+#     report.session = item.session
 
 
 @pytest.hookimpl(trylast=True)
@@ -89,59 +89,40 @@ def pytest_configure(config: Config) -> None:
             config._pyfoldoutputfile = tempfile.TemporaryFile("wb+")
             oldwrite = tr._tw.write
 
-            def tee_write(s, **kwargs):  # sourcery skip: use-named-expression
+            # identify and mark each section of results
+            def tee_write(s, **kwargs):
                 if config._pyfoldfirsttime:
-                    # oldwrite(MARKERS["pytest_fold_firstline"] + "\n")
                     config._pyfoldoutputfile.write(
                         (MARKERS["pytest_fold_firstline"] + "\n").encode("utf-8")
                     )
                     config._pyfoldfirsttime = False
 
-                # identify and mark the beginning of the errors section
-                search = re.search(errors_matcher, s)
-                if search:
-                    # oldwrite(MARKERS["pytest_fold_errors"] + "\n")
+                if search := re.search(errors_matcher, s):
                     config._pyfoldoutputfile.write(
                         (MARKERS["pytest_fold_errors"] + "\n").encode("utf-8")
                     )
 
-                # identify and mark the beginning of the failures section
-                search = re.search(failures_matcher, s)
-                if search:
-                    # oldwrite(MARKERS["pytest_fold_failures"] + "\n")
+                if search := re.search(failures_matcher, s):
                     config._pyfoldoutputfile.write(
                         (MARKERS["pytest_fold_failures"] + "\n").encode("utf-8")
                     )
 
-                # identify and mark the beginning of each failed test (the end of each
-                # failed test is identified/marked in 'pytest_runtest_logreport' method)
-                search = re.search(failed_test_marker, s)
-                if search:
-                    # oldwrite(MARKERS["pytest_fold_failed_test"] + "\n")
+                if search := re.search(failed_test_marker, s):
                     config._pyfoldoutputfile.write(
                         (MARKERS["pytest_fold_failed_test"] + "\n").encode("utf-8")
                     )
 
-                # identify and mark the beginning of the warnings summary section
-                search = re.search(warnings_summary_matcher, s)
-                if search:
-                    # oldwrite(MARKERS["warnings_summary_matcher"] + "\n")
+                if search := re.search(warnings_summary_matcher, s):
                     config._pyfoldoutputfile.write(
                         (MARKERS["pytest_fold_warnings_summary"] + "\n").encode("utf-8")
                     )
 
-                # identify and mark the beginning of the final summary info line
-                search = re.search(summary_matcher, s)
-                if search:
-                    # oldwrite(MARKERS["pytest_fold_terminal_summary"] + "\n")
+                if search := re.search(summary_matcher, s):
                     config._pyfoldoutputfile.write(
                         (MARKERS["pytest_fold_terminal_summary"] + "\n").encode("utf-8")
                     )
 
-                # identify and mark the very last line of terminal output
-                search = re.search(lastline_matcher, s)
-                if search:
-                    # oldwrite(MARKERS["pytest_fold_lastline"] + "\n")
+                if search := re.search(lastline_matcher, s):
                     config._pyfoldoutputfile.write(
                         (MARKERS["pytest_fold_lastline"] + "\n").encode("utf-8")
                     )
