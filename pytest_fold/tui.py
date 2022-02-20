@@ -88,7 +88,7 @@ class QuitterLayout(Layout):
         super(QuitterLayout, self).__init__(columns=[4, screen.width - 6])
 
     def add_widgets(self) -> None:
-        self.add_widget(Button(text="Quit", on_click=self._quit), 1)
+        self.add_widget(Button(text="Quit (Ctrl-X)", on_click=self._quit), 1)
 
     def _quit(self) -> None:
         raise StopApplication("User requested exit by clicking 'Quit'")
