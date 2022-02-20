@@ -4,7 +4,7 @@ from rich.text import Text
 from textual import events
 from textual.app import App
 from textual.views import DockView
-from textual.widgets import Header, Footer, TreeControl, ScrollView, TreeClick
+from textual.widgets import Header, TreeControl, ScrollView, TreeClick
 from pytest_fold.utils import OUTFILE, sectionize
 
 TREE_WIDTH = 30
@@ -59,40 +59,40 @@ class PytestFoldApp(App):
     async def on_load(self, event: events.Load) -> None:
         # Load results from OUTFILE; bind actions to heaader/footer widgets
         self.results = ResultsData().get_results_dict()
-        summary_text = (
-            Text.from_ansi(self.results["LASTLINE"]).plain.replace("=", "").strip()
+        self.summary_text = (
+            Text.from_ansi(self.results["LASTLINE"]).markup.replace("=", "").strip()
         )
         await self.bind("b", "view.toggle('sidebar')", "Toggle sidebar")
-        await self.bind("q", "quit", f"Quit        {summary_text}")
+        await self.bind("q", "quit", "Quit")
 
     async def on_mount(self) -> None:
         # Create and dock header and footer widgets
-        header = Header(tall=False)
-        header.title = "bar"
-        footer = Footer()
-        footer.title = "Woof!"
-        await self.view.dock(header, edge="top", size=1)
-        await self.view.dock(footer, edge="bottom")
+        self.title = self.summary_text
+        header1 = Header(tall=False, style="white on black underline")
+        header2 = Header(tall=False, style="white on black", clock = False)
+        await self.view.dock(header1, edge="top", size=1)
+        await self.view.dock(header2, edge="bottom", size=1)
 
-        # Stylize the results tree section headers
+        # Stylize the results-tree section headers
         tree = TreeControl("SESSION RESULTS:", {})
         for results_key in self.results.keys():
             await tree.add(tree.root.id, Text(results_key), {"results": self.results})
             for k, v in SECTIONS.items():
                 if tree.nodes[tree.id].label.plain == k:
                     tree.nodes[tree.id].label.stylize(v)
+                    continue
                 else:
                     tree.nodes[tree.id].label.stylize("italic")
         await tree.root.expand()
 
         # Create and dock the results header tree, and individual results
         self.body = ScrollView()
-        self.dock_view = DockView()
+        self.sections = DockView()
         await self.view.dock(
             ScrollView(tree), edge="left", size=TREE_WIDTH, name="sidebar"
         )
-        await self.view.dock(self.dock_view)
-        await self.dock_view.dock(self.body, edge="top")
+        await self.view.dock(self.sections)
+        await self.sections.dock(self.body, edge="top")
 
     async def handle_tree_click(self, message: TreeClick[dict]) -> None:
         # Display results in body when section header is clicked
@@ -105,8 +105,7 @@ class PytestFoldApp(App):
 
 def main():
     # Instantiate app and run it
-    app = PytestFoldApp()
-    app.title = "Hello"
+    app = PytestFoldApp(title="Hello!!")
     app.run()
 
 
