@@ -1,11 +1,12 @@
 # pytest-fold
 ## A Pytest plugin to make console output more manageable
 
-### ...using Textual TUI (Mac only):
+### ...using Textual TUI (Mac/Windows):
 ![ezgif com-gif-maker](https://user-images.githubusercontent.com/4308435/154848960-391fd62f-4859-4d2b-8d03-9f55f4b04cad.gif)
 
-### ...using Asciimatics TUI (default):
-https://user-images.githubusercontent.com/4308435/152653413-acba6882-e930-4d61-ba9c-032bedefe508.mp4
+### ...using Asciimatics TUI (Mac/Windows/Linux):
+![ezgif com-gif-maker(1)](https://user-images.githubusercontent.com/4308435/154856734-35695a56-8d4c-423f-89c6-c9f6522e0039.gif)
+
 
 ## Introduction
 Do you run long Pytest campaigns and get lots of failures? And then spend the next 15 minutes scrolling back in your console to find the one traceback that you're interested in drilling down into? Well, maybe `pytest-fold` can help. `pytest-fold` is a simple plugin that captures the output from your test runs, and redirects it into an interactive Text User Interface (TUI), where all your failed tests are "folded up" by default, showing only their titles and their status. Simply click on any test title to open it up and show its traceback information.
