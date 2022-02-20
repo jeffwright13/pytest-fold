@@ -8,8 +8,8 @@ from _pytest.config import Config, _PluggyPlugin
 from _pytest.config.argparsing import Parser
 from _pytest.main import Session
 from _pytest._io.terminalwriter import TerminalWriter
-from pytest_fold.tui import main as tui_asciimatics
-from pytest_fold.tuit2 import main as tui_textual
+from pytest_fold.tuia import main as tui_asciimatics
+from pytest_fold.tuit import main as tui_textual
 from pytest_fold.utils import (
     failures_matcher,
     errors_matcher,
