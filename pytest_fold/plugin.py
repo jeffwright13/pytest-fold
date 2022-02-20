@@ -5,6 +5,7 @@ from pathlib import Path
 from typing import Union
 
 from _pytest.config import Config, _PluggyPlugin
+from _pytest.config.argparsing import Parser
 from _pytest.main import Session
 from _pytest._io.terminalwriter import TerminalWriter
 from pytest_fold.tui import main as tui_asciimatics
@@ -29,21 +30,21 @@ collect_ignore = [
 def pytest_addoption(parser):
     group = parser.getgroup("fold")
     group.addoption(
-        "--fold", action="store_true", help="fold: fold failed test output sections"
+        "--fold", action="store_true", help="fold failed test output sections",
     )
-    group = parser.getgroup("fold-now")
     group.addoption(
         "--fold-now",
+        "--fn",
         action="store_true",
         default="False",
-        help="fold-now: run TUI from existing .fold file, bypassing pytest execution",
+        help="run TUI from existing results file, bypassing pytest execution",
     )
-    group = parser.getgroup("fold-tui")
     group.addoption(
         "--fold-tui",
+        "--ft",
         action="store",
         default="asciimatics",
-        help="fold-tui: pick your user interface ('asciimatics' 'a' | 'textual' 't')",
+        help="specify user interface ('asciimatics' 'a' | 'textual' 't')",
         choices=['asciimatics', 'a', 'textual', 't']
     )
 
