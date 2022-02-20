@@ -43,7 +43,8 @@ def pytest_addoption(parser):
         "--fold-tui",
         action="store",
         default="asciimatics",
-        help="fold-tui: pick your user interface ('asciimatics' | 'textual')",
+        help="fold-tui: pick your user interface ('asciimatics' 'a' | 'textual' 't')",
+        choices=['asciimatics', 'a', 'textual', 't']
     )
 
 
@@ -187,11 +188,16 @@ def pyfold_tui(config: Config, tui: str = "asciimatics") -> None:
     Final code invocation after Pytest run has completed.
     This method calls the Pyfold TUI to display final results.
     """
+
+    if config.getoption("--fold-now") == True:
+        tui_asciimatics() if tui.lower()[0] == "a" else tui_textual()
+        return
+
     # disable capturing while TUI runs to avoid error `redirected stdin is pseudofile, has no fileno()`;
     # adapted from https://githubmemory.com/repo/jsbueno/terminedia/issues/25
     capmanager = config.pluginmanager.getplugin("capturemanager")
     try:
         capmanager.suspend_global_capture(in_=True)
     finally:
-        tui_asciimatics() if tui == "asciimatics" else tui_textual()
+        tui_asciimatics() if tui.lower()[0] == "a" else tui_textual()
         capmanager.resume_global_capture()

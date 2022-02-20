@@ -1,19 +1,21 @@
-import re
 from pathlib import Path
-
 from rich.console import RenderableType
 from rich.text import Text
-from rich import print
-from rich.panel import Panel
-from rich.style import Style
-
 from textual import events
 from textual.app import App
-from textual.reactive import Reactive
 from textual.views import DockView
 from textual.widgets import Header, Footer, TreeControl, ScrollView, TreeClick
+from pytest_fold.utils import OUTFILE, sectionize
 
-from pytest_fold.utils import MARKERS, OUTFILE, sectionize
+TREE_WIDTH = 30
+SECTIONS = {
+    "FIRSTLINE": "bold blue underline",
+    "FAILURES": "bold red underline",
+    "ERRORS": "bold magenta underline",
+    "WARNINGS_SUMMARY": "bold yellow underline",
+    "TERMINAL_SUMMARY": "bold green underline",
+    "LASTLINE": "bold blue underline",
+}
 
 
 class ResultsData:
@@ -49,56 +51,63 @@ class ResultsData:
 
 
 class PytestFoldApp(App):
+    """
+    Textual class inherited from App
+    Provides docking and data population for test session headers and results
+    """
+
     async def on_load(self, event: events.Load) -> None:
+        # Load results from OUTFILE; bind actions to heaader/footer widgets
         self.results = ResultsData().get_results_dict()
+        summary_text = (
+            Text.from_ansi(self.results["LASTLINE"]).plain.replace("=", "").strip()
+        )
         await self.bind("b", "view.toggle('sidebar')", "Toggle sidebar")
-        await self.bind("q", "quit", "Quit")
+        await self.bind("q", "quit", f"Quit        {summary_text}")
 
     async def on_mount(self) -> None:
+        # Create and dock header and footer widgets
         header = Header(tall=False)
-        header.__setattr__("title", "Howdy")
+        header.title = "bar"
         footer = Footer()
+        footer.title = "Woof!"
         await self.view.dock(header, edge="top", size=1)
         await self.view.dock(footer, edge="bottom")
-        print("")
 
+        # Stylize the results tree section headers
         tree = TreeControl("SESSION RESULTS:", {})
         for results_key in self.results.keys():
             await tree.add(tree.root.id, Text(results_key), {"results": self.results})
-            if tree.nodes[tree.id].label.plain == "FIRSTLINE":
-                tree.nodes[tree.id].label.stylize("bold blue")
-            elif tree.nodes[tree.id].label.plain == "FAILURES":
-                tree.nodes[tree.id].label.stylize("bold red")
-            elif tree.nodes[tree.id].label.plain == "ERRORS":
-                tree.nodes[tree.id].label.stylize("bold magenta")
-            elif tree.nodes[tree.id].label.plain == "WARNINGS_SUMMARY":
-                tree.nodes[tree.id].label.stylize("bold yellow")
-            elif tree.nodes[tree.id].label.plain == "TERMINAL_SUMMARY":
-                tree.nodes[tree.id].label.stylize("bold green")
-            elif tree.nodes[tree.id].label.plain == "LASTLINE":
-                tree.nodes[tree.id].label.stylize("bold blue")
-            else:
-                tree.nodes[tree.id].label.stylize("italic")
+            for k, v in SECTIONS.items():
+                if tree.nodes[tree.id].label.plain == k:
+                    tree.nodes[tree.id].label.stylize(v)
+                else:
+                    tree.nodes[tree.id].label.stylize("italic")
         await tree.root.expand()
 
+        # Create and dock the results header tree, and individual results
         self.body = ScrollView()
         self.dock_view = DockView()
-        await self.view.dock(ScrollView(tree), edge="left", size=48, name="sidebar")
+        await self.view.dock(
+            ScrollView(tree), edge="left", size=TREE_WIDTH, name="sidebar"
+        )
         await self.view.dock(self.dock_view)
-        await self.dock_view.dock(self.body, edge="top", size=48)
+        await self.dock_view.dock(self.body, edge="top")
 
     async def handle_tree_click(self, message: TreeClick[dict]) -> None:
-        """Called in response to a tree click."""
+        # Display results in body when section header is clicked
         label = message.node.label
         self.text = message.node.data.get("results")[label._text[0]]
-
         text: RenderableType
         text = Text.from_ansi(self.text)
         await self.body.update(text)
 
 
 def main():
-    PytestFoldApp(title="pytest --fold results").run()
+    # Instantiate app and run it
+    app = PytestFoldApp()
+    app.title = "Hello"
+    app.run()
 
 
 if __name__ == "__main__":
