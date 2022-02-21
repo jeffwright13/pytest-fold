@@ -13,7 +13,11 @@ def read(fname):
 
 setup(
     name="pytest-fold",
+<<<<<<< Updated upstream
     version="0.7.4",
+=======
+    version="0.7.2",
+>>>>>>> Stashed changes
     author="Jeff Wright",
     author_email="jeff.washcloth@gmail.com",
     license="MIT",
@@ -23,14 +27,13 @@ setup(
     long_description_content_type="text/markdown",
     packages=["pytest_fold"],
     py_modules=["pytest_fold"],
-    python_requires=">=3.7",
+    python_requires=">=3.8",
     install_requires=["pytest>=6.2.5", "asciimatics>=1.13.0", "textual>=0.1.15", "single-source>=0.2.0"],
     classifiers=[
         "Framework :: Pytest",
         "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
         "Topic :: Software Development :: Testing",
-        "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",

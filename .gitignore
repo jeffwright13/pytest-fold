@@ -1,5 +1,6 @@
 # Pyfold
 console_output.fold
+textual.log
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
