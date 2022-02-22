@@ -1,12 +1,13 @@
+import pickle
 import pytest
 import tempfile
 import re
+from dataclasses import dataclass
 from pathlib import Path
-from typing import Union
 
-from _pytest.config import Config, _PluggyPlugin
-from _pytest.config.argparsing import Parser
+from _pytest.config import Config
 from _pytest.main import Session
+from _pytest.reports import TestReport
 from _pytest._io.terminalwriter import TerminalWriter
 from pytest_fold.tuia import main as tui_asciimatics
 from pytest_fold.tuit import main as tui_textual
@@ -18,6 +19,7 @@ from pytest_fold.utils import (
     summary_matcher,
     lastline_matcher,
     OUTFILE,
+    PICKLEFILE,
     MARKERS,
 )
 
@@ -25,6 +27,17 @@ collect_ignore = [
     "setup.py",
     "plugin.py",
 ]
+
+
+@dataclass
+class TestReportInfo:
+    whole_damn_thing: TestReport
+    caplog: str
+    capstderr: str
+    capstdout: str
+    title: str
+
+test_reports_info = []
 
 
 def pytest_addoption(parser):
@@ -59,6 +72,11 @@ def pytest_sessionstart(session: Session) -> None:
             pytest.exit(msg="No previous results to display!")
     yield
 
+
+def pytest_report_teststatus(report: TestReport, config: Config):
+    if report.when == "teardown" and report.outcome == "passed":
+        t = TestReportInfo(report, report.caplog, report.capstderr, report.capstdout, report.head_line)
+        test_reports_info.append(t)
 
 # @pytest.hookimpl(hookwrapper=True)
 # def pytest_runtest_makereport(item, call):
@@ -149,6 +167,11 @@ def pytest_unconfigure(config: Config):
     Write console output to a file for use by TUI
     (part 2; used in conjunction with pytest_configure, above)
     """
+    # Write the passed test info to file
+    with open(PICKLEFILE, "wb") as picklefile:
+        pickle.dump(test_reports_info, picklefile)
+
+    # Write the folded terminal output to file
     if hasattr(config, "_pyfoldoutputfile"):
         # get terminal contents, then write file
         config._pyfoldoutputfile.seek(0)
@@ -175,8 +198,8 @@ def pyfold_tui(config: Config, tui: str = "asciimatics") -> None:
         tui_asciimatics() if tui.lower()[0] == "a" else tui_textual()
         return
 
-    # disable capturing while TUI runs to avoid error `redirected stdin is pseudofile, has no fileno()`;
-    # adapted from https://githubmemory.com/repo/jsbueno/terminedia/issues/25
+    # disable capturing while TUI runs to avoid error `redirected stdin is pseudofile, has
+    # no fileno()`; adapted from https://githubmemory.com/repo/jsbueno/terminedia/issues/25
     capmanager = config.pluginmanager.getplugin("capturemanager")
     try:
         capmanager.suspend_global_capture(in_=True)

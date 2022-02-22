@@ -1,5 +1,6 @@
 # Pyfold
 console_output.fold
+console_output.pickle
 textual.log
 
 # Byte-compiled / optimized / DLL files

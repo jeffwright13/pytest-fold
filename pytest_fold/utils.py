@@ -13,6 +13,7 @@ section_name_matcher = re.compile(r"~~>PYTEST_FOLD_MARKER_(\w+)")
 test_title_matcher = re.compile(r"__.*\s(.*)\s__+")
 
 OUTFILE = Path.cwd() / "console_output.fold"
+PICKLEFILE = Path.cwd() / "console_output.pickle"
 MARKERS = {
     "pytest_fold_firstline": "~~>PYTEST_FOLD_MARKER_FIRSTLINE<~~",
     "pytest_fold_errors": "~~>PYTEST_FOLD_MARKER_ERRORS<~~",

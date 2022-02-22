@@ -13,11 +13,7 @@ def read(fname):
 
 setup(
     name="pytest-fold",
-<<<<<<< Updated upstream
     version="0.7.4",
-=======
-    version="0.7.2",
->>>>>>> Stashed changes
     author="Jeff Wright",
     author_email="jeff.washcloth@gmail.com",
     license="MIT",

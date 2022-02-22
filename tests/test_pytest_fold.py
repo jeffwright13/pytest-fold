@@ -1,17 +1,39 @@
 import sys
 import time
 import logging
+import faker
 import pytest
+from random import sample
 # from . import __version__
 
+LOG_LEVELS = ("DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL")
 logger = logging.getLogger()
-logger.setLevel(logging.WARNING)
+logger.setLevel(logging.NOTSET)
 logger.propagate = True
 stdout_handler = logging.StreamHandler(sys.stdout)
 logger.addHandler(stdout_handler)
 
 # def test_version():
 #     assert __version__ == "0.1.0"
+
+
+def test_which_passes_and_has_lots_of_logging_output():
+    text = faker.Faker().text(2000)
+    logger.critical(text)
+    logger.error(text)
+    logger.warning(text)
+    logger.info(text)
+    logger.debug(text)
+    assert 1 == 1
+
+def test_which_fails_and_has_lots_of_logging_output():
+    text = faker.Faker().text(3000)
+    logger.critical(text)
+    logger.error(text)
+    logger.warning(text)
+    logger.info(text)
+    logger.debug(text)
+    assert 0 == 1
 
 
 def test_which_fails_1():
@@ -22,20 +44,31 @@ def test_which_passes_1():
     assert 1 == 1
 
 
-def test_which_fails_2():
+# def test_which_fails_2():
+#     assert 0
+
+
+# def test_which_passes_2():
+#     assert 1 == 1
+
+
+@pytest.mark.skip
+def test_which_is_marked_SKIP():
+    assert 1
+
+
+@pytest.mark.xfail
+def test_flaky_XPASS():
+    assert 1
+
+
+@pytest.mark.xfail
+def test_which_is_marked_XFAIL():
     assert 0
 
 
-def test_which_passes_2():
-    assert 1 == 1
-
-
-def test_which_fails_3():
-    assert 0
-
-
-def test_which_passes_3():
-    assert 1 == 1
+# def test_which_passes_3():
+#     assert 1 == 1
 
 
 # Method and its test that causes warnings
@@ -85,115 +118,115 @@ def test_pass_capturing(capsys):
     assert True
 
 
-def test_fail_1():
-    a = 0
-    time.sleep(0.05)
-    assert False
+# def test_fail_1():
+#     a = 0
+#     time.sleep(0.05)
+#     assert False
 
 
-def test_pass_1():
-    a = 0
-    time.sleep(0.05)
-    assert True
+# def test_pass_1():
+#     a = 0
+#     time.sleep(0.05)
+#     assert True
 
 
-def test_fail_2():
-    a = 0
-    time.sleep(0.05)
-    assert False
+# def test_fail_2():
+#     a = 0
+#     time.sleep(0.05)
+#     assert False
 
 
-def test_pass_2():
-    a = 0
-    time.sleep(0.05)
-    assert True
+# def test_pass_2():
+#     a = 0
+#     time.sleep(0.05)
+#     assert True
 
 
-def test_fail_3():
-    a = 0
-    time.sleep(0.05)
-    assert False
+# def test_fail_3():
+#     a = 0
+#     time.sleep(0.05)
+#     assert False
 
 
-def test_pass_3():
-    a = 0
-    time.sleep(0.05)
-    assert True
+# def test_pass_3():
+#     a = 0
+#     time.sleep(0.05)
+#     assert True
 
 
-def test_which_fails_and_has_stdout_1(capsys):
+def test_which_fails_and_has_stdout(capsys):
     print("this test fails")
     assert 0 == 1
 
 
-def test_which_pauses_and_fails_and_has_stdout_1(capsys):
-    print("this test pauses, then fails")
-    # time.sleep(2)
-    assert 0 == -11
+# def test_which_pauses_and_fails_and_has_stdout_1(capsys):
+#     print("this test pauses, then fails")
+#     # time.sleep(2)
+#     assert 0 == -11
 
 
-def test_which_passes_and_has_stdout_2(capsys):
+def test_which_passes_and_has_stdout(capsys):
     print("this test passes")  # stdout is consumed by pytest
     assert "a" == "a"
 
 
-def test_summary():
-    assert "a" == "a"
+# def test_summary():
+#     assert "a" == "a"
 
 # This test can intentionally cause an error - useful for testing output of
 # folding - if the fixture is commented out, the test throws an error at setup.
-@pytest.fixture()
-def fixture_for_fun():
-    pass
+# @pytest.fixture()
+# def fixture_for_fun():
+#     pass
 
-def test_fixture_for_fun_pass(fixture_for_fun):
+def test_which_causes_error_pass(fixture_for_fun):
     assert 1
 
-def test_fixture_for_fun_fail(fixture_for_fun):
+def test_which_causes_error_fail(fixture_for_fun):
     assert 0
 
 
-def test_hello(hello):
-    assert "hello" == "hello"
+# def test_hello(hello):
+#     assert "hello" == "hello"
 
 ### Following few tests takn from Okken's book
-@pytest.fixture()
-def sample_test(pytester):
-    pytester.makepyfile(
-        """
-        def test_pass():
-            assert 1 == 1
-            def test_fail():
-            assert 1 == 2
-        """
-    )
-    return pytester
+# @pytest.fixture()
+# def sample_test(pytester):
+#     pytester.makepyfile(
+#         """
+#         def test_pass():
+#             assert 1 == 1
+#             def test_fail():
+#             assert 1 == 2
+#         """
+#     )
+#     return pytester
 
 
-def test_with_fold(sample_test):
-    result = sample_test.runpytest("--fold")
-    result.stdout.fnmatch_lines(
-        [
-            "*",
-        ]
-    )
-    assert result.ret == 1
+# def test_with_fold(sample_test):
+#     result = sample_test.runpytest("--fold")
+#     result.stdout.fnmatch_lines(
+#         [
+#             "*",
+#         ]
+#     )
+#     assert result.ret == 1
 
 
-def test_with_fold_verbose(sample_test):
-    result = sample_test.runpytest("-v", "--fold")
-    result.stdout.fnmatch_lines(
-        [
-            "▶",
-        ]
-    )
-    assert result.ret == 1
+# def test_with_fold_verbose(sample_test):
+#     result = sample_test.runpytest("-v", "--fold")
+#     result.stdout.fnmatch_lines(
+#         [
+#             "▶",
+#         ]
+#     )
+#     assert result.ret == 1
 
 
-def test_no_fold_verbose(sample_test):
-    result = sample_test.runpytest("-v")
-    result.stdout.fnmatch_lines(["*"])
-    assert result.ret == 1
+# def test_no_fold_verbose(sample_test):
+#     result = sample_test.runpytest("-v")
+#     result.stdout.fnmatch_lines(["*"])
+#     assert result.ret == 1
 
 
 # ### <END> Okken's stuff
