@@ -13,7 +13,7 @@ SECTIONS = {
     "FIRSTLINE": "bold blue underline",
     "FAILURES": "bold red underline",
     "ERRORS": "bold magenta underline",
-    "WARNINGS_SUMMARY": "bold yellow underline",
+    "WARNINGS": "bold yellow underline",
     "TERMINAL_SUMMARY": "bold green underline",
     "LASTLINE": "bold blue underline",
 }
@@ -26,7 +26,9 @@ class ResultsData:
     display on the TUI. Relies on utils.py.
     """
 
-    def __init__(self, results_file_path: Path = OUTFILE, pickle_file_path: Path = PICKLEFILE) -> None:
+    def __init__(
+        self, results_file_path: Path = OUTFILE, pickle_file_path: Path = PICKLEFILE
+    ) -> None:
         self.results_file = results_file_path
         self.pass_file = pickle_file_path
         self.sections = []
@@ -57,7 +59,6 @@ class ResultsData:
         return passes
 
 
-
 class FoldFooter(Footer):
     # Override default Footer method 'make_key_text' to allow customizations
     def make_key_text(self) -> Text:
@@ -83,7 +84,6 @@ class FoldFooter(Footer):
             )
             text.append_text(key_text)
         return text
-
 
 
 class FoldApp(App):
@@ -133,12 +133,22 @@ class FoldApp(App):
             elif tree.nodes[tree.id].label.plain == "TERMINAL_SUMMARY":
                 tree.nodes[tree.id].label.stylize("bold green underline")
             else:
-                tree.nodes[tree.id].label.stylize("italic")
-        await tree.add(tree.root.id, Text("PASSING TESTS"), {})
+                tree.nodes[tree.id].label.stylize("encircle red")
+        await tree.add(tree.root.id, Text("PASSES"), {})
         tree.nodes[tree.id].label.stylize("bold green underline")
         for item in self.passes:
-            await tree.add(tree.root.id, Text(item.title), {"item": {"caplog": item.caplog, "capstderr": item.capstderr, "capstdout": item.capstdout}})
-            tree.nodes[tree.id].label.stylize("italic")
+            await tree.add(
+                tree.root.id,
+                Text(item.title),
+                {
+                    "item": {
+                        "caplog": item.caplog,
+                        "capstderr": item.capstderr,
+                        "capstdout": item.capstdout,
+                    }
+                },
+            )
+            tree.nodes[tree.id].label.stylize("cyan")
         await tree.root.expand()
 
         # Create and dock the results tree
@@ -154,16 +164,18 @@ class FoldApp(App):
 
     async def handle_tree_click(self, message: TreeClick[dict]) -> None:
         # Display results in body when section header is clicked
-        label = message.node.label
+        label = message.node.label.plain
+        if label in ("ERRORS", "FAILURES", "PASSES"):
+            return
         try:
-            self.text = message.node.data.get("results")[label._text[0]]
+            self.text = message.node.data.get("results")[label]
         except TypeError:
             caplog = message.node.data.get("item")["caplog"]
             capstderr = message.node.data.get("item")["capstderr"]
             capstdout = message.node.data.get("item")["capstdout"]
             self.text = caplog + capstderr + capstdout
             if len(self.text) == 0:
-                self.text = "<<no output from this test>>"
+                self.text = "<<no stdout, stderr, or stdlog output from this test>>"
         except Exception as e:
             return
         text: RenderableType

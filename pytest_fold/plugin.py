@@ -1,7 +1,7 @@
 import pickle
 import pytest
-import tempfile
 import re
+import tempfile
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -38,6 +38,7 @@ class TestReportInfo:
     title: str
 
 test_reports_info = []
+reports = []
 
 
 def pytest_addoption(parser):
@@ -74,19 +75,13 @@ def pytest_sessionstart(session: Session) -> None:
 
 
 def pytest_report_teststatus(report: TestReport, config: Config):
-    if report.when == "teardown" and report.outcome == "passed":
+    # Populate the global rest_results_info list with this test's final result
+    # Only doing currently for Passed tests, since we already have Errors/Failures/etc
+    reports.append(report)
+    if report.when == "teardown":
         t = TestReportInfo(report, report.caplog, report.capstderr, report.capstdout, report.head_line)
-        test_reports_info.append(t)
-
-# @pytest.hookimpl(hookwrapper=True)
-# def pytest_runtest_makereport(item, call):
-#     """
-#     Attach session info to report for later use in pytest_runtest_logreport
-#     https://stackoverflow.com/questions/54717786/access-pytest-session-or-arguments-in-pytest-runtest-logreport
-#     """
-#     out = yield
-#     report = out.get_result()
-#     report.session = item.session
+        if report.outcome == "passed":
+            test_reports_info.append(t)
 
 
 @pytest.hookimpl(trylast=True)
@@ -115,32 +110,32 @@ def pytest_configure(config: Config) -> None:
                     )
                     config._pyfoldfirsttime = False
 
-                if search := re.search(errors_matcher, s):
+                if re.search(errors_matcher, s):
                     config._pyfoldoutputfile.write(
                         (MARKERS["pytest_fold_errors"] + "\n").encode("utf-8")
                     )
 
-                if search := re.search(failures_matcher, s):
+                if re.search(failures_matcher, s):
                     config._pyfoldoutputfile.write(
                         (MARKERS["pytest_fold_failures"] + "\n").encode("utf-8")
                     )
 
-                if search := re.search(failed_test_marker, s):
+                if re.search(failed_test_marker, s):
                     config._pyfoldoutputfile.write(
                         (MARKERS["pytest_fold_failed_test"] + "\n").encode("utf-8")
                     )
 
-                if search := re.search(warnings_summary_matcher, s):
+                if re.search(warnings_summary_matcher, s):
                     config._pyfoldoutputfile.write(
                         (MARKERS["pytest_fold_warnings_summary"] + "\n").encode("utf-8")
                     )
 
-                if search := re.search(summary_matcher, s):
+                if re.search(summary_matcher, s):
                     config._pyfoldoutputfile.write(
                         (MARKERS["pytest_fold_terminal_summary"] + "\n").encode("utf-8")
                     )
 
-                if search := re.search(lastline_matcher, s):
+                if re.search(lastline_matcher, s):
                     config._pyfoldoutputfile.write(
                         (MARKERS["pytest_fold_lastline"] + "\n").encode("utf-8")
                     )

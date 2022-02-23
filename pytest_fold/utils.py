@@ -19,7 +19,7 @@ MARKERS = {
     "pytest_fold_errors": "~~>PYTEST_FOLD_MARKER_ERRORS<~~",
     "pytest_fold_failures": "~~>PYTEST_FOLD_MARKER_FAILURES<~~",
     "pytest_fold_failed_test": "~~>PYTEST_FOLD_MARKER_FAILED_TEST<~~",
-    "pytest_fold_warnings_summary": "~~>PYTEST_FOLD_MARKER_WARNINGS_SUMMARY<~~",
+    "pytest_fold_warnings_summary": "~~>PYTEST_FOLD_MARKER_WARNINGS<~~",
     "pytest_fold_lastline": "~~>PYTEST_FOLD_MARKER_LASTLINE<~~",
     "pytest_fold_terminal_summary": "~~>PYTEST_FOLD_MARKER_TERMINAL_SUMMARY<~~",
 }
