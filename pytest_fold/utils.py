@@ -16,6 +16,7 @@ test_title_matcher = re.compile(r"__.*\s(.*)\s__+")
 
 OUTFILE = Path.cwd() / "console_output.fold"
 PICKLEFILE = Path.cwd() / "console_output.pickle"
+REPORTFILE = Path.cwd() / "pytest_report.bin"
 MARKERS = {
     "pytest_fold_firstline": "~~>PYTEST_FOLD_MARKER_FIRSTLINE<~~",
     "pytest_fold_errors": "~~>PYTEST_FOLD_MARKER_ERRORS<~~",
@@ -29,7 +30,7 @@ MARKERS = {
 
 @dataclass
 class TestReportInfo:
-    whole_damn_thing: TestReport
+    report: TestReport
     outcome: str
     caplog: str
     capstderr: str

@@ -14,7 +14,7 @@ SECTIONS = {
     "FAILURES": "bold red underline",
     "ERRORS": "bold magenta underline",
     "WARNINGS": "bold yellow underline",
-    "TERMINAL_SUMMARY": "bold green underline",
+    "SUMMARY": "bold green underline",
     "LASTLINE": "bold blue underline",
 }
 
@@ -119,7 +119,7 @@ class FoldApp(App):
         # Stylize the results-tree section headers
         tree = TreeControl(Text("TEST RUN RESULTS:", style="bold white underline"), {})
         for results_key in self.results.keys():
-            if results_key in ("LASTLINE", "TERMINAL_SUMMARY"):
+            if results_key in ("LASTLINE", "SUMMARY"):
                 continue
             await tree.add(tree.root.id, Text(results_key), {"results": self.results})
             if tree.nodes[tree.id].label.plain == "FIRSTLINE":
@@ -130,7 +130,7 @@ class FoldApp(App):
                 tree.nodes[tree.id].label.stylize("bold magenta underline")
             elif tree.nodes[tree.id].label.plain == "WARNINGS":
                 tree.nodes[tree.id].label.stylize("bold yellow underline")
-            elif tree.nodes[tree.id].label.plain == "TERMINAL_SUMMARY":
+            elif tree.nodes[tree.id].label.plain == "SUMMARY":
                 tree.nodes[tree.id].label.stylize("bold green underline")
             else:
                 tree.nodes[tree.id].label.stylize("encircle red")

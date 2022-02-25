@@ -18,9 +18,10 @@ from pytest_fold.utils import (
     warnings_summary_matcher,
     summary_matcher,
     lastline_matcher,
-    OUTFILE,
-    PICKLEFILE,
-    MARKERS,
+    REPORTFILE,
+    # OUTFILE,
+    # PICKLEFILE,
+    # MARKERS,
 )
 
 collect_ignore = [
@@ -29,22 +30,13 @@ collect_ignore = [
 ]
 
 
-test_reports_info = []
-test_reports_info_all = []
-reports = []
+reports, report_info = [], []
 
 
 def pytest_addoption(parser):
     group = parser.getgroup("fold")
     group.addoption(
         "--fold", action="store_true", help="fold failed test output sections",
-    )
-    group.addoption(
-        "--fold-now",
-        "--fn",
-        action="store_true",
-        default="False",
-        help="run TUI from existing results file, bypassing pytest execution",
     )
     group.addoption(
         "--fold-tui",
@@ -54,30 +46,36 @@ def pytest_addoption(parser):
         help="specify user interface ('asciimatics' 'a' | 'textual' 't')",
         choices=['asciimatics', 'a', 'textual', 't']
     )
+    # group.addoption(
+    #     "--fold-now",
+    #     "--fn",
+    #     action="store_true",
+    #     default="False",
+    #     help="run TUI from existing results file, bypassing pytest execution",
+    # )
 
 
-@pytest.hookimpl(hookwrapper=True)
-def pytest_sessionstart(session: Session) -> None:
-    if session.config.getoption("--fold-now") == True:
-        if Path(OUTFILE).exists():
-            pyfold_tui(session.config, session.config.getoption("--fold-tui"))
-            pytest.exit(msg="Quitting TUI")
-        else:
-            pytest.exit(msg="No previous results to display!")
-    yield
+# @pytest.hookimpl(hookwrapper=True)
+# def pytest_sessionstart(session: Session) -> None:
+#     if session.config.getoption("--fold-now") == True:
+#         if Path(OUTFILE).exists():
+#             pyfold_tui(session.config, session.config.getoption("--fold-tui"))
+#             pytest.exit(msg="Quitting TUI")
+#         else:
+#             pytest.exit(msg="No previous results to display!")
+#     yield
 
 
 def pytest_report_teststatus(report: TestReport, config: Config):
-    # Populate the global rest_results_info list with this test's final result
-    # Only doing currently for Passed tests, since we already have Errors/Failures/etc
+    """Construct list(s) of individial test report/report-info instances"""
     reports.append(report)
     if report.when == "call" and report.outcome == "skipped":
-        test_reports_info.append(TestReportInfo(report, report.outcome, report.caplog, report.capstderr, report.capstdout, report.head_line))
+        report_info.append(TestReportInfo(report, report.outcome, report.caplog, report.capstderr, report.capstdout, report.head_line))
     if report.when == "call":
         t = TestReportInfo(report, report.outcome, report.caplog, report.capstderr, report.capstdout, report.head_line)
-        test_reports_info_all.append(t)
+        report_info_all.append(t)
         if report.outcome == "passed":
-            test_reports_info.append(t)
+            report_info.append(t)
             return
 
 
@@ -161,11 +159,11 @@ def pytest_unconfigure(config: Config):
     """
     # Write the passed test info to file
     with open(PICKLEFILE, "wb") as picklefile:
-        pickle.dump(test_reports_info, picklefile)
+        pickle.dump(report_info, picklefile)
 
     # DEBUG ONLY - REMOVE
-    with open("test_reports_info_all.pickle", "wb") as picklefile:
-        pickle.dump(test_reports_info_all, picklefile)
+    with open("report_info_all.pickle", "wb") as picklefile:
+        pickle.dump(report_info_all, picklefile)
     with open("reports.pickle", "wb") as picklefile:
         pickle.dump(reports, picklefile)
 
