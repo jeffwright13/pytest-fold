@@ -1,88 +1,76 @@
-import re
+import pickle
 from dataclasses import dataclass
 from pathlib import Path
 from _pytest.reports import TestReport
 
-failures_matcher = re.compile(r"^==.*\sFAILURES\s==+")
-errors_matcher = re.compile(r"^==.*\sERRORS\s==+")
-failed_test_marker = re.compile(r"^__.*\s(.*)\s__+")
-warnings_summary_matcher = re.compile(r"^==.*warnings summary\s.*==+")
-summary_matcher = re.compile(r"^==.*short test summary info\s.*==+")
-lastline_matcher = re.compile(r"^==.*in\s\d+.\d+s.*==+")
-
-foldmark_matcher = re.compile(r".*(~~>PYTEST_FOLD_MARKER_)+(.*)<~~")
-section_name_matcher = re.compile(r"~~>PYTEST_FOLD_MARKER_(\w+)")
-test_title_matcher = re.compile(r"__.*\s(.*)\s__+")
-
-OUTFILE = Path.cwd() / "console_output.fold"
-PICKLEFILE = Path.cwd() / "console_output.pickle"
 REPORTFILE = Path.cwd() / "pytest_report.bin"
-MARKERS = {
-    "pytest_fold_firstline": "~~>PYTEST_FOLD_MARKER_FIRSTLINE<~~",
-    "pytest_fold_errors": "~~>PYTEST_FOLD_MARKER_ERRORS<~~",
-    "pytest_fold_failures": "~~>PYTEST_FOLD_MARKER_FAILURES<~~",
-    "pytest_fold_failed_test": "~~>PYTEST_FOLD_MARKER_FAILED_TEST<~~",
-    "pytest_fold_warnings_summary": "~~>PYTEST_FOLD_MARKER_WARNINGS<~~",
-    "pytest_fold_lastline": "~~>PYTEST_FOLD_MARKER_LASTLINE<~~",
-    "pytest_fold_terminal_summary": "~~>PYTEST_FOLD_MARKER_TERMINAL_SUMMARY<~~",
-}
 
 
 @dataclass
-class TestReportInfo:
-    report: TestReport
-    outcome: str
-    caplog: str
-    capstderr: str
-    capstdout: str
-    title: str
+class TestInfo:
+    title: str = ""
+    tag: str = ""
+    outcome: str = ""
+    caplog: str = ""
+    capstderr: str = ""
+    capstdout: str = ""
+    text: str = ""
 
 
-def line_is_a_marker(line: str) -> bool:
-    if line.strip() == "":
-        return False
-    return line.strip() in (
-        MARKERS["pytest_fold_firstline"],
-        MARKERS["pytest_fold_errors"],
-        MARKERS["pytest_fold_failures"],
-        MARKERS["pytest_fold_failed_test"],
-        MARKERS["pytest_fold_warnings_summary"],
-        MARKERS["pytest_fold_terminal_summary"],
-    )
+class Results:
+    def __init__(self):
+        self._reports = self._unpickle()
+        self._test_info = self._parse_reports()
+        self.sections = self._sectionalize()
+
+    def _unpickle(self):
+        with open(REPORTFILE, "rb") as rfile:
+            return pickle.load(rfile)
+
+    def _parse_reports(self):
+        test_infos = []
+        for report in self._reports:
+            test_info = TestInfo()
+            if (
+                # passed test
+                report.when == "call"
+                and report.outcome == "passed"
+                #  failed test
+                or report.when == "setup"
+                and report.outcome == "failed"
+                # error
+                or report.when == "call"
+                and report.outcome == "failed"
+                # marked skip
+                or report.when == "setup"
+                and report.outcome == "skipped"
+                # marked xfail
+                or report.when == "call"
+                and report.outcome == "skipped"
+            ):
+                test_info.outcome = report.outcome
+                test_info.caplog = report.caplog
+                test_info.capstderr = report.capstderr
+                test_info.capstdout = report.capstdout
+                test_info.title = report.head_line
+                test_info.text = report.longreprtext if report.outcome == "failed" else None
+                test_infos.append(test_info)
+        return test_infos
+
+    def _sectionalize(self):
+        return list({item.title:item for item in self._test_info}.values())
+
+    def get_results(self) -> list:
+        return self.sections
 
 
-def line_is_lastline(line: str) -> bool:
-    if line.strip() == "":
-        return False
-    return line.strip() in MARKERS["pytest_fold_lastline"]
-
-
-def sectionize(lines: str) -> dict:
-    """
-    Parse lines from a Pytest run's console output which are marked with Pytest-Fold
-    markers, and build up a dictionary of ANSI text strings corresponding to individual
-    sections of the output. This function is meant to be called from the Pytest-Fold
-    TUI for interactive display.
-    """
-    sections = []
-    section = {"name": None, "test_title": "", "content": ""}
-    lastline = False
-
-    for line in lines:
-        if line_is_a_marker(line):
-            sections.append(section.copy()) if section["name"] else None
-            section["test_title"] = ""
-            section["content"] = ""
-            section["name"] = re.search(section_name_matcher, line).groups()[0]
-        elif line_is_lastline(line):
-            lastline = True
-            sections.append(section.copy())
-            section["content"] = ""
-            section["name"] = re.search(section_name_matcher, line).groups()[0]
-        else:
-            section["content"] += line
-            if re.search(test_title_matcher, line):
-                section["test_title"] = re.search(test_title_matcher, line).groups()[0]
-            sections.append(section.copy()) if lastline else None
-
-    return sections
+"""
+if report.when == "call" and report.outcome == "skipped":
+    report_info.append(TestReportInfo(report, report.outcome, report.caplog, report.capstderr, report.capstdout, report.head_line))
+if report.when == "call":
+    t = TestReportInfo(report, report.outcome, report.caplog, report.capstderr, report.capstdout, report.head_line)
+    report_info.append(t)
+    if report.outcome == "passed":
+        report_info.append(t)
+        return
+"""
