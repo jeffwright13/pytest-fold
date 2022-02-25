@@ -2,7 +2,6 @@ import pickle
 import pytest
 import re
 import tempfile
-from dataclasses import dataclass
 from pathlib import Path
 
 from _pytest.config import Config
@@ -12,6 +11,7 @@ from _pytest._io.terminalwriter import TerminalWriter
 from pytest_fold.tuia import main as tui_asciimatics
 from pytest_fold.tuit import main as tui_textual
 from pytest_fold.utils import (
+    TestReportInfo,
     failures_matcher,
     errors_matcher,
     failed_test_marker,
@@ -29,15 +29,8 @@ collect_ignore = [
 ]
 
 
-@dataclass
-class TestReportInfo:
-    whole_damn_thing: TestReport
-    caplog: str
-    capstderr: str
-    capstdout: str
-    title: str
-
 test_reports_info = []
+test_reports_info_all = []
 reports = []
 
 
@@ -78,10 +71,14 @@ def pytest_report_teststatus(report: TestReport, config: Config):
     # Populate the global rest_results_info list with this test's final result
     # Only doing currently for Passed tests, since we already have Errors/Failures/etc
     reports.append(report)
-    if report.when == "teardown":
-        t = TestReportInfo(report, report.caplog, report.capstderr, report.capstdout, report.head_line)
+    if report.when == "call" and report.outcome == "skipped":
+        test_reports_info.append(TestReportInfo(report, report.outcome, report.caplog, report.capstderr, report.capstdout, report.head_line))
+    if report.when == "call":
+        t = TestReportInfo(report, report.outcome, report.caplog, report.capstderr, report.capstdout, report.head_line)
+        test_reports_info_all.append(t)
         if report.outcome == "passed":
             test_reports_info.append(t)
+            return
 
 
 @pytest.hookimpl(trylast=True)
@@ -165,6 +162,12 @@ def pytest_unconfigure(config: Config):
     # Write the passed test info to file
     with open(PICKLEFILE, "wb") as picklefile:
         pickle.dump(test_reports_info, picklefile)
+
+    # DEBUG ONLY - REMOVE
+    with open("test_reports_info_all.pickle", "wb") as picklefile:
+        pickle.dump(test_reports_info_all, picklefile)
+    with open("reports.pickle", "wb") as picklefile:
+        pickle.dump(reports, picklefile)
 
     # Write the folded terminal output to file
     if hasattr(config, "_pyfoldoutputfile"):

@@ -1,5 +1,7 @@
 import re
+from dataclasses import dataclass
 from pathlib import Path
+from _pytest.reports import TestReport
 
 failures_matcher = re.compile(r"^==.*\sFAILURES\s==+")
 errors_matcher = re.compile(r"^==.*\sERRORS\s==+")
@@ -23,6 +25,16 @@ MARKERS = {
     "pytest_fold_lastline": "~~>PYTEST_FOLD_MARKER_LASTLINE<~~",
     "pytest_fold_terminal_summary": "~~>PYTEST_FOLD_MARKER_TERMINAL_SUMMARY<~~",
 }
+
+
+@dataclass
+class TestReportInfo:
+    whole_damn_thing: TestReport
+    outcome: str
+    caplog: str
+    capstderr: str
+    capstdout: str
+    title: str
 
 
 def line_is_a_marker(line: str) -> bool:
