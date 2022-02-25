@@ -124,9 +124,15 @@ def test_12_passes_and_has_stdout(capsys):
 #     pass
 
 
-def test_13_causes_error_pass(fixture_for_fun):
+def test_13_causes_error_pass_stderr_stdout_stdlog(fixture_for_fun):
+    print("PASS this stdout is captured")
+    print("PASS this stderr is captured", file=sys.stderr)
+    logger.warning("PASS this log is captured")
     assert 1
 
 
-def test_14_causes_error_fail(fixture_for_fun):
+def test_14_causes_error_fail_stderr_stdout_stdlog(fixture_for_fun):
+    print("FAIL this stdout is captured")
+    print("FAIL this stderr is captured", file=sys.stderr)
+    logger.warning("FAIL this log is captured")
     assert 0
