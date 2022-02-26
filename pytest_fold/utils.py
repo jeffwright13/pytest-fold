@@ -1,15 +1,37 @@
+import re
 import pickle
 from dataclasses import dataclass
 from pathlib import Path
-from _pytest.reports import TestReport
 
-REPORTFILE = Path.cwd() / "pytest_report.bin"
+REPORTFILE = Path.cwd() / "report_objects.bin"
+MARKEDTERMINALOUTPUTFILE = Path.cwd() / "marked_output.bin"
+
+failures_matcher = re.compile(r"^==.*\sFAILURES\s==+")
+errors_matcher = re.compile(r"^==.*\sERRORS\s==+")
+failed_test_marker = re.compile(r"^__.*\s(.*)\s__+")
+warnings_summary_matcher = re.compile(r"^==.*warnings summary\s.*==+")
+summary_matcher = re.compile(r"^==.*short test summary info\s.*==+")
+lastline_matcher = re.compile(r"^==.*in\s\d+.\d+s.*==+")
+
+foldmark_matcher = re.compile(r".*(~~>PYTEST_FOLD_MARKER_)+(.*)<~~")
+section_name_matcher = re.compile(r"~~>PYTEST_FOLD_MARKER_(\w+)")
+test_title_matcher = re.compile(r"__.*\s(.*)\s__+")
+
+MARKERS = {
+    "pytest_fold_firstline": "~~>PYTEST_FOLD_MARKER_FIRSTLINE<~~",
+    "pytest_fold_errors": "~~>PYTEST_FOLD_MARKER_ERRORS<~~",
+    "pytest_fold_failures": "~~>PYTEST_FOLD_MARKER_FAILURES<~~",
+    "pytest_fold_failed_test": "~~>PYTEST_FOLD_MARKER_FAILED_TEST<~~",
+    "pytest_fold_warnings_summary": "~~>PYTEST_FOLD_MARKER_WARNINGS_SUMMARY<~~",
+    "pytest_fold_lastline": "~~>PYTEST_FOLD_MARKER_LASTLINE<~~",
+    "pytest_fold_terminal_summary": "~~>PYTEST_FOLD_MARKER_TERMINAL_SUMMARY<~~",
+}
 
 
 @dataclass
 class TestInfo:
     title: str = ""
-    tag: str = ""
+    category: str = ""
     outcome: str = ""
     caplog: str = ""
     capstderr: str = ""
@@ -20,57 +42,167 @@ class TestInfo:
 class Results:
     def __init__(self):
         self._reports = self._unpickle()
-        self._test_info = self._parse_reports()
-        self.sections = self._sectionalize()
+        self._test_info = self._process_reports()
+        self._marked_output = MarkedSections()
+
+        self.test_results = self._deduplicate()
+        self.failures = self.get_failures()
+        self.errors = self.get_errors()
+        self.passes = self.get_passes()
+        self.misc = self.get_misc()
+        print("")
 
     def _unpickle(self):
+        """Unpack pickled file from disk"""
         with open(REPORTFILE, "rb") as rfile:
             return pickle.load(rfile)
 
-    def _parse_reports(self):
+    def _deduplicate(self):
+        """Remove duplicate _test_info to give 1:1 test-title:result"""
+        return list({item.title: item for item in self._test_info}.values())
+
+    def _process_reports(self):
+        """Extract individual test results from the pytest report objects"""
         test_infos = []
         for report in self._reports:
             test_info = TestInfo()
+
+            # populate the TestInfo instance with pertinent data from report
+            test_info.outcome = report.outcome
+            test_info.caplog = report.caplog
+            test_info.capstderr = report.capstderr
+            test_info.capstdout = report.capstdout
+            test_info.title = report.head_line
+            test_info.text = report.longreprtext or ""
+
+            # categorize the TestInfo instance
             if (
-                # passed test
-                report.when == "call"
-                and report.outcome == "passed"
-                #  failed test
-                or report.when == "setup"
+                report.when in ("collect", "setup", "teardown")
                 and report.outcome == "failed"
-                # error
-                or report.when == "call"
-                and report.outcome == "failed"
-                # marked skip
-                or report.when == "setup"
-                and report.outcome == "skipped"
-                # marked xfail
-                or report.when == "call"
+            ):
+                test_info.category = "error"
+            elif (
+                report.when in ("collect", "setup", "teardown")
                 and report.outcome == "skipped"
             ):
-                test_info.outcome = report.outcome
-                test_info.caplog = report.caplog
-                test_info.capstderr = report.capstderr
-                test_info.capstdout = report.capstdout
-                test_info.title = report.head_line
-                test_info.text = report.longreprtext if report.outcome == "failed" else None
-                test_infos.append(test_info)
+                test_info.category = "skipped"
+            elif report.when == "call" and report.outcome == "failed":
+                test_info.category = "failed"
+            elif report.when == "call" and report.outcome == "passed":
+                test_info.category = "passed"
+            elif report.when == "setup" and report.outcome == "skipped":
+                test_info.category = "skipped"
+            elif report.when == "call" and report.outcome == "skipped":
+                test_info.category = "xfail"
+            else:
+                continue
+            test_infos.append(test_info)
+
         return test_infos
 
-    def _sectionalize(self):
-        return list({item.title:item for item in self._test_info}.values())
+    def get_failures(self):
+        return {
+            entry.title: entry.caplog + entry.capstderr + entry.capstdout + entry.text
+            for entry in self.test_results
+            if entry.category == "failed"
+        }
+
+    def get_errors(self):
+        return {
+            entry.title: entry.caplog + entry.capstderr + entry.capstdout
+            for entry in self.test_results
+            if entry.category == "error"
+        }
+
+    def get_passes(self):
+        return {
+            entry.title: entry.caplog + entry.capstderr + entry.capstdout
+            for entry in self.test_results
+            if entry.category == "passed"
+        }
+
+    def get_misc(self):
+        return {
+            entry.title: entry.caplog + entry.capstderr + entry.capstdout
+            for entry in self.test_results
+            if entry.category in ("skipped", "xfail")
+        }
 
     def get_results(self) -> list:
-        return self.sections
+        return self.test_results
+
+    def get_terminal_output(self) -> bytes:
+        return self._terminal_output
 
 
-"""
-if report.when == "call" and report.outcome == "skipped":
-    report_info.append(TestReportInfo(report, report.outcome, report.caplog, report.capstderr, report.capstdout, report.head_line))
-if report.when == "call":
-    t = TestReportInfo(report, report.outcome, report.caplog, report.capstderr, report.capstdout, report.head_line)
-    report_info.append(t)
-    if report.outcome == "passed":
-        report_info.append(t)
-        return
-"""
+class MarkedSections:
+    def __init__(self, marked_file_path: Path = MARKEDTERMINALOUTPUTFILE) -> None:
+        self._marked_lines = self._get_marked_lines(marked_file_path)
+        self._sections = self._sectionize(self._marked_lines)
+        self._parsed_sections = []
+
+    def get_section(self, name: str) -> str:
+        if name not in (
+            "FIRSTLINE",
+            "WARNINGS_SUMMARY",
+            "TERMINAL_SUMMARY",
+            "LASTLINE",
+        ):
+            raise Exception(f"Cannot retrieve section by name: '{name}'")
+        for section in self._sections:
+            if name == section["name"]:
+                return section
+
+    def _get_marked_lines(
+        self, marked_file_path: Path = MARKEDTERMINALOUTPUTFILE
+    ) -> list:
+        with open(MARKEDTERMINALOUTPUTFILE, "r") as mfile:
+            return mfile.readlines()
+
+    def _line_is_a_marker(self, line: str) -> bool:
+        if line.strip() == "":
+            return False
+        return line.strip() in (
+            MARKERS["pytest_fold_firstline"],
+            MARKERS["pytest_fold_errors"],
+            MARKERS["pytest_fold_failures"],
+            MARKERS["pytest_fold_failed_test"],
+            MARKERS["pytest_fold_warnings_summary"],
+            MARKERS["pytest_fold_terminal_summary"],
+        )
+
+    def _line_is_lastline(self, line: str) -> bool:
+        if line.strip() == "":
+            return False
+        return line.strip() in MARKERS["pytest_fold_lastline"]
+
+    def _sectionize(self, lines: list) -> dict:
+        """
+        Parse lines from a Pytest run's console output which are marked with Pytest-Fold
+        markers, and build up a dictionary of ANSI text strings corresponding to individual
+        sections of the output. This function is meant to be called from the Pytest-Fold
+        TUI for interactive display.
+        """
+        sections = []
+        section = {"name": None, "test_title": "", "content": ""}
+        lastline = False
+
+        for line in lines:
+            if self._line_is_a_marker(line):
+                sections.append(section.copy()) if section["name"] else None
+                section["test_title"] = ""
+                section["content"] = ""
+                section["name"] = re.search(section_name_matcher, line).groups()[0]
+            elif self._line_is_lastline(line):
+                lastline = True
+                sections.append(section.copy())
+                section["content"] = ""
+                section["name"] = re.search(section_name_matcher, line).groups()[0]
+            else:
+                section["content"] += line
+                if re.search(test_title_matcher, line):
+                    section["test_title"] = re.search(
+                        test_title_matcher, line
+                    ).groups()[0]
+                sections.append(section.copy()) if lastline else None
+        return sections

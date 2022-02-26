@@ -2,11 +2,10 @@ from rich.console import RenderableType
 from rich.text import Text
 from textual import events
 from textual.app import App
+from textual.view import messages
 from textual.views import DockView
 from textual.widgets import Header, Footer, TreeControl, ScrollView, TreeClick
-from pytest_fold.utils import Results
-
-TREE_WIDTH = 30
+from pytest_fold.utils import Results, MarkedSections
 
 
 class FoldFooter(Footer):
@@ -42,97 +41,142 @@ class FoldApp(App):
     Provides docking and data population for test session headers and results
     """
 
+    async def action_toggle_tree(self, names: list) -> None:
+        # self.trees = {child.name: child for child in self.children}
+        if type(names) == str:
+            names = [names]
+        for name in names:
+            widget = self.view.named_widgets[
+                name
+            ]  # <= self here is View; see end of view.py
+            widget.visible = not widget.visible  # <= 'visible' is attr on Widget class
+            await self.post_message(messages.Layout(self))
+
     async def on_load(self, event: events.Load) -> None:
         # Populate footer with quit and toggle info
-        await self.bind("t", "view.toggle('results_tree')", "Toggle Results Tree  |")
+        await self.bind("f", "toggle_tree('fail_tree')", "Toggle Fail  ⁞")
+        await self.bind("p", "toggle_tree('pass_tree')", "Toggle Pass  ⁞")
+        await self.bind("e", "toggle_tree('error_tree')", "Toggle Error  ⁞")
+        await self.bind("m", "toggle_tree('misc_tree')", "Toggle Misc  ⁞")
+        await self.bind(
+            "a",
+            "toggle_tree(['misc_tree', 'error_tree', 'pass_tree', 'fail_tree'])",
+            "Toggle All  ⁞",
+        )
         await self.bind("q", "quit", "Quit")
 
         # Get test result sections
-        self.results = Results().get_results()
-        print("")
+        self.test_results = Results()
+        self.marked_sections = MarkedSections()
         self.summary_text = (
-            Text.from_ansi(self.results["LASTLINE"]).markup.replace("=", "").strip()
+            Text.from_ansi(self.marked_sections.get_section("LASTLINE")["content"])
+            .markup.replace("=", "")
+            .strip()
         )
-
 
     async def on_mount(self) -> None:
         # Create and dock header and footer widgets
         self.title = self.summary_text
-        header1 = Header(tall=False, style="bold white on black underline")
+        header1 = Header(style="bold white on black")
         header1.title = self.summary_text
         await self.view.dock(header1, edge="top", size=1)
         footer = FoldFooter()
         await self.view.dock(footer, edge="bottom")
 
         # Stylize the results-tree section headers
-        tree = TreeControl(Text("TEST RUN RESULTS:", style="bold white underline"), {})
-        for results_key in self.results.keys():
-            if results_key in ("LASTLINE", "SUMMARY"):
-                continue
-            await tree.add(tree.root.id, Text(results_key), {"results": self.results})
-            if tree.nodes[tree.id].label.plain == "FIRSTLINE":
-                tree.nodes[tree.id].label.stylize("bold blue underline")
-            elif tree.nodes[tree.id].label.plain == "FAILURES":
-                tree.nodes[tree.id].label.stylize("bold red underline")
-            elif tree.nodes[tree.id].label.plain == "ERRORS":
-                tree.nodes[tree.id].label.stylize("bold magenta underline")
-            elif tree.nodes[tree.id].label.plain == "WARNINGS":
-                tree.nodes[tree.id].label.stylize("bold yellow underline")
-            elif tree.nodes[tree.id].label.plain == "SUMMARY":
-                tree.nodes[tree.id].label.stylize("bold green underline")
-            else:
-                tree.nodes[tree.id].label.stylize("encircle red")
-        await tree.add(tree.root.id, Text("PASSES"), {})
-        tree.nodes[tree.id].label.stylize("bold green underline")
-        for item in self.passes:
-            await tree.add(
-                tree.root.id,
-                Text(item.title),
-                {
-                    "item": {
-                        "caplog": item.caplog,
-                        "capstderr": item.capstderr,
-                        "capstdout": item.capstdout,
-                    }
-                },
+        self.fail_tree = TreeControl(
+            Text("FAILED:", style="bold red underline"), {}, name="fail_tree"
+        )
+        self.pass_tree = TreeControl(
+            Text("PASSED:", style="bold green underline"), {}, name="pass_tree"
+        )
+        self.error_tree = TreeControl(
+            Text("ERRORS:", style="bold magenta underline"), {}, name="perror_tree"
+        )
+        self.misc_tree = TreeControl(
+            Text("MISC:", style="bold YELLOW underline"), {}, name="misc_tree"
+        )
+
+        for failed in self.test_results.failures:
+            await self.fail_tree.add(
+                self.fail_tree.root.id,
+                Text(failed),
+                {"results": self.test_results.failures},
             )
-            tree.nodes[tree.id].label.stylize("cyan")
-        await tree.root.expand()
+        for errored in self.test_results.errors:
+            await self.error_tree.add(
+                self.error_tree.root.id,
+                Text(errored),
+                {"results": self.test_results.errors},
+            )
+        for passed in self.test_results.passes:
+            await self.pass_tree.add(
+                self.pass_tree.root.id,
+                Text(passed),
+                {"results": self.test_results.passes},
+            )
+        for misc in self.test_results.misc:
+            await self.misc_tree.add(
+                self.misc_tree.root.id, Text(misc), {"results": self.test_results.misc}
+            )
+        await self.fail_tree.root.expand()
+        await self.pass_tree.root.expand()
+        await self.error_tree.root.expand()
+        await self.misc_tree.root.expand()
 
         # Create and dock the results tree
-        self.sections = DockView()
         await self.view.dock(
-            ScrollView(tree), edge="left", size=TREE_WIDTH, name="results_tree"
+            ScrollView(self.pass_tree),
+            edge="top",
+            size=len(self.pass_tree.nodes) + 2,
+            name="pass_tree",
         )
-        await self.view.dock(self.sections)
+        await self.view.dock(
+            ScrollView(self.fail_tree),
+            edge="top",
+            size=len(self.fail_tree.nodes) + 2,
+            name="fail_tree",
+        )
+        await self.view.dock(
+            ScrollView(self.error_tree),
+            edge="top",
+            size=len(self.error_tree.nodes) + 2,
+            name="error_tree",
+        )
+        await self.view.dock(
+            ScrollView(self.misc_tree),
+            edge="top",
+            size=len(self.misc_tree.nodes) + 2,
+            name="misc_tree",
+        )
+
+        self.dockview = DockView()
+        await self.view.dock(self.dockview)
 
         # Create and dock the test result ('body') view
         self.body = ScrollView()
-        await self.sections.dock(self.body, edge="top")
+        await self.dockview.dock(self.body, edge="right")
 
     async def handle_tree_click(self, message: TreeClick[dict]) -> None:
-        # Display results in body when section header is clicked
         label = message.node.label.plain
-        if label in ("ERRORS", "FAILURES", "PASSES"):
+
+        # Click the category headers to toggle on/off (future;
+        # right now, just ignore those clicks)
+        if label == "FAILED:":
             return
-        try:
-            self.text = message.node.data.get("results")[label]
-        except TypeError:
-            caplog = message.node.data.get("item")["caplog"]
-            capstderr = message.node.data.get("item")["capstderr"]
-            capstdout = message.node.data.get("item")["capstdout"]
-            self.text = caplog + capstderr + capstdout
-            if len(self.text) == 0:
-                self.text = "<<no stdout, stderr, or stdlog output from this test>>"
-        except Exception as e:
+        if label == "PASSED:":
             return
+        if label == "ERRORS:":
+            return
+
+        # Display results when test name is clicked
+        self.text = message.node.data.get("results")[label]
         text: RenderableType
         text = Text.from_ansi(self.text)
         await self.body.update(text)
 
 
 def main():
-    # Instantiate app and run it
     app = FoldApp()
     app.run()
 
