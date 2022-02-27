@@ -129,24 +129,32 @@ class FoldApp(App):
             ScrollView(self.pass_tree),
             edge="top",
             size=len(self.pass_tree.nodes) + 2,
+            # edge="left",
+            # size = 25,
             name="pass_tree",
         )
         await self.view.dock(
             ScrollView(self.fail_tree),
             edge="top",
             size=len(self.fail_tree.nodes) + 2,
+            # edge="left",
+            # size = 25,
             name="fail_tree",
         )
         await self.view.dock(
             ScrollView(self.error_tree),
             edge="top",
             size=len(self.error_tree.nodes) + 2,
+            # edge="left",
+            # size = 25,
             name="error_tree",
         )
         await self.view.dock(
             ScrollView(self.misc_tree),
             edge="top",
             size=len(self.misc_tree.nodes) + 2,
+            # edge="left",
+            # size = 25,
             name="misc_tree",
         )
 
@@ -155,6 +163,8 @@ class FoldApp(App):
 
         # Create and dock the test result ('body') view
         self.body = ScrollView()
+        self.body.border = 1
+        self.body.border_style = "green"
         await self.dockview.dock(self.body, edge="right")
 
     async def handle_tree_click(self, message: TreeClick[dict]) -> None:

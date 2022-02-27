@@ -12,7 +12,7 @@ logger.addHandler(stdout_handler)
 
 
 def test_1_passes_and_has_lots_of_logging_output():
-    text = faker.Faker().text(2000)
+    text = faker.Faker().text(750)
     logger.critical(text)
     logger.error(text)
     logger.warning(text)
@@ -22,7 +22,7 @@ def test_1_passes_and_has_lots_of_logging_output():
 
 
 def test_2_fails_and_has_lots_of_logging_output():
-    text = faker.Faker().text(3000)
+    text = faker.Faker().text(900)
     logger.critical(text)
     logger.error(text)
     logger.warning(text)

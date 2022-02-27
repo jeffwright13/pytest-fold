@@ -42,15 +42,14 @@ class TestInfo:
 class Results:
     def __init__(self):
         self._reports = self._unpickle()
-        self._test_info = self._process_reports()
         self._marked_output = MarkedSections()
+        self._test_info = self._process_reports()
 
         self.test_results = self._deduplicate()
         self.failures = self.get_failures()
         self.errors = self.get_errors()
         self.passes = self.get_passes()
         self.misc = self.get_misc()
-        print("")
 
     def _unpickle(self):
         """Unpack pickled file from disk"""
@@ -73,7 +72,6 @@ class Results:
             test_info.capstderr = report.capstderr
             test_info.capstdout = report.capstdout
             test_info.title = report.head_line
-            test_info.text = report.longreprtext or ""
 
             # categorize the TestInfo instance
             if (
@@ -96,9 +94,25 @@ class Results:
                 test_info.category = "xfail"
             else:
                 continue
+
+            # ...except for failures, wihch get ANSI-coded text from the marked sections
+            if test_info.category == "failed":
+                try:
+                    test_info.text = self._marked_output.get_failed_test_text_by_test_name(test_info.title)
+                except:
+                    try:
+                        test_info.text = report.longreprtext
+                    except:
+                        test_info.text == ""
+            else:
+                test_info.text == ""
+
             test_infos.append(test_info)
 
         return test_infos
+
+        def get_marked_output(self):
+            return self.marked_output
 
     def get_failures(self):
         return {
@@ -152,6 +166,12 @@ class MarkedSections:
         for section in self._sections:
             if name == section["name"]:
                 return section
+
+    def get_failed_test_text_by_test_name(self, name: str) -> str:
+        for section in self._sections:
+            if section["name"] == "FAILED_TEST" and name == section["test_title"]:
+                return section["content"]
+        return ""
 
     def _get_marked_lines(
         self, marked_file_path: Path = MARKEDTERMINALOUTPUTFILE
