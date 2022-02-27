@@ -4,6 +4,7 @@ import tempfile
 import pytest
 
 from _pytest.config import Config
+from _pytest._io.terminalwriter import TerminalWriter
 from _pytest.reports import TestReport
 from pytest_fold.tuit_new import main as tui
 from pytest_fold.utils import (
@@ -17,7 +18,6 @@ from pytest_fold.utils import (
     REPORTFILE,
     MARKEDTERMINALOUTPUTFILE,
 )
-from _pytest._io.terminalwriter import TerminalWriter
 
 collect_ignore = [
     "setup.py",
