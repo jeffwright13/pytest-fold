@@ -17,13 +17,14 @@ from pytest_fold.utils import (
     MARKERS,
     REPORTFILE,
     MARKEDTERMINALOUTPUTFILE,
+    UNMARKEDTERMINALOUTPUTFILE,
 )
+
 
 collect_ignore = [
     "setup.py",
     "plugin.py",
 ]
-
 
 reports = []
 
@@ -64,44 +65,45 @@ def pytest_configure(config: Config) -> None:
             except AttributeError:
                 config._pyfoldfirsttime = True
 
-            config._pyfoldoutputfile = tempfile.TemporaryFile("wb+")
+            config._pyfold_unmarked_outputfile = tempfile.TemporaryFile("wb+")
+            config._pyfold_marked_outputfile = tempfile.TemporaryFile("wb+")
             oldwrite = tr._tw.write
 
             # identify and mark each section of results
             def tee_write(s, **kwargs):
                 if config._pyfoldfirsttime:
-                    config._pyfoldoutputfile.write(
+                    config._pyfold_marked_outputfile.write(
                         (MARKERS["pytest_fold_firstline"] + "\n").encode("utf-8")
                     )
                     config._pyfoldfirsttime = False
 
                 if re.search(errors_matcher, s):
-                    config._pyfoldoutputfile.write(
+                    config._pyfold_marked_outputfile.write(
                         (MARKERS["pytest_fold_errors"] + "\n").encode("utf-8")
                     )
 
                 if re.search(failures_matcher, s):
-                    config._pyfoldoutputfile.write(
+                    config._pyfold_marked_outputfile.write(
                         (MARKERS["pytest_fold_failures"] + "\n").encode("utf-8")
                     )
 
                 if re.search(failed_test_marker, s):
-                    config._pyfoldoutputfile.write(
+                    config._pyfold_marked_outputfile.write(
                         (MARKERS["pytest_fold_failed_test"] + "\n").encode("utf-8")
                     )
 
                 if re.search(warnings_summary_matcher, s):
-                    config._pyfoldoutputfile.write(
+                    config._pyfold_marked_outputfile.write(
                         (MARKERS["pytest_fold_warnings_summary"] + "\n").encode("utf-8")
                     )
 
                 if re.search(summary_matcher, s):
-                    config._pyfoldoutputfile.write(
+                    config._pyfold_marked_outputfile.write(
                         (MARKERS["pytest_fold_terminal_summary"] + "\n").encode("utf-8")
                     )
 
                 if re.search(lastline_matcher, s):
-                    config._pyfoldoutputfile.write(
+                    config._pyfold_marked_outputfile.write(
                         (MARKERS["pytest_fold_lastline"] + "\n").encode("utf-8")
                     )
 
@@ -114,12 +116,21 @@ def pytest_configure(config: Config) -> None:
                 kwargs.pop("flush") if "flush" in kwargs.keys() else None
                 s1 = TerminalWriter().markup(s, **kwargs)
 
-                # Encode the marked up line so it can be written to the config pbject
+                # Encode the marked up line so it can be written to the config object
                 if isinstance(s1, str):
                     marked_up = s1.encode("utf-8")
-                config._pyfoldoutputfile.write(marked_up)
+                config._pyfold_marked_outputfile.write(marked_up)
 
-            # Write to both terminal and tempfile _pyfoldoutputfile
+                # Write this line's original (unmarked) text to unmarked file
+                s_orig = s
+                kwargs.pop("flush") if "flush" in kwargs.keys() else None
+                s_orig = TerminalWriter().markup(s, **kwargs)
+                if isinstance(s_orig, str):
+                    unmarked_up = s_orig.encode("utf-8")
+                config._pyfold_unmarked_outputfile.write(unmarked_up)
+
+            # Write to both terminal/console, and tempfiles:
+            # _pyfold_marked_outputfile, _pyfold_unmarked_outputfile
             tr._tw.write = tee_write
 
 
@@ -128,18 +139,28 @@ def pytest_unconfigure(config: Config):
     Write terminal and test results info to files for use by TUI
     """
     # Write terminal output to file
-    if hasattr(config, "_pyfoldoutputfile"):
+    if hasattr(config, "_pyfold_marked_outputfile"):
         # get terminal contents, then write file
-        config._pyfoldoutputfile.seek(0)
-        sessionlog = config._pyfoldoutputfile.read()
-        config._pyfoldoutputfile.close()
+        config._pyfold_marked_outputfile.seek(0)
+        markedsessionlog = config._pyfold_marked_outputfile.read()
+        config._pyfold_marked_outputfile.close()
+
+    if hasattr(config, "_pyfold_unmarked_outputfile"):
+        # get terminal contents, then write file
+        config._pyfold_unmarked_outputfile.seek(0)
+        unmarkedsessionlog = config._pyfold_unmarked_outputfile.read()
+        config._pyfold_unmarked_outputfile.close()
 
         # Undo our patching in the terminal reporter
         config.pluginmanager.getplugin("terminalreporter")
 
         # Write marked-up results to file
         with open(MARKEDTERMINALOUTPUTFILE, "wb") as outfile:
-            outfile.write(sessionlog)
+            outfile.write(markedsessionlog)
+
+        # Write un-marked-up results to file
+        with open(UNMARKEDTERMINALOUTPUTFILE, "wb") as outfile:
+            outfile.write(unmarkedsessionlog)
 
         # Write the reports list to file
         with open(REPORTFILE, "wb") as report_file:

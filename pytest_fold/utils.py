@@ -5,6 +5,7 @@ from pathlib import Path
 
 REPORTFILE = Path.cwd() / "report_objects.bin"
 MARKEDTERMINALOUTPUTFILE = Path.cwd() / "marked_output.bin"
+UNMARKEDTERMINALOUTPUTFILE = Path.cwd() / "unmarked_output.bin"
 
 failures_matcher = re.compile(r"^==.*\sFAILURES\s==+")
 errors_matcher = re.compile(r"^==.*\sERRORS\s==+")
@@ -27,6 +28,17 @@ MARKERS = {
     "pytest_fold_terminal_summary": "~~>PYTEST_FOLD_MARKER_TERMINAL_SUMMARY<~~",
 }
 
+KNOWN_TYPES = (
+    "failed",
+    "passed",
+    "skipped",
+    "deselected",
+    "xfailed",
+    "xpassed",
+    "warnings",
+    "error",
+)
+
 
 @dataclass
 class TestInfo:
@@ -43,6 +55,7 @@ class Results:
     def __init__(self):
         self._reports = self._unpickle()
         self._marked_output = MarkedSections()
+        self._unmarked_output = self._get_unmarked_output()
         self._test_info = self._process_reports()
 
         self.test_results = self._deduplicate()
@@ -50,6 +63,12 @@ class Results:
         self.errors = self.get_errors()
         self.passes = self.get_passes()
         self.misc = self.get_misc()
+
+    def _get_unmarked_output(
+        self, unmarked_file_path: Path = UNMARKEDTERMINALOUTPUTFILE
+    ) -> list:
+        with open(UNMARKEDTERMINALOUTPUTFILE, "r") as umfile:
+            return umfile.read()
 
     def _unpickle(self):
         """Unpack pickled file from disk"""
@@ -61,7 +80,7 @@ class Results:
         return list({item.title: item for item in self._test_info}.values())
 
     def _process_reports(self):
-        """Extract individual test results from the pytest report objects"""
+        """Extract individual test results from the pytest marked output"""
         test_infos = []
         for report in self._reports:
             test_info = TestInfo()
@@ -114,6 +133,7 @@ class Results:
         def get_marked_output(self):
             return self.marked_output
 
+    # These functions combine all outputs from one test
     def get_failures(self):
         return {
             entry.title: entry.caplog + entry.capstderr + entry.capstdout + entry.text
