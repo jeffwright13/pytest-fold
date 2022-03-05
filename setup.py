@@ -29,6 +29,7 @@ setup(
         "asciimatics>=1.13.0",
         "textual>=0.1.15",
         "single-source>=0.2.0",
+        "Faker>=13.0.0",
     ],
     classifiers=[
         "Framework :: Pytest",
