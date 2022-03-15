@@ -55,13 +55,14 @@ class FoldApp(App):
     async def on_load(self, event: events.Load) -> None:
         # Populate footer with quit and toggle info
         await self.bind("u", "toggle_tree('unmarked')", "Toggle Unmarked  ⁞")
+        await self.bind("1", "toggle_tree('firstlines')", "Toggle Firstline  ⁞")
         await self.bind("f", "toggle_tree('fail_tree')", "Toggle Fail  ⁞")
         await self.bind("p", "toggle_tree('pass_tree')", "Toggle Pass  ⁞")
         await self.bind("e", "toggle_tree('error_tree')", "Toggle Error  ⁞")
         await self.bind("m", "toggle_tree('misc_tree')", "Toggle Misc  ⁞")
         await self.bind(
             "a",
-            "toggle_tree(['unmarked', 'misc_tree', 'error_tree', 'pass_tree', 'fail_tree'])",
+            "toggle_tree(['unmarked', 'firstlines', 'misc_tree', 'error_tree', 'pass_tree', 'fail_tree'])",
             "Toggle All  ⁞",
         )
         await self.bind("q", "quit", "Quit")
@@ -87,7 +88,14 @@ class FoldApp(App):
 
         # Stylize the results-tree section headers
         self.unmarked = TreeControl(
-            Text("UNMARKED (FULL TERMINAL OUTPUT)", style="bold white underline"), {"results": self.unmarked_output}, name="unmarked"
+            Text("UNMARKED (FULL TERMINAL OUTPUT)", style="dark_slate_gray2 underline"),
+            {"results": self.unmarked_output},
+            name="unmarked",
+        )
+        self.firstlines = TreeControl(
+            Text("FIRSTLINES", style="bold white underline"),
+            {"results": self.marked_sections.get_section("FIRSTLINE")["content"]},
+            name="firstlines",
         )
         self.fail_tree = TreeControl(
             Text("FAILED:", style="bold red underline"), {}, name="fail_tree"
@@ -99,7 +107,7 @@ class FoldApp(App):
             Text("ERRORS:", style="bold magenta underline"), {}, name="perror_tree"
         )
         self.misc_tree = TreeControl(
-            Text("MISC:", style="bold YELLOW underline"), {}, name="misc_tree"
+            Text("MISC:", style="bold yellow underline"), {}, name="misc_tree"
         )
 
         for failed in self.test_results.failures:
@@ -125,6 +133,7 @@ class FoldApp(App):
                 self.misc_tree.root.id, Text(misc), {"results": self.test_results.misc}
             )
         await self.unmarked.root.expand()
+        await self.firstlines.root.expand()
         await self.fail_tree.root.expand()
         await self.pass_tree.root.expand()
         await self.error_tree.root.expand()
@@ -138,6 +147,14 @@ class FoldApp(App):
             # edge="left",
             # size = 25,
             name="unmarked",
+        )
+        await self.view.dock(
+            ScrollView(self.firstlines),
+            edge="top",
+            size=len(self.firstlines.nodes) + 2,
+            # edge="left",
+            # size = 25,
+            name="firstlines",
         )
         await self.view.dock(
             ScrollView(self.pass_tree),
@@ -190,10 +207,11 @@ class FoldApp(App):
             return
 
         # Display results when test name is clicked
-        if "UNMARKED" in label:
+        if "UNMARKED" in label or "FIRSTLINES" in label:
             self.text = message.node.data.get("results")
         else:
             self.text = message.node.data.get("results")[label]
+
         text: RenderableType
         text = Text.from_ansi(self.text)
         await self.body.update(text)

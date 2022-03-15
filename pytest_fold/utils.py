@@ -7,20 +7,21 @@ REPORTFILE = Path.cwd() / "report_objects.bin"
 MARKEDTERMINALOUTPUTFILE = Path.cwd() / "marked_output.bin"
 UNMARKEDTERMINALOUTPUTFILE = Path.cwd() / "unmarked_output.bin"
 
-failures_matcher = re.compile(r"^==.*\sFAILURES\s==+")
-errors_matcher = re.compile(r"^==.*\sERRORS\s==+")
+pass_matcher = re.compile(r"^==.*\sPASSES\s==+")
+failure_matcher = re.compile(r"^==.*\sFAILURES\s==+")
+error_matcher = re.compile(r"^==.*\sERRORS\s==+")
 failed_test_marker = re.compile(r"^__.*\s(.*)\s__+")
-warnings_summary_matcher = re.compile(r"^==.*warnings summary\s.*==+")
-summary_matcher = re.compile(r"^==.*short test summary info\s.*==+")
+warnings_short_test_summary_matcher = re.compile(r"^==.*warnings summary\s.*==+")
+short_test_summary_matcher = re.compile(r"^==.*short test summary info\s.*==+")
 lastline_matcher = re.compile(r"^==.*in\s\d+.\d+s.*==+")
 
-foldmark_matcher = re.compile(r".*(~~>PYTEST_FOLD_MARKER_)+(.*)<~~")
 section_name_matcher = re.compile(r"~~>PYTEST_FOLD_MARKER_(\w+)")
 test_title_matcher = re.compile(r"__.*\s(.*)\s__+")
 
 MARKERS = {
     "pytest_fold_firstline": "~~>PYTEST_FOLD_MARKER_FIRSTLINE<~~",
     "pytest_fold_errors": "~~>PYTEST_FOLD_MARKER_ERRORS<~~",
+    "pytest_fold_passes": "~~>PYTEST_FOLD_MARKER_PASSES<~~",
     "pytest_fold_failures": "~~>PYTEST_FOLD_MARKER_FAILURES<~~",
     "pytest_fold_failed_test": "~~>PYTEST_FOLD_MARKER_FAILED_TEST<~~",
     "pytest_fold_warnings_summary": "~~>PYTEST_FOLD_MARKER_WARNINGS_SUMMARY<~~",
@@ -117,7 +118,11 @@ class Results:
             # ...except for failures, wihch get ANSI-coded text from the marked sections
             if test_info.category == "failed":
                 try:
-                    test_info.text = self._marked_output.get_failed_test_text_by_test_name(test_info.title)
+                    test_info.text = (
+                        self._marked_output.get_failed_test_text_by_test_name(
+                            test_info.title
+                        )
+                    )
                 except:
                     try:
                         test_info.text = report.longreprtext

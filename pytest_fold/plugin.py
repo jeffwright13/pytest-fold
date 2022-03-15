@@ -8,11 +8,12 @@ from _pytest._io.terminalwriter import TerminalWriter
 from _pytest.reports import TestReport
 from pytest_fold.tuit_new import main as tui
 from pytest_fold.utils import (
-    failures_matcher,
-    errors_matcher,
+    pass_matcher,
+    failure_matcher,
+    error_matcher,
     failed_test_marker,
-    warnings_summary_matcher,
-    summary_matcher,
+    warnings_short_test_summary_matcher,
+    short_test_summary_matcher,
     lastline_matcher,
     MARKERS,
     REPORTFILE,
@@ -55,6 +56,8 @@ def pytest_report_teststatus(report: TestReport, config: Config):
 def pytest_configure(config: Config) -> None:
     """
     Write console output to a file for use by TUI
+    This code works by looking at every line sent by pytest to the terminal output,
+    and based on the line, marking (or not marking) it depending on its category
     """
     if config.option.fold:
         tr = config.pluginmanager.getplugin("terminalreporter")
@@ -77,12 +80,17 @@ def pytest_configure(config: Config) -> None:
                     )
                     config._pyfoldfirsttime = False
 
-                if re.search(errors_matcher, s):
+                if re.search(error_matcher, s):
                     config._pyfold_marked_outputfile.write(
                         (MARKERS["pytest_fold_errors"] + "\n").encode("utf-8")
                     )
 
-                if re.search(failures_matcher, s):
+                if re.search(pass_matcher, s):
+                    config._pyfold_marked_outputfile.write(
+                        (MARKERS["pytest_fold_passes"] + "\n").encode("utf-8")
+                    )
+
+                if re.search(failure_matcher, s):
                     config._pyfold_marked_outputfile.write(
                         (MARKERS["pytest_fold_failures"] + "\n").encode("utf-8")
                     )
@@ -92,12 +100,12 @@ def pytest_configure(config: Config) -> None:
                         (MARKERS["pytest_fold_failed_test"] + "\n").encode("utf-8")
                     )
 
-                if re.search(warnings_summary_matcher, s):
+                if re.search(warnings_short_test_summary_matcher, s):
                     config._pyfold_marked_outputfile.write(
                         (MARKERS["pytest_fold_warnings_summary"] + "\n").encode("utf-8")
                     )
 
-                if re.search(summary_matcher, s):
+                if re.search(short_test_summary_matcher, s):
                     config._pyfold_marked_outputfile.write(
                         (MARKERS["pytest_fold_terminal_summary"] + "\n").encode("utf-8")
                     )
@@ -129,7 +137,7 @@ def pytest_configure(config: Config) -> None:
                     unmarked_up = s_orig.encode("utf-8")
                 config._pyfold_unmarked_outputfile.write(unmarked_up)
 
-            # Write to both terminal/console, and tempfiles:
+            # Write to both terminal/console and tempfiles:
             # _pyfold_marked_outputfile, _pyfold_unmarked_outputfile
             tr._tw.write = tee_write
 
@@ -155,12 +163,12 @@ def pytest_unconfigure(config: Config):
         config.pluginmanager.getplugin("terminalreporter")
 
         # Write marked-up results to file
-        with open(MARKEDTERMINALOUTPUTFILE, "wb") as outfile:
-            outfile.write(markedsessionlog)
+        with open(MARKEDTERMINALOUTPUTFILE, "wb") as marked_file:
+            marked_file.write(markedsessionlog)
 
         # Write un-marked-up results to file
-        with open(UNMARKEDTERMINALOUTPUTFILE, "wb") as outfile:
-            outfile.write(unmarkedsessionlog)
+        with open(UNMARKEDTERMINALOUTPUTFILE, "wb") as unmarked_file:
+            unmarked_file.write(unmarkedsessionlog)
 
         # Write the reports list to file
         with open(REPORTFILE, "wb") as report_file:

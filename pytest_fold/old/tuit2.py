@@ -12,7 +12,14 @@ from textual.app import App
 from textual.reactive import Reactive
 
 from textual.views import DockView
-from textual.widgets import Header, Footer, TreeControl, ScrollView, TreeClick, Placeholder
+from textual.widgets import (
+    Header,
+    Footer,
+    TreeControl,
+    ScrollView,
+    TreeClick,
+    Placeholder,
+)
 
 from pytest_fold.utils import MARKERS, OUTFILE, sectionize
 
@@ -58,7 +65,7 @@ class PytestFoldApp(App):
         await self.bind("q", "quit", "Quit")
 
     async def on_mount(self) -> None:
-        footer_title = re.sub('=', '', self.results["LASTLINE"])
+        footer_title = re.sub("=", "", self.results["LASTLINE"])
         await self.view.dock(Header(tall=False), edge="top", size=1)
         await self.view.dock(Footer(), edge="bottom")
 

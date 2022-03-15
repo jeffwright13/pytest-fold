@@ -1,7 +1,8 @@
-import sys
-import logging
-import faker
 import pytest
+import faker
+import logging
+import random
+import sys
 
 LOG_LEVELS = ("DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL")
 logger = logging.getLogger()
@@ -10,8 +11,16 @@ logger.propagate = True
 stdout_handler = logging.StreamHandler(sys.stdout)
 logger.addHandler(stdout_handler)
 
+@pytest.fixture
+def log_testname():
+    logger.info(f"Running test {__name__}...")
+    logger.info("Setting test up...")
+    logger.info("Executing test...")
+    logger.info(faker.Faker().text(random.randint(50, 200)))
+    logger.info("Tearing test down...")
 
-def test_1_passes_and_has_lots_of_logging_output():
+
+def test_1_passes_and_has_lots_of_logging_output(log_testname):
     text = faker.Faker().text(750)
     logger.critical(text)
     logger.error(text)
@@ -21,7 +30,7 @@ def test_1_passes_and_has_lots_of_logging_output():
     assert True
 
 
-def test_2_fails_and_has_lots_of_logging_output():
+def test_2_fails_and_has_lots_of_logging_output(log_testname):
     text = faker.Faker().text(900)
     logger.critical(text)
     logger.error(text)
@@ -31,38 +40,38 @@ def test_2_fails_and_has_lots_of_logging_output():
     assert 0 == 1
 
 
-def test_3_fails():
+def test_3_fails(log_testname):
     assert 0
 
 
-def test_4_passes():
+def test_4_passes(log_testname):
     assert True
 
 
 @pytest.mark.skip
-def test_5_marked_SKIP():
+def test_5_marked_SKIP(log_testname):
     assert 1
 
 
 @pytest.mark.xfail
-def test_6_marked_xfail_but_passes():
+def test_6_marked_xfail_but_passes(log_testname):
     assert 1
 
 
 @pytest.mark.xfail
-def test_7_marked_xfail_and_fails():
+def test_7_marked_xfail_and_fails(log_testname):
     assert 0
 
 
 # Method and its test that causes warnings
-def api_v1():
+def api_v1(log_testname):
     import warnings
 
     warnings.warn(UserWarning("api v1, should use functions from v2"))
     return 1
 
 
-def test_8_causes_a_warning():
+def test_8_causes_a_warning(log_testname):
     assert api_v1() == 1
 
 
@@ -82,7 +91,7 @@ def test_9_fail_capturing(capsys):
     print("FAIL this stdout is captured")
     print("FAIL this stderr is captured", file=sys.stderr)
     logger.warning("FAIL this log is captured")
-    with capsys.disabled():
+    with capsys.disabled(log_testname):
         print("FAIL stdout not captured, going directly to sys.stdout")
         print("FAIL stderr not captured, going directly to sys.stderr", file=sys.stderr)
         logger.warning("FAIL is this log captured?")
@@ -96,7 +105,7 @@ def test_10_pass_capturing(capsys):
     print("\nPASS this stdout is captured")
     print("PASS this stderr is captured", file=sys.stderr)
     logger.warning("PASS this log is captured")
-    with capsys.disabled():
+    with capsys.disabled(log_testname):
         print("PASS stdout not captured, going directly to sys.stdout")
         print("PASS stderr not captured, going directly to sys.stderr", file=sys.stderr)
         logger.warning("is this log captured?")
@@ -120,7 +129,7 @@ def test_12_passes_and_has_stdout(capsys):
 # folding - if the fixture is commented out, the test throws an error at setup.
 #
 # @pytest.fixture()
-# def fixture_for_fun():
+# def fixture_for_fun(log_testname):
 #     pass
 
 
