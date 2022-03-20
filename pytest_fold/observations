@@ -11,7 +11,7 @@
 - stdout, stderr and stdlog info is contained in the 'call' phase only
 - If a test results in 'error', no stdout/stderr/stdlog will be shown, just the error msg
 
-- All the above notwithstanding, pytest still marks tests with a final category of one of the following, and then sends to console: 
+- All the above notwithstanding, pytest still marks tests with a final category of one of the following, and then sends to console:
 KNOWN_TYPES = (
     "failed",
     "passed",
@@ -22,6 +22,15 @@ KNOWN_TYPES = (
     "warnings",
     "error",
 )
+
+- Console prints the following sections, delineated with separator line consisting of multiple "=" characters, with information embedded in middle of "=" characters (see terminal.py):
+session_start: self.write_sep("=", "test session starts", bold=True)
+summary_warnings: self.write_sep("=", "warnings summary", yellow=True, bold=False)
+summary_errors: self.write_sep("=", "ERRORS")
+summary_failures: self.write_sep("=", "FAILURES")
+summary_passes: self.write_sep("=", "PASSES")
+summary_stats: self.write_sep("=", msg, fullwidth=fullwidth, **main_markup)
+self.write_sep("=", "short test summary info")
 
 WILL POSSIBLY NEED:
 FIRSTLINE

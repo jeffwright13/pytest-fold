@@ -181,16 +181,24 @@ class MarkedSections:
         self._parsed_sections = []
 
     def get_section(self, name: str) -> str:
-        if name not in (
+        # return marked section, or if not found (e.g. didn't occur in output),
+        # return blank dict w/ /no section content
+        if name in {
             "FIRSTLINE",
+            "ERRORS",
+            "PASSES",
+            "FAILURES",
             "WARNINGS_SUMMARY",
             "TERMINAL_SUMMARY",
             "LASTLINE",
-        ):
+        }:
+            return next(
+                (section for section in self._sections if name == section["name"]),
+                {"name": name, "test_title": "", "content": ""},
+            )
+
+        else:
             raise Exception(f"Cannot retrieve section by name: '{name}'")
-        for section in self._sections:
-            if name == section["name"]:
-                return section
 
     def get_failed_test_text_by_test_name(self, name: str) -> str:
         for section in self._sections:
