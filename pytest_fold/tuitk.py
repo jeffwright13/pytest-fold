@@ -1,8 +1,3 @@
-# import os, sys
-
-# file_path = "/Users/jwr003/coding/pyTermTk/TermTk"
-# sys.path.append(os.path.dirname(file_path))
-
 import faker
 import TermTk as ttk
 
