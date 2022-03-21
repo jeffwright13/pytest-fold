@@ -2,67 +2,67 @@ import faker
 import TermTk as ttk
 
 from os import get_terminal_size
+from pytest_fold.utils import Results, MarkedSections, SECTIONS
 from rich import print
 from rich.text import Text
-from pytest_fold.utils import Results, MarkedSections
+from strip_ansi import strip_ansi
 
 TERMINAL_SIZE = get_terminal_size()
-OUTPUT_SECTIONS = {
-    "SESSION_START": "Session Start",
-    "ERRORS": "Errors",
-    "FAILURES": "Failures",
-    "WARNINGS_SUMMARY": "Warnings",
-    "PASSES": "Pass",
-    "MISC": "Misc",
-    "TERMINAL_SUMMARY": "Summary",
-    "RAW": "Raw Output",
-}
+
+
+def name_section(section):
+    words = []
+    for word in section.split("_"):
+        word.lower().capitalize()
+        words.append(word)
+    phrase = " ".join(words)
+    return phrase
 
 
 def main():
+    # Retrieve pytest results and extract summary results
     test_results = Results()
+    summary_results = (
+        test_results._marked_output.get_section("LAST_LINE")["content"]
+        .replace("=", "")
+        .rstrip("\n")
+    )
+    # h_offset = int((TERMINAL_SIZE.columns - len(strip_ansi(summary_results))) / 2)
 
+    # Create root TTk object
     root = ttk.TTk()
 
-    top_window = ttk.TTkWindow(
+    # Create main window
+    main_win = ttk.TTkWindow(
         parent=root,
         pos=(0, 0),
-        size=(TERMINAL_SIZE.columns - 10, 3),
-        title=test_results._marked_output.get_section("LASTLINE")["content"].replace(
-            "=", ""
-        ),
-        border=False,
-    )
-    top_window.setLayout(ttk.TTkHBoxLayout())
-
-    main_frame = ttk.TTkFrame(
-        parent=root, pos=(0, 3), height=(TERMINAL_SIZE.columns - 10), border=True
+        size=(TERMINAL_SIZE.columns, TERMINAL_SIZE.lines),
+        title=summary_results,
+        border=True,
+        layout=ttk.TTkGridLayout(),
     )
 
-    tab_widget = ttk.TTkTabWidget(parent=main_frame, border=False, height=4)
+    # Create tabs with individual section results
+    tab_widget = ttk.TTkTabWidget(parent=main_win, border=True, height=4)
+    OUTPUT_SECTIONS = {k: name_section(k) for k in SECTIONS}
     for key, value in OUTPUT_SECTIONS.items():
-        if key in ["SESSION_START", "ERRORS", "WARNINGS_SUMMARY"]:
-            text = test_results._marked_output.get_section(key)["content"]
-            text_edit = ttk.TTkTextEdit(parent=tab_widget)
-            text_edit.setText(text)
-            tab_widget.addTab(text_edit, f"  {value}  ")
-        elif key == "TERMINAL_SUMMARY":
-            text = test_results._marked_output.get_section(key)["content"]
-            text += test_results._marked_output.get_section("LASTLINE")["content"]
-            text_edit = ttk.TTkTextEdit(parent=tab_widget)
-            text_edit.setText(text)
-            tab_widget.addTab(text_edit, f"  {value}  ")
-        elif key == "RAW":
-            text = test_results._unmarked_output
-            text_edit = ttk.TTkTextEdit(parent=tab_widget)
-            text_edit.setText(text)
-            tab_widget.addTab(text_edit, f"  {value}  ")
-        elif key == "FAILURES":
-            text = ""
-            tests = test_results.failures
-            for test in tests:
-                text += test
-            tab_widget.addTab(text_edit, f"  {value}  ")
+        text = test_results._marked_output.get_section(key)["content"]
+        text_area = ttk.TTkTextEdit(parent=tab_widget)
+        text_area.setText(text)
+        tab_widget.addTab(text_area, f"  {value}  ")
+
+    text = test_results._marked_output.get_section(key)["content"]
+    text += test_results._marked_output.get_section("LAST_LINE")["content"]
+    value = "LAST_LINE"
+    text_area = ttk.TTkTextEdit(parent=tab_widget)
+    text_area.setText(text)
+    tab_widget.addTab(text_area, f"  {value}  ")
+
+    text = test_results._unmarked_output
+    value = "RAW OUTPUT"
+    text_area = ttk.TTkTextEdit(parent=tab_widget)
+    text_area.setText(text)
+    tab_widget.addTab(text_area, f"  {value}  ")
 
     root.mainloop()
 

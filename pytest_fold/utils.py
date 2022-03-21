@@ -15,11 +15,11 @@ passes_section_matcher = re.compile(r"^==.*\sPASSES\s==+")
 short_test_summary_matcher = re.compile(r"^==.*short test summary info\s.*==+")
 lastline_matcher = re.compile(r"^==.*in\s\d+.\d+s.*==+")
 
-section_name_matcher = re.compile(r"~~>PYTEST_FOLD_MARKER_(\w+)")
+section_name_matcher = re.compile(r"~~>PYTEST_FOLD_(\w+)")
 test_title_matcher = re.compile(r"__.*\s(.*)\s__+")
 
 MARKERS = {
-    "pytest_fold_test_session_starts": "~~>PYTEST_FOLD_TEST_SESSION_STARTS<~~",
+    "pytest_fold_test_session_starts": "~~>PYTEST_FOLD_TEST_TEST_SESSION_STARTSS<~~",
     "pytest_fold_errors_section": "~~>PYTEST_FOLD_ERRORS_SECTION<~~",
     "pytest_fold_passes_section": "~~>PYTEST_FOLD_PASSES_SECTION<~~",
     "pytest_fold_failures_section": "~~>PYTEST_FOLD_FAILURES_SECTION<~~",
@@ -28,16 +28,15 @@ MARKERS = {
     "pytest_fold_lastline": "~~>PYTEST_FOLD_LASTLINE<~~",
 }
 
-KNOWN_TYPES = (
-    "failed",
-    "passed",
-    "skipped",
-    "deselected",
-    "xfailed",
-    "xpassed",
-    "warnings",
-    "error",
-)
+SECTIONS = [
+    "TEST_SESSION_STARTS",
+    "ERRORS_SECTION",
+    "PASSES_SECTION",
+    "FAILURES_SECTION",
+    "WARNINGS_SUMMARY",
+    "SHORT_TEST_SUMMARY",
+    "LAST_LINE",
+]
 
 
 @dataclass
@@ -59,8 +58,9 @@ class Results:
         self._test_info = self._process_reports()
 
         self.test_results = self._deduplicate()
-        self.failures = self.get_failures()
         self.errors = self.get_errors()
+        self.failures = self.get_failures()
+        # self.warnings = self.get_warnings()
         self.passes = self.get_passes()
         self.misc = self.get_misc()
 
@@ -138,6 +138,13 @@ class Results:
             return self.marked_output
 
     # These functions combine all outputs from one test
+    def get_errors(self):
+        return {
+            entry.title: entry.caplog + entry.capstderr + entry.capstdout
+            for entry in self.test_results
+            if entry.category == "error"
+        }
+
     def get_failures(self):
         return {
             entry.title: entry.caplog + entry.capstderr + entry.capstdout + entry.text
@@ -145,12 +152,10 @@ class Results:
             if entry.category == "failed"
         }
 
-    def get_errors(self):
-        return {
-            entry.title: entry.caplog + entry.capstderr + entry.capstdout
-            for entry in self.test_results
-            if entry.category == "error"
-        }
+    def get_warnings(self):
+        # currently un-implemented; need to figure out how to tell when individual
+        # TestReport items indicate a test that has a warning
+        return {}
 
     def get_passes(self):
         return {
@@ -182,20 +187,11 @@ class MarkedSections:
     def get_section(self, name: str) -> str:
         # return marked section, or if not found (e.g. didn't occur in output),
         # return blank dict w/ /no section content
-        if name in {
-            "FIRSTLINE",
-            "ERRORS",
-            "PASSES",
-            "FAILURES",
-            "WARNINGS_SUMMARY",
-            "TERMINAL_SUMMARY",
-            "LASTLINE",
-        }:
+        if name in SECTIONS:
             return next(
                 (section for section in self._sections if name == section["name"]),
                 {"name": name, "test_title": "", "content": ""},
             )
-
         else:
             raise Exception(f"Cannot retrieve section by name: '{name}'")
 
@@ -208,32 +204,34 @@ class MarkedSections:
     def _get_marked_lines(
         self, marked_file_path: Path = MARKEDTERMINALOUTPUTFILE
     ) -> list:
+        """Return a list of all lines from the marked output file"""
         with open(MARKEDTERMINALOUTPUTFILE, "r") as mfile:
             return mfile.readlines()
 
     def _line_is_a_marker(self, line: str) -> bool:
+        """Determine if the current line is a marker or part of Pytest output"""
         if line.strip() == "":
             return False
         return line.strip() in (
             MARKERS["pytest_fold_test_session_starts"],
             MARKERS["pytest_fold_errors_section"],
             MARKERS["pytest_fold_failures_section"],
-            MARKERS["pytest_fold_failed_test"],
+            MARKERS["pytest_fold_passes_section"],
             MARKERS["pytest_fold_warnings_summary"],
             MARKERS["pytest_fold_short_test_summary"],
-        )pytest_fold_short_test_summary
+        )
 
     def _line_is_lastline(self, line: str) -> bool:
+        """Determine if the current line is the last line in Pytest's output"""
         if line.strip() == "":
             return False
         return line.strip() in MARKERS["pytest_fold_lastline"]
 
     def _sectionize(self, lines: list) -> dict:
         """
-        Parse lines from a Pytest run's console output which are marked with Pytest-Fold
-        markers, and build up a dictionary of ANSI text strings corresponding to individual
-        sections of the output. This function is meant to be called from the Pytest-Fold
-        TUI for interactive display.
+        Parse marked lines from a Pytest run's console output, and build up a 'section'
+        dictionarycorresponding to individual sections of the output.
+        'section' dict: {name, test_title, content}
         """
         sections = []
         section = {"name": None, "test_title": "", "content": ""}
@@ -242,14 +240,15 @@ class MarkedSections:
         for line in lines:
             if self._line_is_a_marker(line):
                 sections.append(section.copy()) if section["name"] else None
+                section["name"] = re.search(section_name_matcher, line).groups()[0]
                 section["test_title"] = ""
                 section["content"] = ""
-                section["name"] = re.search(section_name_matcher, line).groups()[0]
             elif self._line_is_lastline(line):
                 lastline = True
                 sections.append(section.copy())
-                section["content"] = ""
                 section["name"] = re.search(section_name_matcher, line).groups()[0]
+                section["test_title"] = ""
+                section["content"] = ""
             else:
                 section["content"] += line
                 if re.search(test_title_matcher, line):

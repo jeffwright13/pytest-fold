@@ -15,7 +15,7 @@ SECTIONS = {
     "ERRORS": "bold magenta underline",
     "WARNINGS": "bold yellow underline",
     "SUMMARY": "bold green underline",
-    "LASTLINE": "bold blue underline",
+    "LAST_LINE": "bold blue underline",
 }
 
 
@@ -101,7 +101,7 @@ class FoldApp(App):
         results_data = ResultsData()
         self.results = results_data.get_results_dict()
         self.summary_text = (
-            Text.from_ansi(self.results["LASTLINE"]).markup.replace("=", "").strip()
+            Text.from_ansi(self.results["LAST_LINE"]).markup.replace("=", "").strip()
         )
 
         # Load passed file results from PICKLEFILE
@@ -119,7 +119,7 @@ class FoldApp(App):
         # Stylize the results-tree section headers
         tree = TreeControl(Text("TEST RUN RESULTS:", style="bold white underline"), {})
         for results_key in self.results.keys():
-            if results_key in ("LASTLINE", "SUMMARY"):
+            if results_key in ("LAST_LINE", "SUMMARY"):
                 continue
             await tree.add(tree.root.id, Text(results_key), {"results": self.results})
             if tree.nodes[tree.id].label.plain == "FIRSTLINE":

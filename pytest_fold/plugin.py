@@ -41,9 +41,9 @@ def pytest_addoption(parser):
         "--fold-tui",
         "--ft",
         action="store",
-        default="asciimatics",
-        help="specify user interface ('asciimatics' 'a' | 'textual' 't')",
-        choices=["asciimatics", "a", "textual", "t"],
+        default="pytermk",
+        help="specify user interface ('pytermtk' ' k' | 'asciimatics' 'a' | 'textual' 't')",
+        choices=["pytermtk", "k", "asciimatics", "a", "textual", "t"],
     )
 
 
@@ -168,7 +168,7 @@ def pytest_unconfigure(config: Config):
         with open(REPORTFILE, "wb") as report_file:
             pickle.dump(reports, report_file)
 
-    # Call the TUI
+    # Launch the TUI
     if config.getoption("--fold") == True:
         pyfold_tui(config)
 

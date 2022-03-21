@@ -72,7 +72,7 @@ class FoldApp(App):
         self.unmarked_output = self.test_results._unmarked_output
         self.marked_sections = MarkedSections()
         self.summary_text = (
-            Text.from_ansi(self.marked_sections.get_section("LASTLINE")["content"])
+            Text.from_ansi(self.marked_sections.get_section("LAST_LINE")["content"])
             .markup.replace("=", "")
             .strip()
         )
