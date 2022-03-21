@@ -119,7 +119,7 @@ class ResultsFrame(Frame):
             if section["name"] in [
                 MARKERS["pytest_fold_test_session_starts"],
                 MARKERS["pytest_fold_failures_section"],
-                MARKERS["pytest_fold_lastline"],
+                MARKERS["pytest_fold_last_line"],
             ]:
                 # Unfolded layouts: first & last sections, and "--- FAILURES ---" banner
                 self.add_layout(

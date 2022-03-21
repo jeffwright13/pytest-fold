@@ -7,25 +7,25 @@ REPORTFILE = Path.cwd() / "report_objects.bin"
 MARKEDTERMINALOUTPUTFILE = Path.cwd() / "marked_output.bin"
 UNMARKEDTERMINALOUTPUTFILE = Path.cwd() / "unmarked_output.bin"
 
-test_session_starts_matcher = re.compile(r"^==.*\test session starts\s==+")
+test_session_starts_matcher = re.compile(r"^==.*\stest session starts\s==+")
 errors_section_matcher = re.compile(r"^==.*\sERRORS\s==+")
 failures_section_matcher = re.compile(r"^==.*\sFAILURES\s==+")
-warnings_summary_matcher = re.compile(r"^==.*warnings summary\s.*==+")
+warnings_summary_matcher = re.compile(r"^==.*\swarnings summary\s.*==+")
 passes_section_matcher = re.compile(r"^==.*\sPASSES\s==+")
-short_test_summary_matcher = re.compile(r"^==.*short test summary info\s.*==+")
+short_test_summary_matcher = re.compile(r"^==.*\sshort test summary info\s.*==+")
 lastline_matcher = re.compile(r"^==.*in\s\d+.\d+s.*==+")
 
 section_name_matcher = re.compile(r"~~>PYTEST_FOLD_(\w+)")
 test_title_matcher = re.compile(r"__.*\s(.*)\s__+")
 
 MARKERS = {
-    "pytest_fold_test_session_starts": "~~>PYTEST_FOLD_TEST_TEST_SESSION_STARTSS<~~",
+    "pytest_fold_test_session_starts": "~~>PYTEST_FOLD_TEST_SESSION_STARTS<~~",
     "pytest_fold_errors_section": "~~>PYTEST_FOLD_ERRORS_SECTION<~~",
     "pytest_fold_passes_section": "~~>PYTEST_FOLD_PASSES_SECTION<~~",
     "pytest_fold_failures_section": "~~>PYTEST_FOLD_FAILURES_SECTION<~~",
     "pytest_fold_warnings_summary": "~~>PYTEST_FOLD_WARNINGS_SUMMARY<~~",
-    "pytest_fold_short_test_summary": "~~>PYTEST_FOLD_TERMINAL_SUMMARY<~~",
-    "pytest_fold_lastline": "~~>PYTEST_FOLD_LASTLINE<~~",
+    "pytest_fold_short_test_summary": "~~>PYTEST_FOLD_SHORT_TEST_SUMMARY<~~",
+    "pytest_fold_last_line": "~~>PYTEST_FOLD_LAST_LINE<~~",
 }
 
 SECTIONS = [
@@ -225,12 +225,12 @@ class MarkedSections:
         """Determine if the current line is the last line in Pytest's output"""
         if line.strip() == "":
             return False
-        return line.strip() in MARKERS["pytest_fold_lastline"]
+        return line.strip() in MARKERS["pytest_fold_last_line"]
 
     def _sectionize(self, lines: list) -> dict:
         """
         Parse marked lines from a Pytest run's console output, and build up a 'section'
-        dictionarycorresponding to individual sections of the output.
+        dictionary corresponding to individual sections of the output.
         'section' dict: {name, test_title, content}
         """
         sections = []

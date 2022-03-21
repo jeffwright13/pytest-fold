@@ -51,13 +51,7 @@ def main():
         text_area.setText(text)
         tab_widget.addTab(text_area, f"  {value}  ")
 
-    text = test_results._marked_output.get_section(key)["content"]
-    text += test_results._marked_output.get_section("LAST_LINE")["content"]
-    value = "LAST_LINE"
-    text_area = ttk.TTkTextEdit(parent=tab_widget)
-    text_area.setText(text)
-    tab_widget.addTab(text_area, f"  {value}  ")
-
+    # Create tabs for raw output, etc.
     text = test_results._unmarked_output
     value = "RAW OUTPUT"
     text_area = ttk.TTkTextEdit(parent=tab_widget)

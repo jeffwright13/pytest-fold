@@ -106,7 +106,7 @@ def pytest_configure(config: Config) -> None:
 
                 if re.search(lastline_matcher, s):
                     config._pyfold_marked_outputfile.write(
-                        (MARKERS["pytest_fold_lastline"] + "\n").encode("utf-8")
+                        (MARKERS["pytest_fold_last_line"] + "\n").encode("utf-8")
                     )
 
                 # Write this line's text along with its markup info to console
