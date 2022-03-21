@@ -26,9 +26,7 @@ setup(
     python_requires=">=3.8",
     install_requires=[
         "pytest>=6.2.5",
-        "asciimatics>=1.13.0",
-        "textual>=0.1.15",
-        "pyTermTk>=0.7.0a26",
+        "pytermgui>=4.1.0",
         "single-source>=0.2.0",
         "Faker>=13.0.0",
     ],

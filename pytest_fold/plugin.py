@@ -95,10 +95,10 @@ def pytest_configure(config: Config) -> None:
                         (MARKERS["pytest_fold_failures"] + "\n").encode("utf-8")
                     )
 
-                if re.search(failed_test_marker, s):
-                    config._pyfold_marked_outputfile.write(
-                        (MARKERS["pytest_fold_failed_test"] + "\n").encode("utf-8")
-                    )
+                # if re.search(failed_test_marker, s):
+                #     config._pyfold_marked_outputfile.write(
+                #         (MARKERS["pytest_fold_failed_test"] + "\n").encode("utf-8")
+                #     )
 
                 if re.search(warnings_short_test_summary_matcher, s):
                     config._pyfold_marked_outputfile.write(
