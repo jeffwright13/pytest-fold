@@ -6,7 +6,7 @@ import pytest
 from _pytest.config import Config
 from _pytest._io.terminalwriter import TerminalWriter
 from _pytest.reports import TestReport
-from pytest_fold.tuitk import main as tui
+from pytest_fold.tui_pytermtk import main as tui
 from pytest_fold.utils import (
     test_session_starts_matcher,
     errors_section_matcher,
