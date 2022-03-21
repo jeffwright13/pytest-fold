@@ -1,9 +1,20 @@
+import platform
+import subprocess
 import sys
 import TermTk as ttk
 from os import get_terminal_size
 from pytest_fold.utils import Results, MarkedSections, SECTIONS
 
 TERMINAL_SIZE = get_terminal_size()
+
+
+def quit():
+    ttk.TTkTimer.quitAll()
+    if platform.system() == "Windows":
+        subprocess.Popen("cls", shell=True).communicate()
+    else:  # Linux and Mac
+        print("\033c", end="")
+    sys.exit()
 
 
 def name_section(section):
@@ -47,10 +58,6 @@ def main():
     )
     quit_button = ttk.TTkButton(parent=button_frame, text="Quit")
     quit_button.layout()
-
-    def quit():
-        ttk.TTkTimer.quitAll()
-
     quit_button.clicked.connect(quit)
 
     main_win = ttk.TTkFrame(
