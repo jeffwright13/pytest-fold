@@ -117,8 +117,8 @@ class ResultsFrame(Frame):
             c = Counter(section["content"])
 
             if section["name"] in [
-                MARKERS["pytest_fold_firstline"],
-                MARKERS["pytest_fold_failures"],
+                MARKERS["pytest_fold_test_session_starts"],
+                MARKERS["pytest_fold_failures_section"],
                 MARKERS["pytest_fold_lastline"],
             ]:
                 # Unfolded layouts: first & last sections, and "--- FAILURES ---" banner

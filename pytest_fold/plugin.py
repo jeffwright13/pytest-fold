@@ -8,11 +8,11 @@ from _pytest._io.terminalwriter import TerminalWriter
 from _pytest.reports import TestReport
 from pytest_fold.tuitk import main as tui
 from pytest_fold.utils import (
-    pass_matcher,
-    failure_matcher,
-    error_matcher,
-    failed_test_marker,
-    warnings_short_test_summary_matcher,
+    test_session_starts_matcher,
+    errors_section_matcher,
+    failures_section_matcher,
+    warnings_summary_matcher,
+    passes_section_matcher,
     short_test_summary_matcher,
     lastline_matcher,
     MARKERS,
@@ -72,42 +72,36 @@ def pytest_configure(config: Config) -> None:
             config._pyfold_marked_outputfile = tempfile.TemporaryFile("wb+")
             oldwrite = tr._tw.write
 
-            # identify and mark each section of results
+            # identify and mark each results section
             def tee_write(s, **kwargs):
-                if config._pyfoldfirsttime:
+                if re.search(test_session_starts_matcher, s):
                     config._pyfold_marked_outputfile.write(
-                        (MARKERS["pytest_fold_firstline"] + "\n").encode("utf-8")
-                    )
-                    config._pyfoldfirsttime = False
-
-                if re.search(error_matcher, s):
-                    config._pyfold_marked_outputfile.write(
-                        (MARKERS["pytest_fold_errors"] + "\n").encode("utf-8")
+                        (MARKERS["pytest_fold_test_session_starts"] + "\n").encode("utf-8")
                     )
 
-                if re.search(pass_matcher, s):
+                if re.search(errors_section_matcher, s):
                     config._pyfold_marked_outputfile.write(
-                        (MARKERS["pytest_fold_passes"] + "\n").encode("utf-8")
+                        (MARKERS["pytest_fold_errors_section"] + "\n").encode("utf-8")
                     )
 
-                if re.search(failure_matcher, s):
+                if re.search(failures_section_matcher, s):
                     config._pyfold_marked_outputfile.write(
-                        (MARKERS["pytest_fold_failures"] + "\n").encode("utf-8")
+                        (MARKERS["pytest_fold_failures_section"] + "\n").encode("utf-8")
                     )
 
-                # if re.search(failed_test_marker, s):
-                #     config._pyfold_marked_outputfile.write(
-                #         (MARKERS["pytest_fold_failed_test"] + "\n").encode("utf-8")
-                #     )
-
-                if re.search(warnings_short_test_summary_matcher, s):
+                if re.search(warnings_summary_matcher, s):
                     config._pyfold_marked_outputfile.write(
                         (MARKERS["pytest_fold_warnings_summary"] + "\n").encode("utf-8")
                     )
 
+                if re.search(passes_section_matcher, s):
+                    config._pyfold_marked_outputfile.write(
+                        (MARKERS["pytest_fold_passes_section"] + "\n").encode("utf-8")
+                    )
+
                 if re.search(short_test_summary_matcher, s):
                     config._pyfold_marked_outputfile.write(
-                        (MARKERS["pytest_fold_terminal_summary"] + "\n").encode("utf-8")
+                        (MARKERS["pytest_fold_short_test_summary"] + "\n").encode("utf-8")
                     )
 
                 if re.search(lastline_matcher, s):

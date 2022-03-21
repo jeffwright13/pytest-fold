@@ -7,11 +7,11 @@ REPORTFILE = Path.cwd() / "report_objects.bin"
 MARKEDTERMINALOUTPUTFILE = Path.cwd() / "marked_output.bin"
 UNMARKEDTERMINALOUTPUTFILE = Path.cwd() / "unmarked_output.bin"
 
-pass_matcher = re.compile(r"^==.*\sPASSES\s==+")
-failure_matcher = re.compile(r"^==.*\sFAILURES\s==+")
-error_matcher = re.compile(r"^==.*\sERRORS\s==+")
-failed_test_marker = re.compile(r"^__.*\s(.*)\s__+")
-warnings_short_test_summary_matcher = re.compile(r"^==.*warnings summary\s.*==+")
+test_session_starts_matcher = re.compile(r"^==.*\test session starts\s==+")
+errors_section_matcher = re.compile(r"^==.*\sERRORS\s==+")
+failures_section_matcher = re.compile(r"^==.*\sFAILURES\s==+")
+warnings_summary_matcher = re.compile(r"^==.*warnings summary\s.*==+")
+passes_section_matcher = re.compile(r"^==.*\sPASSES\s==+")
 short_test_summary_matcher = re.compile(r"^==.*short test summary info\s.*==+")
 lastline_matcher = re.compile(r"^==.*in\s\d+.\d+s.*==+")
 
@@ -19,14 +19,13 @@ section_name_matcher = re.compile(r"~~>PYTEST_FOLD_MARKER_(\w+)")
 test_title_matcher = re.compile(r"__.*\s(.*)\s__+")
 
 MARKERS = {
-    "pytest_fold_firstline": "~~>PYTEST_FOLD_MARKER_FIRSTLINE<~~",
-    "pytest_fold_errors": "~~>PYTEST_FOLD_MARKER_ERRORS<~~",
-    "pytest_fold_passes": "~~>PYTEST_FOLD_MARKER_PASSES<~~",
-    "pytest_fold_failures": "~~>PYTEST_FOLD_MARKER_FAILURES<~~",
-    "pytest_fold_failed_test": "~~>PYTEST_FOLD_MARKER_FAILED_TEST<~~",
-    "pytest_fold_warnings_summary": "~~>PYTEST_FOLD_MARKER_WARNINGS_SUMMARY<~~",
-    "pytest_fold_lastline": "~~>PYTEST_FOLD_MARKER_LASTLINE<~~",
-    "pytest_fold_terminal_summary": "~~>PYTEST_FOLD_MARKER_TERMINAL_SUMMARY<~~",
+    "pytest_fold_test_session_starts": "~~>PYTEST_FOLD_TEST_SESSION_STARTS<~~",
+    "pytest_fold_errors_section": "~~>PYTEST_FOLD_ERRORS_SECTION<~~",
+    "pytest_fold_passes_section": "~~>PYTEST_FOLD_PASSES_SECTION<~~",
+    "pytest_fold_failures_section": "~~>PYTEST_FOLD_FAILURES_SECTION<~~",
+    "pytest_fold_warnings_summary": "~~>PYTEST_FOLD_WARNINGS_SUMMARY<~~",
+    "pytest_fold_short_test_summary": "~~>PYTEST_FOLD_TERMINAL_SUMMARY<~~",
+    "pytest_fold_lastline": "~~>PYTEST_FOLD_LASTLINE<~~",
 }
 
 KNOWN_TYPES = (
@@ -216,13 +215,13 @@ class MarkedSections:
         if line.strip() == "":
             return False
         return line.strip() in (
-            MARKERS["pytest_fold_firstline"],
-            MARKERS["pytest_fold_errors"],
-            MARKERS["pytest_fold_failures"],
+            MARKERS["pytest_fold_test_session_starts"],
+            MARKERS["pytest_fold_errors_section"],
+            MARKERS["pytest_fold_failures_section"],
             MARKERS["pytest_fold_failed_test"],
             MARKERS["pytest_fold_warnings_summary"],
-            MARKERS["pytest_fold_terminal_summary"],
-        )
+            MARKERS["pytest_fold_short_test_summary"],
+        )pytest_fold_short_test_summary
 
     def _line_is_lastline(self, line: str) -> bool:
         if line.strip() == "":
