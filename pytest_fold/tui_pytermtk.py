@@ -46,6 +46,7 @@ def main():
     top_label = ttk.TTkLabel(
         parent=top_frame, pos=(0, 0)  # , size=(TERMINAL_SIZE.columns - 10, 3)
     )
+    # top_label.setText(ttk.TTkString(summary_results))
     top_label.setText(summary_results)
 
     # Create Quit button
@@ -60,6 +61,7 @@ def main():
     quit_button.layout()
     quit_button.clicked.connect(quit)
 
+    # Main frame to hold tab and text widgets
     main_win = ttk.TTkFrame(
         parent=root,
         pos=(0, 3),
@@ -72,12 +74,24 @@ def main():
     tab_widget = ttk.TTkTabWidget(parent=main_win, border=True, height=4)
     OUTPUT_SECTIONS = {k: name_section(k) for k in SECTIONS}
     for key, value in OUTPUT_SECTIONS.items():
+        if key in ("LAST_LINE", "SHORT_TEST_SUMMARY"):
+            continue  # combine these two into one tab
         text = test_results._marked_output.get_section(key)["content"]
         text_area = ttk.TTkTextEdit(parent=tab_widget)
         text_area.setText(text)
         tab_widget.addTab(text_area, f"  {value}  ")
 
-    # Create tabs for raw output, etc.
+    # Create tab for combined test summary and final results
+    text = (
+        test_results._marked_output.get_section("SHORT_TEST_SUMMARY")["content"]
+        + test_results._marked_output.get_section("LAST_LINE")["content"]
+    )
+    value = "TEST SUMMARY"
+    text_area = ttk.TTkTextEdit(parent=tab_widget)
+    text_area.setText(text)
+    tab_widget.addTab(text_area, f"  {value}  ")
+
+    # Create tab for raw output
     text = test_results._unmarked_output
     value = "RAW OUTPUT"
     text_area = ttk.TTkTextEdit(parent=tab_widget)
