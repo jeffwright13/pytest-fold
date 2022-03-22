@@ -1,6 +1,9 @@
 # pytest-fold
 ## A Pytest plugin to make console output more manageable
 
+### Using PyTermTk (experimental; incomplete):
+https://user-images.githubusercontent.com/4308435/159505704-75683248-4734-4db9-9f6e-f4ec28ebfdb6.mp4
+
 ### ...using Textual TUI (Mac/Windows):
 ![ezgif com-gif-maker](https://user-images.githubusercontent.com/4308435/154848960-391fd62f-4859-4d2b-8d03-9f55f4b04cad.gif)
 
