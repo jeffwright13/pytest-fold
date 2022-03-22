@@ -2,6 +2,7 @@ import re
 import pickle
 from dataclasses import dataclass
 from pathlib import Path
+from strip_ansi import strip_ansi
 
 REPORTFILE = Path.cwd() / "report_objects.bin"
 MARKEDTERMINALOUTPUTFILE = Path.cwd() / "marked_output.bin"
@@ -58,11 +59,18 @@ class Results:
         self._test_info = self._process_reports()
 
         self.test_results = self._deduplicate()
+        self.test_session_starts = self.get_terminal_output()
         self.errors = self.get_errors()
+        # self.errors2 =
         self.failures = self.get_failures()
         # self.warnings = self.get_warnings()
         self.passes = self.get_passes()
         self.misc = self.get_misc()
+
+    def _get_test_details_by_test_name(self, testname: str) -> str:
+        summary = strip_ansi(self.test_session_starts)
+
+
 
     def _get_unmarked_output(
         self, unmarked_file_path: Path = UNMARKEDTERMINALOUTPUTFILE
@@ -175,8 +183,9 @@ class Results:
         return self.test_results
 
     def get_terminal_output(self) -> bytes:
-        return self._terminal_output
-
+        for section in self._marked_output._sections:
+            if section["name"] == "TEST_SESSION_STARTS":
+                return section["content"]
 
 class MarkedSections:
     def __init__(self, marked_file_path: Path = MARKEDTERMINALOUTPUTFILE) -> None:

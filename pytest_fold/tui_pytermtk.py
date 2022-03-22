@@ -28,6 +28,7 @@ def name_section(section):
 def main():
     # Retrieve pytest results and extract summary results
     test_results = Results()
+    r = test_results._get_test_details_by_test_name("test_a_ok")
     summary_results = (
         test_results._marked_output.get_section("LAST_LINE")["content"].replace("=", "")
         # .rstrip("\n")
@@ -70,7 +71,7 @@ def main():
         layout=ttk.TTkGridLayout(),
     )
 
-    # Create tabs with individual section results
+    # Create tabs with results from individual sections
     tab_widget = ttk.TTkTabWidget(parent=main_win, border=True, height=4)
     OUTPUT_SECTIONS = {k: name_section(k) for k in SECTIONS}
     for key, value in OUTPUT_SECTIONS.items():
@@ -80,6 +81,14 @@ def main():
         text_area = ttk.TTkTextEdit(parent=tab_widget)
         text_area.setText(text)
         tab_widget.addTab(text_area, f"  {value}  ")
+
+
+    # Create MISC tab for combined XPass, XFail, Skipped tests
+    text = "".join(test_results.misc)
+    value = "XF/XP/SKP"
+    text_area = ttk.TTkTextEdit(parent=tab_widget)
+    text_area.setText(text)
+    tab_widget.addTab(text_area, f"  {value}  ")
 
     # Create tab for combined test summary and final results
     text = (

@@ -137,8 +137,8 @@ def test_11_pass_capturing(capsys):
     print("PASS this stderr is captured", file=sys.stderr)
     logger.warning("PASS this log is captured")
     with capsys.disabled(log_testname):
-        print("PASS stdout not captured, going directly to sys.stdout")
-        print("PASS stderr not captured, going directly to sys.stderr", file=sys.stderr)
+        print("PASS stdout not captured (capsys disabled), going directly to sys.stdout")
+        print("PASS stderr not captured (capsys disabled), going directly to sys.stderr", file=sys.stderr)
         logger.warning("is this log captured?")
     print("PASS this stdout is also captured")
     print("PASS this stderr is also captured", file=sys.stderr)
