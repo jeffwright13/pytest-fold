@@ -68,7 +68,7 @@ class ResultsLayout(Layout):
             as_string=True,
             parser=self.parser,
         )
-        tb.value = self.value if not self.folded else self.value[: self.screen.width]
+        tb.value = self.value[: self.screen.width] if self.folded else self.value
         self.add_widget(tb, column=1)
 
     def _toggle_checkbox(self) -> None:

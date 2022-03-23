@@ -76,7 +76,9 @@ def pytest_configure(config: Config) -> None:
             def tee_write(s, **kwargs):
                 if re.search(test_session_starts_matcher, s):
                     config._pyfold_marked_outputfile.write(
-                        (MARKERS["pytest_fold_test_session_starts"] + "\n").encode("utf-8")
+                        (MARKERS["pytest_fold_test_session_starts"] + "\n").encode(
+                            "utf-8"
+                        )
                     )
 
                 if re.search(errors_section_matcher, s):
@@ -101,7 +103,9 @@ def pytest_configure(config: Config) -> None:
 
                 if re.search(short_test_summary_matcher, s):
                     config._pyfold_marked_outputfile.write(
-                        (MARKERS["pytest_fold_short_test_summary"] + "\n").encode("utf-8")
+                        (MARKERS["pytest_fold_short_test_summary"] + "\n").encode(
+                            "utf-8"
+                        )
                     )
 
                 if re.search(lastline_matcher, s):

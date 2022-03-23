@@ -29,15 +29,15 @@ MARKERS = {
     "pytest_fold_last_line": "~~>PYTEST_FOLD_LAST_LINE<~~",
 }
 
-SECTIONS = [
-    "TEST_SESSION_STARTS",
-    "ERRORS_SECTION",
-    "PASSES_SECTION",
-    "FAILURES_SECTION",
-    "WARNINGS_SUMMARY",
-    "SHORT_TEST_SUMMARY",
-    "LAST_LINE",
-]
+SECTIONS = {
+    "TEST_SESSION_STARTS": "Session Start",
+    "ERRORS_SECTION": "Errors",
+    "PASSES_SECTION": "Passes",
+    "FAILURES_SECTION": "Failures",
+    "WARNINGS_SUMMARY": "Warnings",
+    "SHORT_TEST_SUMMARY": "Summary",
+    "LAST_LINE": None,
+}
 
 
 @dataclass
@@ -69,8 +69,6 @@ class Results:
 
     def _get_test_details_by_test_name(self, testname: str) -> str:
         summary = strip_ansi(self.test_session_starts)
-
-
 
     def _get_unmarked_output(
         self, unmarked_file_path: Path = UNMARKEDTERMINALOUTPUTFILE
@@ -186,6 +184,7 @@ class Results:
         for section in self._marked_output._sections:
             if section["name"] == "TEST_SESSION_STARTS":
                 return section["content"]
+
 
 class MarkedSections:
     def __init__(self, marked_file_path: Path = MARKEDTERMINALOUTPUTFILE) -> None:

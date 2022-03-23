@@ -17,18 +17,9 @@ def quit():
     sys.exit()
 
 
-def name_section(section):
-    words = []
-    for word in section.split("_"):
-        word.lower().capitalize()
-        words.append(word)
-    return " ".join(words)
-
-
 def main():
     # Retrieve pytest results and extract summary results
     test_results = Results()
-    r = test_results._get_test_details_by_test_name("test_a_ok")
     summary_results = (
         test_results._marked_output.get_section("LAST_LINE")["content"].replace("=", "")
         # .rstrip("\n")
@@ -73,8 +64,7 @@ def main():
 
     # Create tabs with results from individual sections
     tab_widget = ttk.TTkTabWidget(parent=main_win, border=True, height=4)
-    OUTPUT_SECTIONS = {k: name_section(k) for k in SECTIONS}
-    for key, value in OUTPUT_SECTIONS.items():
+    for key, value in SECTIONS.items():
         if key in ("LAST_LINE", "SHORT_TEST_SUMMARY"):
             continue  # combine these two into one tab
         text = test_results._marked_output.get_section(key)["content"]
@@ -82,10 +72,9 @@ def main():
         text_area.setText(text)
         tab_widget.addTab(text_area, f"  {value}  ")
 
-
-    # Create MISC tab for combined XPass, XFail, Skipped tests
-    text = "".join(test_results.misc)
-    value = "XF/XP/SKP"
+    # Create Misc tab for combined XPass, XFail, Skipped tests
+    text = "\n".join(test_results.misc)
+    value = "Misc"
     text_area = ttk.TTkTextEdit(parent=tab_widget)
     text_area.setText(text)
     tab_widget.addTab(text_area, f"  {value}  ")
@@ -95,14 +84,14 @@ def main():
         test_results._marked_output.get_section("SHORT_TEST_SUMMARY")["content"]
         + test_results._marked_output.get_section("LAST_LINE")["content"]
     )
-    value = "TEST SUMMARY"
+    value = "Summary"
     text_area = ttk.TTkTextEdit(parent=tab_widget)
     text_area.setText(text)
     tab_widget.addTab(text_area, f"  {value}  ")
 
     # Create tab for raw output
     text = test_results._unmarked_output
-    value = "RAW OUTPUT"
+    value = "Raw Output"
     text_area = ttk.TTkTextEdit(parent=tab_widget)
     text_area.setText(text)
     tab_widget.addTab(text_area, f"  {value}  ")
