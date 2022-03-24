@@ -9,6 +9,7 @@ TERMINAL_SIZE = get_terminal_size()
 
 
 def quit():
+    # Quits app and resstores terminal fo Windows, Mac, Linux
     ttk.TTkTimer.quitAll()
     if platform.system() == "Windows":
         subprocess.Popen("cls", shell=True).communicate()
@@ -59,23 +60,43 @@ def main():
         pos=(0, 3),
         size=(TERMINAL_SIZE.columns, TERMINAL_SIZE.lines - 3),
         border=True,
-        layout=ttk.TTkGridLayout(),
+        layout=ttk.TTkVBoxLayout(),
     )
 
     # Create tabs with results from individual sections
     tab_widget = ttk.TTkTabWidget(parent=main_win, border=True, height=4)
+    text_area_handles = {}
     for key, value in SECTIONS.items():
-        if key in ("LAST_LINE", "SHORT_TEST_SUMMARY"):
-            continue  # combine these two into one tab
+        if key in ("SHORT_TEST_SUMMARY", "LAST_LINE"):
+            continue  # combine these two into one tab later
         text = test_results._marked_output.get_section(key)["content"]
         text_area = ttk.TTkTextEdit(parent=tab_widget)
+        text_area_handles[value] = text_area
         text_area.setText(text)
         tab_widget.addTab(text_area, f"  {value}  ")
 
-    # Create Misc tab for combined XPass, XFail, Skipped tests
-    text = "\n".join(test_results.misc)
-    value = "Misc"
+    # Create tabs for XPass, XFail, Skipped tests
+    text = ""
+    text += "\n".join(k for k in test_results.xpasses.keys())
+    value = "Xpass"
     text_area = ttk.TTkTextEdit(parent=tab_widget)
+    text_area_handles[value] = text_area
+    text_area.setText(text)
+    tab_widget.addTab(text_area, f"  {value}  ")
+
+    text = ""
+    text += "\n".join(k for k in test_results.xfails.keys())
+    value = "Xfail"
+    text_area = ttk.TTkTextEdit(parent=tab_widget)
+    text_area_handles[value] = text_area
+    text_area.setText(text)
+    tab_widget.addTab(text_area, f"  {value}  ")
+
+    text = ""
+    text += "\n".join(k for k in test_results.skipped.keys())
+    value = "Skipped"
+    text_area = ttk.TTkTextEdit(parent=tab_widget)
+    text_area_handles[value] = text_area
     text_area.setText(text)
     tab_widget.addTab(text_area, f"  {value}  ")
 
@@ -86,6 +107,7 @@ def main():
     )
     value = "Summary"
     text_area = ttk.TTkTextEdit(parent=tab_widget)
+    text_area_handles[value] = text_area
     text_area.setText(text)
     tab_widget.addTab(text_area, f"  {value}  ")
 
@@ -93,6 +115,7 @@ def main():
     text = test_results._unmarked_output
     value = "Raw Output"
     text_area = ttk.TTkTextEdit(parent=tab_widget)
+    # text_area_handles[value] = text_area
     text_area.setText(text)
     tab_widget.addTab(text_area, f"  {value}  ")
 
@@ -101,46 +124,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-    # # Create main window
-    # main_win = ttk.TTkFrame(
-    #     parent=root,
-    #     pos=(0, 0),
-    #     size=(TERMINAL_SIZE.columns, TERMINAL_SIZE.lines),
-    #     border=True,
-    #     layout=ttk.TTkGridLayout(),
-    # )
-    # main_label = ttk.TTkLabel(
-    #     parent=main_win,
-    #     pos=(0, 0),
-    #     size=(TERMINAL_SIZE.columns-10, 1),
-    #     border=True,
-    # )
-    # main_label.setText(summary_results)
-
-    # Create main window
-    # main_win = ttk.TTkWindow(
-    #     parent=root,
-    #     pos=(0, 0),
-    #     size=(TERMINAL_SIZE.columns, TERMINAL_SIZE.lines),
-    #     title=summary_results,
-    #     border=True,
-    #     layout=ttk.TTkGridLayout(),
-    # )
-
-    # Create main window
-    # main_win = ttk.TTkWindow(
-    #     parent=root,
-    #     pos=(0, 0),
-    #     size=(TERMINAL_SIZE.columns, 3),
-    #     title=summary_results,
-    #     border=True,
-    #     layout=ttk.TTkGridLayout(),
-    # )
-    # main_frame = ttk.TTkFrame(
-    #     parent=root,
-    #     pos=(0, 2),
-    #     size=(TERMINAL_SIZE.columns, TERMINAL_SIZE.lines - 2),
-    #     border=True,
-    #     layout=ttk.TTkGridLayout(),
-    # )

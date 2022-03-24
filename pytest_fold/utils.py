@@ -49,6 +49,7 @@ class TestInfo:
     capstderr: str = ""
     capstdout: str = ""
     text: str = ""
+    keywords: set = ()
 
 
 class Results:
@@ -61,11 +62,12 @@ class Results:
         self.test_results = self._deduplicate()
         self.test_session_starts = self.get_terminal_output()
         self.errors = self.get_errors()
-        # self.errors2 =
         self.failures = self.get_failures()
         # self.warnings = self.get_warnings()
         self.passes = self.get_passes()
-        self.misc = self.get_misc()
+        self.xfails = self.get_xfails()
+        self.skipped = self.get_skipped()
+        self.xpasses = self.get_xpasses()
 
     def _get_test_details_by_test_name(self, testname: str) -> str:
         summary = strip_ansi(self.test_session_starts)
@@ -97,6 +99,7 @@ class Results:
             test_info.capstderr = report.capstderr
             test_info.capstdout = report.capstdout
             test_info.title = report.head_line
+            test_info.keywords = set(report.keywords)
 
             # categorize the TestInfo instance
             if (
@@ -146,16 +149,21 @@ class Results:
     # These functions combine all outputs from one test
     def get_errors(self):
         return {
-            entry.title: entry.caplog + entry.capstderr + entry.capstdout
-            for entry in self.test_results
-            if entry.category == "error"
+            test_result.title: test_result.caplog
+            + test_result.capstderr
+            + test_result.capstdout
+            for test_result in self.test_results
+            if test_result.category == "error"
         }
 
     def get_failures(self):
         return {
-            entry.title: entry.caplog + entry.capstderr + entry.capstdout + entry.text
-            for entry in self.test_results
-            if entry.category == "failed"
+            test_result.title: test_result.caplog
+            + test_result.capstderr
+            + test_result.capstdout
+            + test_result.text
+            for test_result in self.test_results
+            if test_result.category == "failed"
         }
 
     def get_warnings(self):
@@ -165,16 +173,38 @@ class Results:
 
     def get_passes(self):
         return {
-            entry.title: entry.caplog + entry.capstderr + entry.capstdout
-            for entry in self.test_results
-            if entry.category == "passed"
+            test_result.title: test_result.caplog
+            + test_result.capstderr
+            + test_result.capstdout
+            for test_result in self.test_results
+            if test_result.category == "passed"
         }
 
-    def get_misc(self):
+    def get_xfails(self):
         return {
-            entry.title: entry.caplog + entry.capstderr + entry.capstdout
-            for entry in self.test_results
-            if entry.category in ("skipped", "xfail")
+            test_result.title: test_result.caplog
+            + test_result.capstderr
+            + test_result.capstdout
+            for test_result in self.test_results
+            if test_result.category == "xfail" and "xfail" not in test_result.keywords
+        }
+
+    def get_xpasses(self):
+        return {
+            test_result.title: test_result.caplog
+            + test_result.capstderr
+            + test_result.capstdout
+            for test_result in self.test_results
+            if test_result.category == "passed" and "xfail" in test_result.keywords
+        }
+
+    def get_skipped(self):
+        return {
+            test_result.title: test_result.caplog
+            + test_result.capstderr
+            + test_result.capstdout
+            for test_result in self.test_results
+            if test_result.category == "skipped"
         }
 
     def get_results(self) -> list:

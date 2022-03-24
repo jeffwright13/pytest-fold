@@ -17,7 +17,6 @@ logging.getLogger('faker').setLevel(logging.ERROR)
 def error_fixture():
     assert 0
 
-
 def test_i_ok():
     print("ok")
 

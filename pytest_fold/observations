@@ -10,6 +10,8 @@
 - Tests with a warning are 'passed' tests (outcome='passed' for all three phases)
 - stdout, stderr and stdlog info is contained in the 'call' phase only
 - If a test results in 'error', no stdout/stderr/stdlog will be shown, just the error msg
+- When a test passes despite being expected to fail (marked with pytest.mark.xfail), it’s an xpass and will be reported in the test summary
+- It *appears* as if Pytest marks an Xpass test with outcome=passed, and keyword: xfail. This is the only example of a test with keyword: xfail that i have seen.
 
 - All the above notwithstanding, pytest still marks tests with a final category of one of the following, and then sends to console:
 KNOWN_TYPES = (

@@ -52,8 +52,8 @@ def log_testname():
     logger.info("Tearing test down...")
 
 
-def fake_data():
-    return faker.Faker().text(random.randint(30,120))
+def fake_data(min: int=30, max: int=120) -> str:
+    return faker.Faker().text(random.randint(min,max))
 
 def test_1_passes_and_has_logging_output(log_testname):
     logger.critical(fake_data())
