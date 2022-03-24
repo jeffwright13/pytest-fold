@@ -103,12 +103,12 @@ class Results:
 
             # categorize the TestInfo instance
             if (
-                report.when in ("collect", "setup", "teardown")
+                report.when in ("setup", "call", "teardown")
                 and report.outcome == "failed"
             ):
                 test_info.category = "error"
             elif (
-                report.when in ("collect", "setup", "teardown")
+                report.when in ("setup", "call", "teardown")
                 and report.outcome == "skipped"
             ):
                 test_info.category = "skipped"
@@ -204,7 +204,7 @@ class Results:
             + test_result.capstderr
             + test_result.capstdout
             for test_result in self.test_results
-            if test_result.category == "skipped"
+            if test_result.outcome == "skipped"
         }
 
     def get_results(self) -> list:

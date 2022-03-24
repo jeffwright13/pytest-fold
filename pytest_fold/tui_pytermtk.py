@@ -39,8 +39,8 @@ def main():
     top_label = ttk.TTkLabel(
         parent=top_frame, pos=(0, 0)  # , size=(TERMINAL_SIZE.columns - 10, 3)
     )
-    # top_label.setText(ttk.TTkString(summary_results))
-    top_label.setText(summary_results)
+    top_label.setText(ttk.TTkString(summary_results))
+    # top_label.setText(summary_results)
 
     # Create Quit button
     button_frame = ttk.TTkFrame(
@@ -75,25 +75,21 @@ def main():
         text_area.setText(text)
         tab_widget.addTab(text_area, f"  {value}  ")
 
-    # Create tabs for XPass, XFail, Skipped tests
-    text = ""
-    text += "\n".join(k for k in test_results.xpasses.keys())
+    text = "" + "\n".join(test_results.xpasses.keys())
     value = "Xpass"
     text_area = ttk.TTkTextEdit(parent=tab_widget)
     text_area_handles[value] = text_area
     text_area.setText(text)
     tab_widget.addTab(text_area, f"  {value}  ")
 
-    text = ""
-    text += "\n".join(k for k in test_results.xfails.keys())
+    text = "" + "\n".join(test_results.xfails.keys())
     value = "Xfail"
     text_area = ttk.TTkTextEdit(parent=tab_widget)
     text_area_handles[value] = text_area
     text_area.setText(text)
     tab_widget.addTab(text_area, f"  {value}  ")
 
-    text = ""
-    text += "\n".join(k for k in test_results.skipped.keys())
+    text = "" + "\n".join(test_results.skipped.keys())
     value = "Skipped"
     text_area = ttk.TTkTextEdit(parent=tab_widget)
     text_area_handles[value] = text_area
