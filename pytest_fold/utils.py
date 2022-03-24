@@ -231,9 +231,10 @@ class MarkedSections:
                 {"name": name, "test_title": "", "content": ""},
             )
         else:
-            raise Exception(f"Cannot retrieve section by name: '{name}'")
+            raise NameError(f"Cannot retrieve section by name: '{name}'")
 
     def get_failed_test_text_by_test_name(self, name: str) -> str:
+        # sourcery skip: use-next
         for section in self._sections:
             if section["name"] == "FAILED_TEST" and name == section["test_title"]:
                 return section["content"]
@@ -248,8 +249,6 @@ class MarkedSections:
 
     def _line_is_a_marker(self, line: str) -> bool:
         """Determine if the current line is a marker or part of Pytest output"""
-        if line.strip() == "":
-            return False
         return line.strip() in (
             MARKERS["pytest_fold_test_session_starts"],
             MARKERS["pytest_fold_errors_section"],
@@ -257,9 +256,10 @@ class MarkedSections:
             MARKERS["pytest_fold_passes_section"],
             MARKERS["pytest_fold_warnings_summary"],
             MARKERS["pytest_fold_short_test_summary"],
-        )
+        ) if line.strip() else False
 
     def _line_is_lastline(self, line: str) -> bool:
+        # sourcery skip: assign-if-exp, reintroduce-else, simplify-empty-collection-comparison, swap-if-expression
         """Determine if the current line is the last line in Pytest's output"""
         if line.strip() == "":
             return False
