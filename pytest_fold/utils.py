@@ -19,6 +19,8 @@ lastline_matcher = re.compile(r"^==.*in\s\d+.\d+s.*==+")
 section_name_matcher = re.compile(r"~~>PYTEST_FOLD_(\w+)")
 test_title_matcher = re.compile(r"__.*\s(.*)\s__+")
 
+test_outcome_matcher = re.compile(r".*::(.*)\s(PASSED|FAILED|ERROR|SKIPPED|XFAIL|XPASS)\s.*\s\[\s.*\]")
+
 MARKERS = {
     "pytest_fold_test_session_starts": "~~>PYTEST_FOLD_TEST_SESSION_STARTS<~~",
     "pytest_fold_errors_section": "~~>PYTEST_FOLD_ERRORS_SECTION<~~",
@@ -61,13 +63,46 @@ class Results:
 
         self.test_results = self._deduplicate()
         self.test_session_starts = self.get_terminal_output()
-        self.errors = self.get_errors()
-        self.failures = self.get_failures()
-        # self.warnings = self.get_warnings()
-        self.passes = self.get_passes()
-        self.xfails = self.get_xfails()
-        self.skipped = self.get_skipped()
-        self.xpasses = self.get_xpasses()
+
+        self.categorize_tests()
+
+        self.errors = self.get_result_by_outcome("ERROR")
+        self.failures = self.get_result_by_outcome("FAILED")
+        self.passes = self.get_result_by_outcome("PASSED")
+        self.xfails = self.get_result_by_outcome("XFAIL")
+        self.skipped = self.get_result_by_outcome("SKIPPED")
+        self.xpasses = self.get_result_by_outcome("XPASS")
+
+        # self.errors = self.get_errors()
+        # self.failures = self.get_failures()
+        # # self.warnings = self.get_warnings()
+        # self.passes = self.get_passes()
+        # self.xfails = self.get_xfails()
+        # self.skipped = self.get_skipped()
+        # self.xpasses = self.get_xpasses()
+
+
+    def update_test_result_by_testname(self, title: str, result: str) -> None:
+        for test_result in self.test_results:
+            if title == test_result.title:
+                test_result.category = result
+
+    def categorize_tests(self) -> None:
+        for line in self.test_session_starts.split("\n"):
+            possible_match = re.search(test_outcome_matcher, strip_ansi(line))
+            if possible_match:
+                title = possible_match.groups()[0]
+                outcome = possible_match.groups()[1]
+                self.update_test_result_by_testname(title, outcome)
+
+    def get_result_by_outcome(self, outcome: str) -> None:
+        return {
+            test_result.title: test_result.caplog
+            + test_result.capstderr
+            + test_result.capstdout
+            for test_result in self.test_results
+            if test_result.category == outcome
+        }
 
     def _get_test_details_by_test_name(self, testname: str) -> str:
         summary = strip_ansi(self.test_session_starts)
