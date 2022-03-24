@@ -19,7 +19,9 @@ lastline_matcher = re.compile(r"^==.*in\s\d+.\d+s.*==+")
 section_name_matcher = re.compile(r"~~>PYTEST_FOLD_(\w+)")
 test_title_matcher = re.compile(r"__.*\s(.*)\s__+")
 
-test_outcome_matcher = re.compile(r".*::(.*)\s(PASSED|FAILED|ERROR|SKIPPED|XFAIL|XPASS)\s.*\s\[\s.*\]")
+test_outcome_matcher = re.compile(
+    r".*::(.*)\s(PASSED|FAILED|ERROR|SKIPPED|XFAIL|XPASS)\s.*\s\[\s.*\]"
+)
 
 MARKERS = {
     "pytest_fold_test_session_starts": "~~>PYTEST_FOLD_TEST_SESSION_STARTS<~~",
@@ -64,28 +66,28 @@ class Results:
         self.test_results = self._deduplicate()
         self.test_session_starts = self.get_terminal_output()
 
-        self.categorize_tests()
-        self.errors = self.get_result_by_outcome("ERROR")
-        self.failures = self.get_result_by_outcome("FAILED")
-        self.passes = self.get_result_by_outcome("PASSED")
-        self.xfails = self.get_result_by_outcome("XFAIL")
-        self.skipped = self.get_result_by_outcome("SKIPPED")
-        self.xpasses = self.get_result_by_outcome("XPASS")
+        self._categorize_tests()
+        self.errors = self._get_result_by_outcome("ERROR")
+        self.failures = self._get_result_by_outcome("FAILED")
+        self.passes = self._get_result_by_outcome("PASSED")
+        self.xfails = self._get_result_by_outcome("XFAIL")
+        self.skipped = self._get_result_by_outcome("SKIPPED")
+        self.xpasses = self._get_result_by_outcome("XPASS")
 
-    def update_test_result_by_testname(self, title: str, result: str) -> None:
+    def _update_test_result_by_testname(self, title: str, result: str) -> None:
         for test_result in self.test_results:
             if title == test_result.title:
                 test_result.category = result
 
-    def categorize_tests(self) -> None:
+    def _categorize_tests(self) -> None:
         for line in self.test_session_starts.split("\n"):
             possible_match = re.search(test_outcome_matcher, strip_ansi(line))
             if possible_match:
                 title = possible_match.groups()[0]
                 outcome = possible_match.groups()[1]
-                self.update_test_result_by_testname(title, outcome)
+                self._update_test_result_by_testname(title, outcome)
 
-    def get_result_by_outcome(self, outcome: str) -> None:
+    def _get_result_by_outcome(self, outcome: str) -> None:
         return {
             test_result.title: test_result.caplog
             + test_result.capstderr
@@ -93,9 +95,6 @@ class Results:
             for test_result in self.test_results
             if test_result.category == outcome
         }
-
-    def _get_test_details_by_test_name(self, testname: str) -> str:
-        summary = strip_ansi(self.test_session_starts)
 
     def _get_unmarked_output(
         self, unmarked_file_path: Path = UNMARKEDTERMINALOUTPUTFILE
@@ -126,29 +125,7 @@ class Results:
             test_info.title = report.head_line
             test_info.keywords = set(report.keywords)
 
-            # categorize the TestInfo instance
-            if (
-                report.when in ("setup", "call", "teardown")
-                and report.outcome == "failed"
-            ):
-                test_info.category = "error"
-            elif (
-                report.when in ("setup", "call", "teardown")
-                and report.outcome == "skipped"
-            ):
-                test_info.category = "skipped"
-            elif report.when == "call" and report.outcome == "failed":
-                test_info.category = "failed"
-            elif report.when == "call" and report.outcome == "passed":
-                test_info.category = "passed"
-            elif report.when == "setup" and report.outcome == "skipped":
-                test_info.category = "skipped"
-            elif report.when == "call" and report.outcome == "skipped":
-                test_info.category = "xfail"
-            else:
-                continue
-
-            # ...except for failures, wihch get ANSI-coded text from the marked sections
+            # get ANSI-coded text from marked sections for failed tests
             if test_info.category == "failed":
                 try:
                     test_info.text = (
@@ -163,13 +140,8 @@ class Results:
                         test_info.text == ""
             else:
                 test_info.text == ""
-
             test_infos.append(test_info)
-
         return test_infos
-
-        def get_marked_output(self):
-            return self.marked_output
 
     # These functions combine all outputs from one test
     def get_errors(self):
@@ -274,14 +246,19 @@ class MarkedSections:
 
     def _line_is_a_marker(self, line: str) -> bool:
         """Determine if the current line is a marker or part of Pytest output"""
-        return line.strip() in (
-            MARKERS["pytest_fold_test_session_starts"],
-            MARKERS["pytest_fold_errors_section"],
-            MARKERS["pytest_fold_failures_section"],
-            MARKERS["pytest_fold_passes_section"],
-            MARKERS["pytest_fold_warnings_summary"],
-            MARKERS["pytest_fold_short_test_summary"],
-        ) if line.strip() else False
+        return (
+            line.strip()
+            in (
+                MARKERS["pytest_fold_test_session_starts"],
+                MARKERS["pytest_fold_errors_section"],
+                MARKERS["pytest_fold_failures_section"],
+                MARKERS["pytest_fold_passes_section"],
+                MARKERS["pytest_fold_warnings_summary"],
+                MARKERS["pytest_fold_short_test_summary"],
+            )
+            if line.strip()
+            else False
+        )
 
     def _line_is_lastline(self, line: str) -> bool:
         # sourcery skip: assign-if-exp, reintroduce-else, simplify-empty-collection-comparison, swap-if-expression
