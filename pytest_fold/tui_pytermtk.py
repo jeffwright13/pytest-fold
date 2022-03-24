@@ -66,14 +66,55 @@ def main():
     # Create tabs with results from individual sections
     tab_widget = ttk.TTkTabWidget(parent=main_win, border=True, height=4)
     text_area_handles = {}
-    for key, value in SECTIONS.items():
-        if key in ("SHORT_TEST_SUMMARY", "LAST_LINE"):
-            continue  # combine these two into one tab later
-        text = test_results._marked_output.get_section(key)["content"]
-        text_area = ttk.TTkTextEdit(parent=tab_widget)
-        text_area_handles[value] = text_area
-        text_area.setText(text)
-        tab_widget.addTab(text_area, f"  {value}  ")
+
+    # for key, value in SECTIONS.items():
+    #     if key in ("SHORT_TEST_SUMMARY", "LAST_LINE", "FAILURES_SECTION"):
+    #         continue  # combine these two into one tab later
+    #     text = test_results._marked_output.get_section(key)["content"]
+    #     text_area = ttk.TTkTextEdit(parent=tab_widget)
+    #     text_area_handles[value] = text_area
+    #     text_area.setText(text)
+    #     tab_widget.addTab(text_area, f"  {value}  ")
+
+
+    text = test_results._marked_output.get_section("TEST_SESSION_STARTS")["content"]
+    value = "Session Start"
+    text_area = ttk.TTkTextEdit(parent=tab_widget)
+    text_area_handles[value] = text_area
+    text_area.setText(text)
+    tab_widget.addTab(text_area, f"  {value}  ")
+
+    text = "" + "\n".join(test_results.passes.keys()) + "\n"
+    text += test_results._marked_output.get_section("PASSES_SECTION")["content"]
+    value = "Pass"
+    text_area = ttk.TTkTextEdit(parent=tab_widget)
+    text_area_handles[value] = text_area
+    text_area.setText(text)
+    tab_widget.addTab(text_area, f"  {value}  ")
+
+    text = "" + "\n".join(test_results.failures.keys()) + "\n"
+    text += test_results._marked_output.get_section("FAILURES_SECTION")["content"]
+    value = "Fail"
+    text_area = ttk.TTkTextEdit(parent=tab_widget)
+    text_area_handles[value] = text_area
+    text_area.setText(text)
+    tab_widget.addTab(text_area, f"  {value}  ")
+
+    text = "" + "\n".join(test_results.errors.keys())
+    value = "Error"
+    text_area = ttk.TTkTextEdit(parent=tab_widget)
+    text_area_handles[value] = text_area
+    text_area.setText(text)
+    tab_widget.addTab(text_area, f"  {value}  ")
+
+    text = test_results._marked_output.get_section("WARNINGS_SUMMARY")["content"]
+    value = "Warning"
+    text_area = ttk.TTkTextEdit(parent=tab_widget)
+    text_area_handles[value] = text_area
+    text_area.setText(text)
+    tab_widget.addTab(text_area, f"  {value}  ")
+
+
 
     text = "" + "\n".join(test_results.xpasses.keys())
     value = "Xpass"

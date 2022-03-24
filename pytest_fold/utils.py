@@ -65,22 +65,12 @@ class Results:
         self.test_session_starts = self.get_terminal_output()
 
         self.categorize_tests()
-
         self.errors = self.get_result_by_outcome("ERROR")
         self.failures = self.get_result_by_outcome("FAILED")
         self.passes = self.get_result_by_outcome("PASSED")
         self.xfails = self.get_result_by_outcome("XFAIL")
         self.skipped = self.get_result_by_outcome("SKIPPED")
         self.xpasses = self.get_result_by_outcome("XPASS")
-
-        # self.errors = self.get_errors()
-        # self.failures = self.get_failures()
-        # # self.warnings = self.get_warnings()
-        # self.passes = self.get_passes()
-        # self.xfails = self.get_xfails()
-        # self.skipped = self.get_skipped()
-        # self.xpasses = self.get_xpasses()
-
 
     def update_test_result_by_testname(self, title: str, result: str) -> None:
         for test_result in self.test_results:
