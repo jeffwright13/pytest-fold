@@ -125,25 +125,22 @@ class Results:
             test_info.title = report.head_line
             test_info.keywords = set(report.keywords)
 
-            # get ANSI-coded text from marked sections for failed tests
-            if test_info.category == "failed":
-                try:
-                    test_info.text = (
-                        self._marked_output.get_failed_test_text_by_test_name(
-                            test_info.title
-                        )
-                    )
-                except:
-                    try:
-                        test_info.text = report.longreprtext
-                    except:
-                        test_info.text == ""
-            else:
-                test_info.text == ""
+            # # get ANSI-coded text from marked sections
+            # if test_info.category in ("failed", "passed"):
+            #     try:
+            #         test_info.text = self._marked_output.get_test_text_from_section(
+            #             test_info.title, "FAILED_TEST"
+            #         )
+            #     except:
+            #         try:
+            #             test_info.text = report.longreprtext
+            #         except:
+            #             test_info.text == ""
+            # else:
+            #     test_info.text == ""
             test_infos.append(test_info)
         return test_infos
 
-    # These functions combine all outputs from one test
     def get_errors(self):
         return {
             test_result.title: test_result.caplog
@@ -162,11 +159,6 @@ class Results:
             for test_result in self.test_results
             if test_result.category == "failed"
         }
-
-    def get_warnings(self):
-        # currently un-implemented; need to figure out how to tell when individual
-        # TestReport items indicate a test that has a warning
-        return {}
 
     def get_passes(self):
         return {
@@ -230,10 +222,10 @@ class MarkedSections:
         else:
             raise NameError(f"Cannot retrieve section by name: '{name}'")
 
-    def get_failed_test_text_by_test_name(self, name: str) -> str:
+    def get_test_text_from_section(self, name: str, section_name: str) -> str:
         # sourcery skip: use-next
         for section in self._sections:
-            if section["name"] == "FAILED_TEST" and name == section["test_title"]:
+            if section["name"] == section_name and name == section["test_title"]:
                 return section["content"]
         return ""
 
