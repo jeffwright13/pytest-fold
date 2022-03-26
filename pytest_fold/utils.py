@@ -20,8 +20,9 @@ section_name_matcher = re.compile(r"~~>PYTEST_FOLD_(\w+)")
 test_title_matcher = re.compile(r"__.*\s(.*)\s__+")
 
 test_outcome_matcher = re.compile(
-    r".*::(.*)\s(PASSED|FAILED|ERROR|SKIPPED|XFAIL|XPASS)\s.*\s\[\s.*\]"
+    r".*?::(.*?)\s(PASSED|FAILED|ERROR|SKIPPED|XFAIL|XPASS)\s.*?\[\s?.*?\]", re.MULTILINE | re.DOTALL
 )
+test_session_starts_section_extra_space_matcher = re.compile(r".*::(.*)\s(PASSED|FAILED|ERROR|SKIPPED|XFAIL|XPASS)\s+.\[\s*.*\]")
 
 MARKERS = {
     "pytest_fold_test_session_starts": "~~>PYTEST_FOLD_TEST_SESSION_STARTS<~~",
@@ -138,6 +139,7 @@ class Results:
             #             test_info.text == ""
             # else:
             #     test_info.text == ""
+
             test_infos.append(test_info)
         return test_infos
 

@@ -22,7 +22,7 @@ class TkTui:
         # Create root TTk object
         self.root = ttk.TTk()
 
-    def create_main_frame(self):
+    def create_top_frame(self):
         self.top_frame = ttk.TTkFrame(
             parent=self.root,
             pos=(0, 0),
@@ -57,19 +57,19 @@ class TkTui:
         self.quit_button.layout()
         self.quit_button.clicked.connect(self.quit)
 
-    def create_main_window(self):
+    def create_main_frame(self):
         # Main frame to hold tab and text widgets
-        self.main_win = ttk.TTkFrame(
+        self.main_frame = ttk.TTkFrame(
             parent=self.root,
             pos=(0, 3),
             size=(TERMINAL_SIZE.columns, TERMINAL_SIZE.lines - 3),
-            border=True,
+            border=False,
             layout=ttk.TTkVBoxLayout(),
         )
 
     def create_tabs(self):
         # Create tabs with results from individual sections
-        tab_widget = ttk.TTkTabWidget(parent=self.main_win, border=True, height=4)
+        tab_widget = ttk.TTkTabWidget(parent=self.main_frame, border=True, height=4)
 
         text = (
             self.test_results._marked_output.get_section("TEST_SESSION_STARTS")[
@@ -156,9 +156,9 @@ class TkTui:
 def main():
     tui = TkTui()
 
-    tui.create_main_frame()
+    tui.create_top_frame()
     tui.create_quit_button()
-    tui.create_main_window()
+    tui.create_main_frame()
     tui.create_tabs()
 
     tui.root.mainloop()
