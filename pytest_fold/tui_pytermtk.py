@@ -51,7 +51,6 @@ class TkTui:
             pos=(0, 0),
             size=(TERMINAL_SIZE.columns - 10, 3),
             border=True,
-            # layout=ttk.TTkLayout(),
         )
         self.top_label = ttk.TTkLabel(
             parent=self.top_frame, pos=(0, 0)  # , size=(TERMINAL_SIZE.columns - 10, 3)
@@ -60,7 +59,7 @@ class TkTui:
         # top_label.setText(summary_results)
 
     def quit(self) -> None:
-        # Quits app and resstores terminal for Windows, Mac, Linux
+        # Quits app and restores terminal for Windows, Mac, Linux
         ttk.TTkTimer.quitAll()
         if platform.system() == "Windows":
             subprocess.Popen("cls", shell=True).communicate()
@@ -73,12 +72,13 @@ class TkTui:
             parent=self.root,
             pos=(TERMINAL_SIZE.columns - 10, 0),
             size=(10, 3),
-            border=True,
+            border=False,
             layout=ttk.TTkVBoxLayout(),
         )
-        self.quit_button = ttk.TTkButton(parent=self.quit_button_frame, text="Quit")
+        # self.quit_button_frame.setPadding(0,0,0,0)
+        self.quit_button = ttk.TTkButton(parent=self.quit_button_frame, text="Quit", border=True)
         self.quit_button.layout()
-        self.quit_button.clicked.connect(self.quit)
+        self.quit_button.clicked.connect(self.root.quit)
 
     def create_main_frame(self):
         # Main frame to hold tab and text widgets
@@ -93,8 +93,9 @@ class TkTui:
     def create_tabs(self) -> None:
         # Create tabs with results from individual sections
         self.tab_widget = ttk.TTkTabWidget(
-            parent=self.main_frame, border=True, height=4
+            parent=self.main_frame, border=False, height=4
         )
+        self.tab_widget.setPadding(3,0,0,0)
 
         text = (
             self.test_results._marked_output.get_section("TEST_SESSION_STARTS")[
