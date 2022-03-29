@@ -11,6 +11,7 @@ import TermTk as ttk
 
 TERMINAL_SIZE = get_terminal_size()
 
+
 @dataclass
 class ResultHandler:
     name: str = ""
@@ -24,11 +25,7 @@ class ResultHandler:
 class TkTui:
     def __init__(self) -> None:
         self.test_results = Results()
-        self.summary_results = (
-            self.test_results._marked_output.get_section("LAST_LINE")[
-                "content"
-            ].replace("=", "")
-        )
+        self.summary_results = self.test_results.last_line.replace("=", "")
 
         self.result_handlers = [
             ResultHandler(name=result, tab_label=result)
@@ -51,7 +48,7 @@ class TkTui:
             pos=(0, 0),
             size=(TERMINAL_SIZE.columns - 10, 3),
             border=True,
-            layout=ttk.TTkHBoxLayout()
+            layout=ttk.TTkHBoxLayout(),
         )
         self.top_label = ttk.TTkLabel(
             parent=self.top_frame, pos=(0, 0)  # , size=(TERMINAL_SIZE.columns - 10, 3)
@@ -77,9 +74,11 @@ class TkTui:
             layout=ttk.TTkVBoxLayout(),
         )
         # self.quit_button_frame.setPadding(0,0,0,0)
-        self.quit_button = ttk.TTkButton(parent=self.quit_button_frame, text="Quit", border=True)
+        self.quit_button = ttk.TTkButton(
+            parent=self.quit_button_frame, text="Quit", border=True
+        )
         self.quit_button.layout()
-        self.quit_button.clicked.connect(self.root.quit)
+        self.quit_button.clicked.connect(self.quit)
 
     def create_main_frame(self):
         # Main frame to hold tab and text widgets
@@ -96,17 +95,13 @@ class TkTui:
         self.tab_widget = ttk.TTkTabWidget(
             parent=self.main_frame, border=False, height=4
         )
-        self.tab_widget.setPadding(3,0,0,0)
+        self.tab_widget.setPadding(3, 0, 0, 0)
 
         text = (
-            self.test_results._marked_output.get_section("TEST_SESSION_STARTS")[
-                "content"
-            ]
-            + self.test_results._marked_output.get_section("SHORT_TEST_SUMMARY")[
-                "content"
-            ]
+            self.test_results.Sections["TEST_SESSION_STARTS"].content
+            + self.test_results.Sections["SHORT_TEST_SUMMARY"].content
             + "\n"
-            + self.test_results._marked_output.get_section("LAST_LINE")["content"]
+            + self.test_results.Sections["LAST_LINE"].content
         )
         tab_label = "Summary"
         text_area = ttk.TTkTextEdit(parent=self.tab_widget)
@@ -120,38 +115,30 @@ class TkTui:
         text_area = ttk.TTkTextEdit(parent=self.tab_widget)
         text_areas[tab_label] = text_area
         text_area.setText(text)
-        self.tab_widget.addTab(text_area, f" {tab_label}" )
+        self.tab_widget.addTab(text_area, f" {tab_label}")
 
-        text = self.test_results._marked_output.get_section("PASSES_SECTION")[
-            "content"
-        ]
+        text = self.test_results.Sections["PASSES_SECTION"].content
         tab_label = "Passes Section"
         text_area = ttk.TTkTextEdit(parent=self.tab_widget)
         text_area.setText(text)
         text_areas[tab_label] = text_area
-        self.tab_widget.addTab(text_area, f" {tab_label}" )
+        self.tab_widget.addTab(text_area, f" {tab_label}")
 
-        text = self.test_results._marked_output.get_section("FAILURES_SECTION")[
-            "content"
-        ]
+        text = self.test_results.Sections["FAILURES_SECTION"].content
         tab_label = "Failures Section"
         text_area = ttk.TTkTextEdit(parent=self.tab_widget)
         text_area.setText(text)
         text_areas[tab_label] = text_area
-        self.tab_widget.addTab(text_area, f" {tab_label}" )
+        self.tab_widget.addTab(text_area, f" {tab_label}")
 
-        text = self.test_results._marked_output.get_section("ERRORS_SECTION")[
-            "content"
-        ]
+        text = self.test_results.Sections["ERRORS_SECTION"].content
         tab_label = "Errors Section"
         text_area = ttk.TTkTextEdit(parent=self.tab_widget)
         text_area.setText(text)
         text_areas[tab_label] = text_area
         self.tab_widget.addTab(text_area, f" {tab_label} ")
 
-        text = self.test_results._marked_output.get_section("WARNINGS_SUMMARY")[
-            "content"
-        ]
+        text = self.test_results.Sections["WARNINGS_SUMMARY"].content
         tab_label = "Warnings"
         text_area = ttk.TTkTextEdit(parent=self.tab_widget)
         text_area.setText(text)
@@ -161,7 +148,6 @@ class TkTui:
     @ttk.pyTTkSlot(str)
     def callback(label):
         pass
-
 
     def create_result_lists(self) -> None:
         for result in ("Errors", "Passes", "Failures", "Skipped", "Xfails", "Xpasses"):
