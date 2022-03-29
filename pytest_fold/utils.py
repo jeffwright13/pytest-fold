@@ -182,61 +182,6 @@ class Results:
             test_infos.append(test_info)
         return test_infos
 
-    def get_errors(self):
-        return {
-            test_result.title: test_result.caplog
-            + test_result.capstderr
-            + test_result.capstdout
-            for test_result in self.test_results
-            if test_result.category == "error"
-        }
-
-    def get_failures(self):
-        return {
-            test_result.title: test_result.caplog
-            + test_result.capstderr
-            + test_result.capstdout
-            + test_result.text
-            for test_result in self.test_results
-            if test_result.category == "failed"
-        }
-
-    def get_passes(self):
-        return {
-            test_result.title: test_result.caplog
-            + test_result.capstderr
-            + test_result.capstdout
-            for test_result in self.test_results
-            if test_result.category == "passed"
-        }
-
-    def get_xfails(self):
-        return {
-            test_result.title: test_result.caplog
-            + test_result.capstderr
-            + test_result.capstdout
-            for test_result in self.test_results
-            if test_result.category == "xfail" and "xfail" not in test_result.keywords
-        }
-
-    def get_xpasses(self):
-        return {
-            test_result.title: test_result.caplog
-            + test_result.capstderr
-            + test_result.capstdout
-            for test_result in self.test_results
-            if test_result.category == "passed" and "xfail" in test_result.keywords
-        }
-
-    def get_skipped(self):
-        return {
-            test_result.title: test_result.caplog
-            + test_result.capstderr
-            + test_result.capstdout
-            for test_result in self.test_results
-            if test_result.outcome == "skipped"
-        }
-
     def get_results(self) -> list:
         return self.test_results
 
@@ -262,7 +207,7 @@ class MarkedSections:
     ) -> None:
         self.Sections = Sections
         self._marked_lines = self._get_marked_lines(marked_file_path)
-        self._sections = self._sectionize2(self._marked_lines)
+        self._sections = self._sectionize(self._marked_lines)
         print("")
 
     def get_section(self, name: str) -> str:
@@ -306,7 +251,7 @@ class MarkedSections:
             else False
         )
 
-    def _sectionize2(self, lines: list) -> dict:
+    def _sectionize(self, lines: list) -> dict:
         """
         Parse marked lines from test run console output;
         build dictionary of SectionInfo objects
