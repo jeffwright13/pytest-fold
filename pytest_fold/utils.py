@@ -18,10 +18,8 @@ warnings_summary_matcher = re.compile(r"^==.*\swarnings summary\s.*==+")
 passes_section_matcher = re.compile(r"^==.*\sPASSES\s==+")
 short_test_summary_matcher = re.compile(r"^==.*\sshort test summary info\s.*==+")
 lastline_matcher = re.compile(r"^==.*in\s\d+.\d+s.*=+")
-
 section_name_matcher = re.compile(r"~~>PYTEST_FOLD_(\w+)")
 test_title_matcher = re.compile(r"__.*\s(.*)\s__+")
-
 test_outcome_matcher = re.compile(
     r".*?::(.*?)\s(PASSED|FAILED|ERROR|SKIPPED|XFAIL|XPASS)\s.*?\[\s?.*?\]",
     re.MULTILINE | re.DOTALL,
@@ -67,25 +65,21 @@ class TestInfo:
 
 class Results:
     def __init__(self):
-        self._reports = self._unpickle()
-        self._unmarked_output = self._get_unmarked_output()
-        self.Sections = self.init_sections()
-        self._marked_output = MarkedSections(self.Sections)
-        self.test_results = self.get_test_results()
-        self.test_session_starts = self.Sections["TEST_SESSION_STARTS"].content
-        self.last_line = self.Sections["LAST_LINE"].content
+        self.Sections = self._init_sections()
+        self.unmarked_output = self._get_unmarked_output()
+        self.marked_output = MarkedSections(self.Sections)
+        self.test_results = self._get_test_results()
 
-        # Group all test results by outcome
         self._categorize_tests()
-        self.errors = self._get_result_by_outcome("ERROR")
 
+        self.errors = self._get_result_by_outcome("ERROR")
         self.failures = self._get_result_by_outcome("FAILED")
         self.passes = self._get_result_by_outcome("PASSED")
         self.xfails = self._get_result_by_outcome("XFAIL")
         self.skipped = self._get_result_by_outcome("SKIPPED")
         self.xpasses = self._get_result_by_outcome("XPASS")
 
-    def init_sections(self):
+    def _init_sections(self):
         return {
             "TEST_SESSION_STARTS": SectionInfo(
                 name="TEST_SESSION_STARTS",
@@ -124,7 +118,7 @@ class Results:
                 test_result.category = result
 
     def _categorize_tests(self) -> None:
-        for line in self.test_session_starts.split("\n"):
+        for line in self.Sections["TEST_SESSION_STARTS"].content.split("\n"):
             possible_match = re.search(test_outcome_matcher, strip_ansi(line))
             if possible_match:
                 title = possible_match.groups()[0]
@@ -132,6 +126,7 @@ class Results:
                 self._update_test_result_by_testname(title, outcome)
 
     def _get_result_by_outcome(self, outcome: str) -> None:
+        # dict of {testname: log+stderr+stdout) for each test, per-outcome
         return {
             test_result.title: test_result.caplog
             + test_result.capstderr
@@ -151,7 +146,7 @@ class Results:
         with open(REPORTFILE, "rb") as rfile:
             return pickle.load(rfile)
 
-    def get_test_results(self):
+    def _get_test_results(self):
         """Process TestReports from Pytest output and then remove duplicates"""
         processed_reports = self._process_reports()
         return list({item.title: item for item in processed_reports}.values())
@@ -159,7 +154,7 @@ class Results:
     def _process_reports(self):
         """Extract individual test results from the pytest marked output"""
         test_infos = []
-        for report in self._reports:
+        for report in self._unpickle():
             test_info = TestInfo()
 
             # populate the TestInfo instance with pertinent data from report
@@ -244,16 +239,6 @@ class Results:
 
     def get_results(self) -> list:
         return self.test_results
-
-    def get_terminal_output(self) -> bytes:
-        for section in self._marked_output._sections:
-            if section.name == "TEST_SESSION_STARTS":
-                return section.content
-
-    def get_terminal_output2(self) -> bytes:
-        for section in self._marked_output._sections:
-            if section.name == "TEST_SESSION_STARTS":
-                return section.content
 
 
 class MarkedSections:

@@ -25,7 +25,9 @@ class ResultHandler:
 class TkTui:
     def __init__(self) -> None:
         self.test_results = Results()
-        self.summary_results = self.test_results.last_line.replace("=", "")
+        self.summary_results = self.test_results.Sections["LAST_LINE"].content.replace(
+            "=", ""
+        )
 
         self.result_handlers = [
             ResultHandler(name=result, tab_label=result)
@@ -110,7 +112,7 @@ class TkTui:
         text_areas = {tab_label: text_area}
         self.tab_widget.addTab(text_area, f" {tab_label} ")
 
-        text = self.test_results._unmarked_output
+        text = self.test_results.unmarked_output
         tab_label = "Full Output"
         text_area = ttk.TTkTextEdit(parent=self.tab_widget)
         text_areas[tab_label] = text_area
