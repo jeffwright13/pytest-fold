@@ -13,12 +13,12 @@ def read(fname):
 
 setup(
     name="pytest-fold",
-    version="0.7.4",
+    version="0.7.5",
     author="Jeff Wright",
     author_email="jeff.washcloth@gmail.com",
     license="MIT",
     url="https://github.com/jeffwright13/pytest-fold",
-    description="Fold console output and drop user into interactive text user interface",
+    description="Mark console output and drop user into interactive text user interface",
     long_description=read("README.md"),
     long_description_content_type="text/markdown",
     packages=["pytest_fold"],
@@ -41,6 +41,9 @@ setup(
         "Operating System :: OS Independent",
         "License :: OSI Approved :: MIT License",
     ],
-    keywords="pytest testing fold output logs fail asciimatics single-source",
-    entry_points={"pytest11": ["pytest_fold = pytest_fold.plugin"]},
+    keywords="pytest testing fold output logs fail pytermtk asciimatics textual single-source",
+    entry_points={
+        "pytest11": ["pytest_fold = pytest_fold.plugin"],
+        "console_scripts": ["tuitk = pytest_fold.tui_pytermtk:main"],
+    },
 )

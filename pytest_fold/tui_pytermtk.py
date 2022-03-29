@@ -51,6 +51,7 @@ class TkTui:
             pos=(0, 0),
             size=(TERMINAL_SIZE.columns - 10, 3),
             border=True,
+            layout=ttk.TTkHBoxLayout()
         )
         self.top_label = ttk.TTkLabel(
             parent=self.top_frame, pos=(0, 0)  # , size=(TERMINAL_SIZE.columns - 10, 3)
