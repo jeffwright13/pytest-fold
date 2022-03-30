@@ -5,7 +5,7 @@ from textual.app import App
 from textual.view import messages
 from textual.views import DockView
 from textual.widgets import Header, Footer, TreeControl, ScrollView, TreeClick
-from pytest_fold.utils import Results, MarkedSections
+from pytest_fold.utils import Results
 
 
 class FoldFooter(Footer):
@@ -59,10 +59,10 @@ class FoldApp(App):
         await self.bind("f", "toggle_tree('fail_tree')", "Toggle Fail  ⁞")
         await self.bind("p", "toggle_tree('pass_tree')", "Toggle Pass  ⁞")
         await self.bind("e", "toggle_tree('error_tree')", "Toggle Error  ⁞")
-        await self.bind("m", "toggle_tree('misc_tree')", "Toggle Misc  ⁞")
+        # await self.bind("m", "toggle_tree('misc_tree')", "Toggle Misc  ⁞")
         await self.bind(
             "a",
-            "toggle_tree(['unmarked', 'summary', 'misc_tree', 'error_tree', 'pass_tree', 'fail_tree'])",
+            "toggle_tree(['unmarked', 'summary', 'error_tree', 'pass_tree', 'fail_tree'])",
             "Toggle All  ⁞",
         )
         await self.bind("q", "quit", "Quit")
@@ -104,38 +104,52 @@ class FoldApp(App):
         self.error_tree = TreeControl(
             Text("Errors:", style="bold magenta underline"), {}, name="error_tree"
         )
-        self.misc_tree = TreeControl(
-            Text("MISC:", style="bold yellow underline"), {}, name="misc_tree"
-        )
+        # self.misc_tree = TreeControl(
+        #     Text("MISC:", style="bold yellow underline"), {}, name="misc_tree"
+        # )
 
-        for failed in self.test_results.failures:
+        for failed in self.test_results.tests_failures:
             await self.fail_tree.add(
                 self.fail_tree.root.id,
                 Text(failed),
-                {"results": self.test_results.failures},
+                {"results": self.test_results.tests_failures},
             )
-        for errored in self.test_results.errors:
+        for errored in self.test_results.tests_errors:
             await self.error_tree.add(
                 self.error_tree.root.id,
                 Text(errored),
-                {"results": self.test_results.errors},
+                {"results": self.test_results.tests_errors},
             )
-        for passed in self.test_results.passes:
+        for passed in self.test_results.tests_passes:
             await self.pass_tree.add(
                 self.pass_tree.root.id,
                 Text(passed),
-                {"results": self.test_results.passes},
+                {"results": self.test_results.tests_passes},
             )
-        for misc in self.test_results.misc:
-            await self.misc_tree.add(
-                self.misc_tree.root.id, Text(misc), {"results": self.test_results.misc}
-            )
+        # for skipped in self.test_results.tests_skipped:
+        #     await self.skip_tree.add(
+        #         self.skip_tree.root.id,
+        #         Text(skipped),
+        #         {"results": self.test_results.tests_skipped},
+        #     )
+        # for passed in self.test_results.tests_xpasses:
+        #     await self.pass_tree.add(
+        #         self.pass_tree.root.id,
+        #         Text(passed),
+        #         {"results": self.test_results.tests_xpasses},
+        #     )
+        # for passed in self.test_results.tests_xfails:
+        #     await self.pass_tree.add(
+        #         self.pass_tree.root.id,
+        #         Text(passed),
+        #         {"results": self.test_results.tests_xfails},
+        #     )
         await self.unmarked.root.expand()
         await self.summary.root.expand()
         await self.fail_tree.root.expand()
         await self.pass_tree.root.expand()
         await self.error_tree.root.expand()
-        await self.misc_tree.root.expand()
+        # await self.misc_tree.root.expand()
 
         # Create and dock the results tree
         await self.view.dock(
@@ -178,14 +192,14 @@ class FoldApp(App):
             # size = 25,
             name="error_tree",
         )
-        await self.view.dock(
-            ScrollView(self.misc_tree),
-            edge="top",
-            size=len(self.misc_tree.nodes) + 2,
-            # edge="left",
-            # size = 25,
-            name="misc_tree",
-        )
+        # await self.view.dock(
+        #     ScrollView(self.misc_tree),
+        #     edge="top",
+        #     size=len(self.misc_tree.nodes) + 2,
+        #     # edge="left",
+        #     # size = 25,
+        #     name="misc_tree",
+        # )
 
         self.dockview = DockView()
         await self.view.dock(self.dockview)

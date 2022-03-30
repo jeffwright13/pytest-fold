@@ -86,6 +86,7 @@ class Results:
 
         self._categorize_tests()
 
+        # This code presents categorized test results
         self.tests_errors = self._get_result_by_outcome("ERROR")
         self.tests_passes = self._get_result_by_outcome("PASSED")
         self.tests_failures = self._get_result_by_outcome("FAILED")
