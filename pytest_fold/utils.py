@@ -24,6 +24,7 @@ test_outcome_matcher = re.compile(
     r".*?::(.*?)\s(PASSED|FAILED|ERROR|SKIPPED|XFAIL|XPASS)\s.*?\[\s?.*?\]",
     re.MULTILINE | re.DOTALL,
 )
+live_log_line_matcher = re.compile(r"--+\s(live log)(\s).*--+")
 test_session_starts_section_extra_space_matcher = re.compile(
     r".*::(.*)\s(PASSED|FAILED|ERROR|SKIPPED|XFAIL|XPASS)\s+.\[\s*.*\]"
 )
@@ -144,12 +145,16 @@ class Results:
                 test_result.category = result
 
     def _categorize_tests(self) -> None:
+        cleaned_out = r""
         for line in self.Sections["TEST_SESSION_STARTS"].content.split("\n"):
-            possible_match = re.search(test_outcome_matcher, strip_ansi(line))
+            cleaned = re.sub(live_log_line_matcher, "", strip_ansi(line))
+            cleaned_out += cleaned
+            possible_match = re.search(test_outcome_matcher, cleaned)
             if possible_match:
                 title = possible_match.groups()[0]
                 outcome = possible_match.groups()[1]
                 self._update_test_result_by_testname(title, outcome)
+        print("")
 
     def _get_result_by_outcome(self, outcome: str) -> None:
         # dict of {testname: log+stderr+stdout) for each test, per-outcome
@@ -194,7 +199,7 @@ class Results:
             # # get ANSI-coded text from marked sections
             # if test_info.category in ("failed", "passed"):
             #     try:
-            #         test_info.text = self._marked_output.get_test_text_from_section2(
+            #         test_info.text = self._marked_output.get_test_text_from_section(
             #             test_info.title, "FAILED_TEST"
             #         )
             #     except:
@@ -247,7 +252,7 @@ class MarkedSections:
         else:
             raise NameError(f"Cannot retrieve section by name: '{name}'")
 
-    def get_test_text_from_section2(self, name: str, section_name: str) -> str:
+    def get_test_text_from_section(self, name: str, section_name: str) -> str:
         # sourcery skip: use-next
         for section in self._sections:
             if section.name == section_name and name == section["test_title"]:
