@@ -3,7 +3,7 @@
 
 import os
 import codecs
-from setuptools import setup
+from setuptools import setup, find_packages
 
 
 def read(fname):
@@ -13,7 +13,7 @@ def read(fname):
 
 setup(
     name="pytest-fold",
-    version="0.7.5",
+    version="0.7.6",
     author="Jeff Wright",
     author_email="jeff.washcloth@gmail.com",
     license="MIT",
@@ -21,7 +21,8 @@ setup(
     description="Mark console output and drop user into interactive text user interface",
     long_description=read("README.md"),
     long_description_content_type="text/markdown",
-    packages=["pytest_fold"],
+    # packages=["pytest_fold"],
+    packages=find_packages(),
     py_modules=["pytest_fold"],
     python_requires=">=3.8",
     install_requires=[
@@ -44,6 +45,6 @@ setup(
     keywords="pytest testing fold output logs fail pytermtk asciimatics textual single-source",
     entry_points={
         "pytest11": ["pytest_fold = pytest_fold.plugin"],
-        "console_scripts": ["tuitk = pytest_fold.tui_pytermtk:main"],
+        "console_scripts": ["tuitxt = pytest_fold.tui_textual:main", "tuitk = pytest_fold.tui_pytermtk:main"],
     },
 )

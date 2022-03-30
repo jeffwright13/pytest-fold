@@ -6,7 +6,8 @@ import pytest
 from _pytest.config import Config
 from _pytest._io.terminalwriter import TerminalWriter
 from _pytest.reports import TestReport
-from pytest_fold.tui_pytermtk import main as tui
+from pytest_fold.tui_pytermtk import main as tuitk
+from pytest_fold.tui_textual import main as tuitxt
 from pytest_fold.utils import (
     test_session_starts_matcher,
     errors_section_matcher,
@@ -184,10 +185,15 @@ def pyfold_tui(config: Config) -> None:
     """
     # disable capturing while TUI runs to avoid error `redirected stdin is pseudofile, has
     # no fileno()`; adapted from https://githubmemory.com/repo/jsbueno/terminedia/issues/25
-    if config.getoption("--fold") == True:
+    if config.getoption("--fold"):
         capmanager = config.pluginmanager.getplugin("capturemanager")
         try:
             capmanager.suspend_global_capture(in_=True)
         finally:
-            tui()
+            if config.getoption("--ft")[0] == "k":
+                tuitk()
+            elif config.getoption("--ft")[0] == "t":
+                tuitxt()
+            else:
+                print(f"Incorrect choice for fold-tui: {config.getoption('--ft')}")
             capmanager.resume_global_capture()
