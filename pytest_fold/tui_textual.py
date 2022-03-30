@@ -55,56 +55,54 @@ class FoldApp(App):
     async def on_load(self, event: events.Load) -> None:
         # Populate footer with quit and toggle info
         await self.bind("u", "toggle_tree('unmarked')", "Toggle Unmarked  ⁞")
-        await self.bind("1", "toggle_tree('firstlines')", "Toggle Firstline  ⁞")
+        await self.bind("1", "toggle_tree('summary')", "Toggle Summary  ⁞")
         await self.bind("f", "toggle_tree('fail_tree')", "Toggle Fail  ⁞")
         await self.bind("p", "toggle_tree('pass_tree')", "Toggle Pass  ⁞")
         await self.bind("e", "toggle_tree('error_tree')", "Toggle Error  ⁞")
         await self.bind("m", "toggle_tree('misc_tree')", "Toggle Misc  ⁞")
         await self.bind(
             "a",
-            "toggle_tree(['unmarked', 'firstlines', 'misc_tree', 'error_tree', 'pass_tree', 'fail_tree'])",
+            "toggle_tree(['unmarked', 'summary', 'misc_tree', 'error_tree', 'pass_tree', 'fail_tree'])",
             "Toggle All  ⁞",
         )
         await self.bind("q", "quit", "Quit")
 
         # Get test result sections
         self.test_results = Results()
-        self.unmarked_output = self.test_results._unmarked_output
-        self.marked_sections = MarkedSections()
-        self.summary_text = (
-            Text.from_ansi(self.marked_sections.get_section("LAST_LINE")["content"])
-            .markup.replace("=", "")
-            .strip()
+        self.summary_results = self.test_results.Sections["LAST_LINE"].content.replace(
+            "=", ""
         )
+        self.unmarked_output = self.test_results.unmarked_output
+        self.marked_output = self.test_results.marked_output
 
     async def on_mount(self) -> None:
         # Create and dock header and footer widgets
-        self.title = self.summary_text
+        self.title = self.summary_results
         header1 = Header(style="bold white on black")
-        header1.title = self.summary_text
+        header1.title = self.summary_results
         await self.view.dock(header1, edge="top", size=1)
         footer = FoldFooter()
         await self.view.dock(footer, edge="bottom")
 
         # Stylize the results-tree section headers
         self.unmarked = TreeControl(
-            Text("UNMARKED (FULL TERMINAL OUTPUT)", style="dark_slate_gray2 underline"),
-            {"results": self.unmarked_output},
+            Text("Full Output", style="dark_slate_gray2 underline"),
+            {"results": self.test_results.unmarked_output},
             name="unmarked",
         )
-        self.firstlines = TreeControl(
-            Text("FIRSTLINES", style="bold white underline"),
-            {"results": self.marked_sections.get_section("FIRSTLINE")["content"]},
-            name="firstlines",
+        self.summary = TreeControl(
+            Text("Summary", style="bold white underline"),
+            {"results": self.test_results.Sections['TEST_SESSION_STARTS'].content},
+            name="summary",
         )
         self.fail_tree = TreeControl(
-            Text("FAILED:", style="bold red underline"), {}, name="fail_tree"
+            Text("Failures:", style="bold red underline"), {}, name="fail_tree"
         )
         self.pass_tree = TreeControl(
-            Text("PASSED:", style="bold green underline"), {}, name="pass_tree"
+            Text("Passes:", style="bold green underline"), {}, name="pass_tree"
         )
         self.error_tree = TreeControl(
-            Text("ERRORS:", style="bold magenta underline"), {}, name="perror_tree"
+            Text("Errors:", style="bold magenta underline"), {}, name="error_tree"
         )
         self.misc_tree = TreeControl(
             Text("MISC:", style="bold yellow underline"), {}, name="misc_tree"
@@ -133,7 +131,7 @@ class FoldApp(App):
                 self.misc_tree.root.id, Text(misc), {"results": self.test_results.misc}
             )
         await self.unmarked.root.expand()
-        await self.firstlines.root.expand()
+        await self.summary.root.expand()
         await self.fail_tree.root.expand()
         await self.pass_tree.root.expand()
         await self.error_tree.root.expand()
@@ -149,12 +147,12 @@ class FoldApp(App):
             name="unmarked",
         )
         await self.view.dock(
-            ScrollView(self.firstlines),
+            ScrollView(self.summary),
             edge="top",
-            size=len(self.firstlines.nodes) + 2,
+            size=len(self.summary.nodes) + 2,
             # edge="left",
             # size = 25,
-            name="firstlines",
+            name="summary",
         )
         await self.view.dock(
             ScrollView(self.pass_tree),
@@ -203,11 +201,11 @@ class FoldApp(App):
 
         # Click the category headers to toggle on/off (future;
         # right now, just ignore those clicks)
-        if label in ("FAILED:", "PASSED:", "ERRORS:"):
+        if label in ("Failures:", "Passes:", "Errors:", "Skipped:", "Xpasses:", "Xfails:"):
             return
 
         # Display results when test name is clicked
-        if "UNMARKED" in label or "FIRSTLINES" in label:
+        if "Full Output" in label or "Summary" in label:
             self.text = message.node.data.get("results")
         else:
             self.text = message.node.data.get("results")[label]
