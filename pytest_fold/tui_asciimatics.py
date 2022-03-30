@@ -68,7 +68,7 @@ class ResultsLayout(Layout):
             as_string=True,
             parser=self.parser,
         )
-        tb.value = self.value if not self.folded else self.value[: self.screen.width]
+        tb.value = self.value[: self.screen.width] if self.folded else self.value
         self.add_widget(tb, column=1)
 
     def _toggle_checkbox(self) -> None:
@@ -117,9 +117,9 @@ class ResultsFrame(Frame):
             c = Counter(section["content"])
 
             if section["name"] in [
-                MARKERS["pytest_fold_firstline"],
-                MARKERS["pytest_fold_failures"],
-                MARKERS["pytest_fold_lastline"],
+                MARKERS["pytest_fold_test_session_starts"],
+                MARKERS["pytest_fold_failures_section"],
+                MARKERS["pytest_fold_last_line"],
             ]:
                 # Unfolded layouts: first & last sections, and "--- FAILURES ---" banner
                 self.add_layout(

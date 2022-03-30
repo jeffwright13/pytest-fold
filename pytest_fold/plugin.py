@@ -1,81 +1,64 @@
-import pytest
-import tempfile
 import re
-from pathlib import Path
-from typing import Union
+import pickle
+import tempfile
+import pytest
 
-from _pytest.config import Config, _PluggyPlugin
-from _pytest.config.argparsing import Parser
-from _pytest.main import Session
+from _pytest.config import Config
 from _pytest._io.terminalwriter import TerminalWriter
-from pytest_fold.tuia import main as tui_asciimatics
-from pytest_fold.tuit import main as tui_textual
+from _pytest.reports import TestReport
+from pytest_fold.tui_pytermtk import main as tuitk
+from pytest_fold.tui_textual import main as tuitxt
 from pytest_fold.utils import (
-    failures_matcher,
-    errors_matcher,
-    failed_test_marker,
+    test_session_starts_matcher,
+    errors_section_matcher,
+    failures_section_matcher,
     warnings_summary_matcher,
-    summary_matcher,
+    passes_section_matcher,
+    short_test_summary_matcher,
     lastline_matcher,
-    OUTFILE,
     MARKERS,
+    REPORTFILE,
+    MARKEDTERMINALOUTPUTFILE,
+    UNMARKEDTERMINALOUTPUTFILE,
 )
+
 
 collect_ignore = [
     "setup.py",
     "plugin.py",
 ]
 
+reports = []
+
 
 def pytest_addoption(parser):
     group = parser.getgroup("fold")
     group.addoption(
-        "--fold", action="store_true", help="fold failed test output sections",
-    )
-    group.addoption(
-        "--fold-now",
-        "--fn",
+        "--fold",
         action="store_true",
-        default="False",
-        help="run TUI from existing results file, bypassing pytest execution",
+        help="fold failed test output sections",
     )
     group.addoption(
         "--fold-tui",
         "--ft",
         action="store",
-        default="asciimatics",
-        help="specify user interface ('asciimatics' 'a' | 'textual' 't')",
-        choices=['asciimatics', 'a', 'textual', 't']
+        default="pytermk",
+        help="specify user interface ('pytermtk' ' k' | 'asciimatics' 'a' | 'textual' 't')",
+        choices=["pytermtk", "k", "asciimatics", "a", "textual", "t"],
     )
 
 
-@pytest.hookimpl(hookwrapper=True)
-def pytest_sessionstart(session: Session) -> None:
-    if session.config.getoption("--fold-now") == True:
-        if Path(OUTFILE).exists():
-            pyfold_tui(session.config, session.config.getoption("--fold-tui"))
-            pytest.exit(msg="Quitting TUI")
-        else:
-            pytest.exit(msg="No previous results to display!")
-    yield
-
-
-# @pytest.hookimpl(hookwrapper=True)
-# def pytest_runtest_makereport(item, call):
-#     """
-#     Attach session info to report for later use in pytest_runtest_logreport
-#     https://stackoverflow.com/questions/54717786/access-pytest-session-or-arguments-in-pytest-runtest-logreport
-#     """
-#     out = yield
-#     report = out.get_result()
-#     report.session = item.session
+def pytest_report_teststatus(report: TestReport, config: Config):
+    """Construct list(s) of individial test report/report-info instances"""
+    reports.append(report)
 
 
 @pytest.hookimpl(trylast=True)
 def pytest_configure(config: Config) -> None:
     """
     Write console output to a file for use by TUI
-    (part 1; used in conjunction with pytest_unconfigure, below)
+    This code works by looking at every line sent by pytest to the terminal output,
+    and based on the line, marking (or not marking) it depending on its category
     """
     if config.option.fold:
         tr = config.pluginmanager.getplugin("terminalreporter")
@@ -86,45 +69,49 @@ def pytest_configure(config: Config) -> None:
             except AttributeError:
                 config._pyfoldfirsttime = True
 
-            config._pyfoldoutputfile = tempfile.TemporaryFile("wb+")
+            config._pyfold_unmarked_outputfile = tempfile.TemporaryFile("wb+")
+            config._pyfold_marked_outputfile = tempfile.TemporaryFile("wb+")
             oldwrite = tr._tw.write
 
-            # identify and mark each section of results
+            # identify and mark each results section
             def tee_write(s, **kwargs):
-                if config._pyfoldfirsttime:
-                    config._pyfoldoutputfile.write(
-                        (MARKERS["pytest_fold_firstline"] + "\n").encode("utf-8")
-                    )
-                    config._pyfoldfirsttime = False
-
-                if search := re.search(errors_matcher, s):
-                    config._pyfoldoutputfile.write(
-                        (MARKERS["pytest_fold_errors"] + "\n").encode("utf-8")
+                if re.search(test_session_starts_matcher, s):
+                    config._pyfold_marked_outputfile.write(
+                        (MARKERS["pytest_fold_test_session_starts"] + "\n").encode(
+                            "utf-8"
+                        )
                     )
 
-                if search := re.search(failures_matcher, s):
-                    config._pyfoldoutputfile.write(
-                        (MARKERS["pytest_fold_failures"] + "\n").encode("utf-8")
+                if re.search(errors_section_matcher, s):
+                    config._pyfold_marked_outputfile.write(
+                        (MARKERS["pytest_fold_errors_section"] + "\n").encode("utf-8")
                     )
 
-                if search := re.search(failed_test_marker, s):
-                    config._pyfoldoutputfile.write(
-                        (MARKERS["pytest_fold_failed_test"] + "\n").encode("utf-8")
+                if re.search(failures_section_matcher, s):
+                    config._pyfold_marked_outputfile.write(
+                        (MARKERS["pytest_fold_failures_section"] + "\n").encode("utf-8")
                     )
 
-                if search := re.search(warnings_summary_matcher, s):
-                    config._pyfoldoutputfile.write(
+                if re.search(warnings_summary_matcher, s):
+                    config._pyfold_marked_outputfile.write(
                         (MARKERS["pytest_fold_warnings_summary"] + "\n").encode("utf-8")
                     )
 
-                if search := re.search(summary_matcher, s):
-                    config._pyfoldoutputfile.write(
-                        (MARKERS["pytest_fold_terminal_summary"] + "\n").encode("utf-8")
+                if re.search(passes_section_matcher, s):
+                    config._pyfold_marked_outputfile.write(
+                        (MARKERS["pytest_fold_passes_section"] + "\n").encode("utf-8")
                     )
 
-                if search := re.search(lastline_matcher, s):
-                    config._pyfoldoutputfile.write(
-                        (MARKERS["pytest_fold_lastline"] + "\n").encode("utf-8")
+                if re.search(short_test_summary_matcher, s):
+                    config._pyfold_marked_outputfile.write(
+                        (MARKERS["pytest_fold_short_test_summary"] + "\n").encode(
+                            "utf-8"
+                        )
+                    )
+
+                if re.search(lastline_matcher, s):
+                    config._pyfold_marked_outputfile.write(
+                        (MARKERS["pytest_fold_last_line"] + "\n").encode("utf-8")
                     )
 
                 # Write this line's text along with its markup info to console
@@ -136,50 +123,77 @@ def pytest_configure(config: Config) -> None:
                 kwargs.pop("flush") if "flush" in kwargs.keys() else None
                 s1 = TerminalWriter().markup(s, **kwargs)
 
-                # Encode the marked up line so it can be written to the config pbject
+                # Encode the marked up line so it can be written to the config object
                 if isinstance(s1, str):
                     marked_up = s1.encode("utf-8")
-                config._pyfoldoutputfile.write(marked_up)
+                config._pyfold_marked_outputfile.write(marked_up)
 
+                # Write this line's original (unmarked) text to unmarked file
+                s_orig = s
+                kwargs.pop("flush") if "flush" in kwargs.keys() else None
+                s_orig = TerminalWriter().markup(s, **kwargs)
+                if isinstance(s_orig, str):
+                    unmarked_up = s_orig.encode("utf-8")
+                config._pyfold_unmarked_outputfile.write(unmarked_up)
+
+            # Write to both terminal/console and tempfiles:
+            # _pyfold_marked_outputfile, _pyfold_unmarked_outputfile
             tr._tw.write = tee_write
 
 
 def pytest_unconfigure(config: Config):
     """
-    Write console output to a file for use by TUI
-    (part 2; used in conjunction with pytest_configure, above)
+    Write terminal and test results info to files for use by TUI
     """
-    if hasattr(config, "_pyfoldoutputfile"):
+    # Write terminal output to file
+    if hasattr(config, "_pyfold_marked_outputfile"):
         # get terminal contents, then write file
-        config._pyfoldoutputfile.seek(0)
-        sessionlog = config._pyfoldoutputfile.read()
-        config._pyfoldoutputfile.close()
+        config._pyfold_marked_outputfile.seek(0)
+        markedsessionlog = config._pyfold_marked_outputfile.read()
+        config._pyfold_marked_outputfile.close()
 
-        # Undo our patching in the terminal reporter.
+    if hasattr(config, "_pyfold_unmarked_outputfile"):
+        # get terminal contents, then write file
+        config._pyfold_unmarked_outputfile.seek(0)
+        unmarkedsessionlog = config._pyfold_unmarked_outputfile.read()
+        config._pyfold_unmarked_outputfile.close()
+
+        # Undo our patching in the terminal reporter
         config.pluginmanager.getplugin("terminalreporter")
 
-        # write out to file
-        with open(OUTFILE, "wb") as outfile:
-            outfile.write(sessionlog)
+        # Write marked-up results to file
+        with open(MARKEDTERMINALOUTPUTFILE, "wb") as marked_file:
+            marked_file.write(markedsessionlog)
 
-        pyfold_tui(config, config.getoption("--fold-tui"))
+        # Write un-marked-up results to file
+        with open(UNMARKEDTERMINALOUTPUTFILE, "wb") as unmarked_file:
+            unmarked_file.write(unmarkedsessionlog)
+
+        # Write the reports list to file
+        with open(REPORTFILE, "wb") as report_file:
+            pickle.dump(reports, report_file)
+
+    # Launch the TUI
+    if config.getoption("--fold") == True:
+        pyfold_tui(config)
 
 
-def pyfold_tui(config: Config, tui: str = "asciimatics") -> None:
+def pyfold_tui(config: Config) -> None:
     """
     Final code invocation after Pytest run has completed.
     This method calls the Pyfold TUI to display final results.
     """
-
-    if config.getoption("--fold-now") == True:
-        tui_asciimatics() if tui.lower()[0] == "a" else tui_textual()
-        return
-
-    # disable capturing while TUI runs to avoid error `redirected stdin is pseudofile, has no fileno()`;
-    # adapted from https://githubmemory.com/repo/jsbueno/terminedia/issues/25
-    capmanager = config.pluginmanager.getplugin("capturemanager")
-    try:
-        capmanager.suspend_global_capture(in_=True)
-    finally:
-        tui_asciimatics() if tui.lower()[0] == "a" else tui_textual()
-        capmanager.resume_global_capture()
+    # disable capturing while TUI runs to avoid error `redirected stdin is pseudofile, has
+    # no fileno()`; adapted from https://githubmemory.com/repo/jsbueno/terminedia/issues/25
+    if config.getoption("--fold"):
+        capmanager = config.pluginmanager.getplugin("capturemanager")
+        try:
+            capmanager.suspend_global_capture(in_=True)
+        finally:
+            if config.getoption("--ft")[0] == "k":
+                tuitk()
+            elif config.getoption("--ft")[0] == "t":
+                tuitxt()
+            else:
+                print(f"Incorrect choice for fold-tui: {config.getoption('--ft')}")
+            capmanager.resume_global_capture()

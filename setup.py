@@ -3,7 +3,7 @@
 
 import os
 import codecs
-from setuptools import setup
+from setuptools import setup, find_packages
 
 
 def read(fname):
@@ -13,22 +13,24 @@ def read(fname):
 
 setup(
     name="pytest-fold",
-<<<<<<< Updated upstream
-    version="0.7.4",
-=======
-    version="0.7.2",
->>>>>>> Stashed changes
+    version="0.7.6",
     author="Jeff Wright",
     author_email="jeff.washcloth@gmail.com",
     license="MIT",
     url="https://github.com/jeffwright13/pytest-fold",
-    description="Fold console output and drop user into interactive text user interface",
+    description="Mark console output and drop user into interactive text user interface",
     long_description=read("README.md"),
     long_description_content_type="text/markdown",
-    packages=["pytest_fold"],
+    # packages=["pytest_fold"],
+    packages=find_packages(),
     py_modules=["pytest_fold"],
     python_requires=">=3.8",
-    install_requires=["pytest>=6.2.5", "asciimatics>=1.13.0", "textual>=0.1.15", "single-source>=0.2.0"],
+    install_requires=[
+        "pytest>=6.2.5",
+        "pytermgui>=4.1.0",
+        "single-source>=0.2.0",
+        "Faker>=13.0.0",
+    ],
     classifiers=[
         "Framework :: Pytest",
         "Development Status :: 4 - Beta",
@@ -40,6 +42,9 @@ setup(
         "Operating System :: OS Independent",
         "License :: OSI Approved :: MIT License",
     ],
-    keywords="pytest testing fold output logs fail asciimatics single-source",
-    entry_points={"pytest11": ["pytest_fold = pytest_fold.plugin"]},
+    keywords="pytest testing fold output logs fail pytermtk asciimatics textual single-source",
+    entry_points={
+        "pytest11": ["pytest_fold = pytest_fold.plugin"],
+        "console_scripts": ["tuitxt = pytest_fold.tui_textual:main", "tuitk = pytest_fold.tui_pytermtk:main"],
+    },
 )
