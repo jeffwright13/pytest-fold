@@ -2,24 +2,26 @@ from dataclasses import dataclass
 from typing import Callable
 from TermTk.TTkCore.constant import TTkK
 from os import get_terminal_size
-from pytest_fold.utils import Results
+from pytest_fold.utils import OUTCOMES, Results
 
 import platform
 import subprocess
 import sys
 import TermTk as ttk
 
+from time import sleep
+
 TERMINAL_SIZE = get_terminal_size()
 
 
-@dataclass
-class ResultHandler:
-    name: str = ""
-    tab_label: str = ""
-    section_name: str = ""
-    section_text: str = ""
-    result_list: set = ()
-    callback: set[Callable] = ()
+# @dataclass
+# class ResultHandler:
+#     name: str = ""
+#     tab_label: str = ""
+#     section_name: str = ""
+#     section_text: str = ""
+#     result_list: set = ()
+#     callback: set[Callable] = ()
 
 
 class TkTui:
@@ -29,17 +31,10 @@ class TkTui:
             "=", ""
         )
 
-        self.result_handlers = [
-            ResultHandler(name=result, tab_label=result)
-            for result in (
-                "Errors",
-                "Passes",
-                "Failures",
-                "Skipped",
-                "Xfails",
-                "Xpasses",
-            )
-        ]
+        # self.result_handlers = [
+        #     ResultHandler(name=result, tab_label=result)
+        #     for result in OUTCOMES
+        # ]
 
         # Create root TTk object
         self.root = ttk.TTk()
@@ -92,7 +87,7 @@ class TkTui:
             layout=ttk.TTkVBoxLayout(),
         )
 
-    def create_tabs(self) -> None:
+    def create_section_tabs(self) -> None:
         # Create tabs with results from individual sections
         self.tab_widget = ttk.TTkTabWidget(
             parent=self.main_frame, border=False, height=4
@@ -147,22 +142,37 @@ class TkTui:
         text_areas[tab_label] = text_area
         self.tab_widget.addTab(text_area, f" {tab_label} ")
 
-    @ttk.pyTTkSlot(str)
-    def callback(label):
-        pass
+    def create_log_tab(self) -> None:
+        # Create tab with TTkLog widget to log clicks from test tabs
+        tab_label = "Click Log"
+        log_viewer = ttk.TTkLogViewer()
+        self.tab_widget.addTab(log_viewer, f" {tab_label} ")
 
-    def create_result_lists(self) -> None:
-        for result in ("Errors", "Passes", "Failures", "Skipped", "Xfails", "Xpasses"):
+    def create_test_result_tabs(self) -> None:
+        # Create tabs with results from individual sections
+        @ttk.pyTTkSlot(str)
+        def callback1(test_name: str) -> None:
+            ttk.TTkLog.info(f"Clicked test: {test_name}")
+            result = self.test_results.tests_all[test_name]
+            ttk.TTkLog.info(result)
+
+        @ttk.pyTTkSlot(ttk.TTkWidget)
+        def callback2(item: ttk.TTkWidget) -> None:
+            item._visible = False
+            sleep(3)
+            item._visible = True
+
+
+        for outcome in OUTCOMES:
+            tab_label = outcome
             results_list = ttk.TTkList(
-                parent=self.tab_widget,
-                # maxWidth=40,
-                # minWidth=10,
                 selectionMode=ttk.TTkK.MultiSelection,
             )
-            for key in eval(f"self.test_results.{result.lower()}.keys()"):
-                results_list.addItem(key)
-            self.tab_widget.addTab(results_list, f" {result} ")
-            # self.result_handlers[result].callback   result.textClicked.connect(self.callback(result))
+            for result in eval(f"self.test_results.tests_{outcome.lower()}"):
+                results_list.addItem(result)
+                results_list.textClicked.connect(callback1)
+                results_list.itemClicked.connect(callback2)
+            self.tab_widget.addTab(results_list, f" {tab_label} ")
 
 
 def main():
@@ -171,9 +181,9 @@ def main():
     tui.create_top_frame()
     tui.create_quit_button()
     tui.create_main_frame()
-
-    tui.create_tabs()
-    tui.create_result_lists()
+    tui.create_section_tabs()
+    tui.create_log_tab()
+    tui.create_test_result_tabs()
 
     tui.root.mainloop()
 
