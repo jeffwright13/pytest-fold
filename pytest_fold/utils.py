@@ -39,6 +39,16 @@ MARKERS = {
 }
 
 
+OUTCOMES = (
+    "Errors",
+    "Passes",
+    "Failures",
+    "Skipped",
+    "Xfails",
+    "Xpasses",
+)
+
+
 @dataclass
 class SectionInfo:
     """Info relevant to each Pytest output section"""
@@ -47,6 +57,7 @@ class SectionInfo:
     label: str = ""
     matcher: Match = None
     content: str = r""
+    outcome: str = ""
 
 
 @dataclass
@@ -64,6 +75,9 @@ class TestInfo:
 
 
 class Results:
+    """
+    This class holds all pertinent information for a given Pytest test run.
+    """
     def __init__(self):
         self.Sections = self._init_sections()
         self.unmarked_output = self._get_unmarked_output()
@@ -72,12 +86,20 @@ class Results:
 
         self._categorize_tests()
 
-        self.errors = self._get_result_by_outcome("ERROR")
-        self.failures = self._get_result_by_outcome("FAILED")
-        self.passes = self._get_result_by_outcome("PASSED")
-        self.xfails = self._get_result_by_outcome("XFAIL")
-        self.skipped = self._get_result_by_outcome("SKIPPED")
-        self.xpasses = self._get_result_by_outcome("XPASS")
+        self.tests_errors = self._get_result_by_outcome("ERROR")
+        self.tests_passes = self._get_result_by_outcome("PASSED")
+        self.tests_failures = self._get_result_by_outcome("FAILED")
+        self.tests_skipped = self._get_result_by_outcome("SKIPPED")
+        self.tests_xfails = self._get_result_by_outcome("XFAIL")
+        self.tests_xpasses = self._get_result_by_outcome("XPASS")
+
+        self.tests_all = {}
+        self.tests_all.update(self.tests_errors)
+        self.tests_all.update(self.tests_passes)
+        self.tests_all.update(self.tests_failures)
+        self.tests_all.update(self.tests_skipped)
+        self.tests_all.update(self.tests_xfails)
+        self.tests_all.update(self.tests_xpasses)
 
     def _init_sections(self):
         return {
@@ -87,7 +109,10 @@ class Results:
                 matcher=test_session_starts_matcher,
             ),
             "ERRORS_SECTION": SectionInfo(
-                name="ERRORS_SECTION", label="Errors", matcher=errors_section_matcher
+                name="ERRORS_SECTION",
+                label="Errors",
+                matcher=errors_section_matcher,
+                outcome="",
             ),
             "FAILURES_SECTION": SectionInfo(
                 name="FAILURES_SECTION",
