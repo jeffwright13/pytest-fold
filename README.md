@@ -12,12 +12,13 @@ https://user-images.githubusercontent.com/4308435/159505704-75683248-4734-4db9-9
 
 
 ## Introduction
-Do you run long Pytest campaigns and get lots of failures? And then spend the next 15 minutes scrolling back in your console to find the one traceback that you're interested in drilling down into? Well, maybe `pytest-fold` can help. `pytest-fold` is a simple plugin that captures the output from your test runs, and redirects it into an interactive Text User Interface (TUI), where all your failed tests are "folded up" by default, showing only their titles and their status. Simply click on any test title to open it up and show its traceback information.
+Do you run long Pytest campaigns and get lots of failures? And then spend the next 10 minutes scrolling back in your console to find the one traceback that you're interested in drilling down into? Well, maybe `pytest-fold` can help. `pytest-fold` is a plugin that captures the output from your Pytest test runs, then automatically launches an interactive Text User Interface (TUI) where all your test results are categorized by (a) outcome [Pass|Fail|Error|Skipped|Xpass|Xfail], and (b) output section [Summary|Full|Errors|Passes|Failures|Warnings]. The intent it to make it easier for you to find the specific result you want so you can examine it without all the other results to get in your way.
 
 ## Features
+- Choice of two TUIs: Textual and PyTermTk
+- Ability to immediately launch TUIs with existing data using console scripts
 - ANSI text markup support - whatever the output on your console looks like is how things are going to show up in the TUI
-- Mouse and keyboard support (including scrolling in the Textual TUI)
-- Support for FAILURES & ERRORS sections, as well as initial "test session starts", 'warnings summary', 'short test summary info' sections
+- Mouse and keyboard support (including scrolling)
 - Support for all output formats/modes:
   - `-v`, `-vv`, `-no-header`, `--showlocals`, `--color=<yes|no|auto>`
   - all variants of `--tb` except "native"
@@ -39,26 +40,28 @@ Do you run long Pytest campaigns and get lots of failures? And then spend the ne
 
 From top-level directory:
 
-* `pytest --fold [--fold-tui asciimatics|textual] <other-pytest-options>`
+* `pytest --fold [--fold-tui textual|pytermtk] <other-pytest-options>`
 
-To quit the Ascimatics TUI, either click the Quit button, or press `Ctrl-X`. To quit the Textual TUI, either click the Quit button, or press `Q`.
+To quit the Textual TUI, either click the Quit button, or press `Q`. To quit the PyTermTk TUI, click the Quit button in the upper right.
 
-If you have already exited the TUI and would like to re-enter it with the same data generated from the last Pytest run, type:
+If you have already exited the TUI and would like to re-enter it with the same data generated from the last Pytest run, simply type:
 
-* `pytest --fold-now -s [--fold-tui asciimatics|textual]`
+* `termtxt` (to launch Textual)
+* `termtk` (to launch PyTermTk)
 
 ## Known Limitations / Issues
-- `pytest-fold` does not display passed tests (that's not really the use case).
-- Rudimentary user interfaces; both need a lot of love.
-- Not fully tested with all combinations of output formats. Probably some use-cases where things won't work right.
-- ERROR output sections are treated just like FAILURES sections. It is assumed that the tester will want to see full text output from pytest when their tests cause an error to be asserted.
+- Rudimentary user interfaces that need a lot of love:
+  - Textual interface shows incomplete information (will be fixed very soon); can be slow, esp. if run within an IDE
+  - PyTermTk interface does not yet show expanded individual test results (second on my list to fix, but will require writing some custom widget code)
+  - There is an Asciimatics interface as well, but it lacks mouse support on Mac, which is a dealbreaker for me (may not ever fix)
+- Not fully tested with all combinations of output formats. Probably some use-cases where things won't work 100% right.
 - `pytest-fold` does not mark stderr or stdout sections for folding. It is assumed that the tester is interested in seeing such output.
 - `pytest-fold` is currently incompatible with `--tb=native` and will cause an INTERNALERROR if run together. (TODO: Fix this.)
 - `pytest-fold` may crash in the Asciimatics TUI if the console is resized.
 
 ## Contributing
-Contributions are very welcome.
-Please run pyflakes and black on your code before submitting a PR (at some point I will implement [pre-commit](https://pypi.org/project/pre-commit/) in this project).
+Contributions are very welcome. If you are slick with user interfaces, I would love some help there.
+Please run pyflakes and black on any code before submitting a PR.
 
 ## License
 Distributed under the terms of the `MIT`_ license, "pytest-fold" is free and open source software.
