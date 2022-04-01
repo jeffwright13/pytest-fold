@@ -56,9 +56,9 @@ class FoldApp(App):
         # Populate footer with quit and toggle info
         await self.bind("u", "toggle_tree('unmarked')", "Toggle Unmarked  ⁞")
         await self.bind("1", "toggle_tree('summary')", "Toggle Summary  ⁞")
+        await self.bind("e", "toggle_tree('error_tree')", "Toggle Error  ⁞")
         await self.bind("f", "toggle_tree('fail_tree')", "Toggle Fail  ⁞")
         await self.bind("p", "toggle_tree('pass_tree')", "Toggle Pass  ⁞")
-        await self.bind("e", "toggle_tree('error_tree')", "Toggle Error  ⁞")
         await self.bind("f", "toggle_tree('skip_tree')", "Toggle Skipped  ⁞")
         await self.bind("p", "toggle_tree('xpass_tree')", "Toggle Xpass  ⁞")
         await self.bind("e", "toggle_tree('xfail_tree')", "Toggle Xfail  ⁞")
@@ -87,16 +87,6 @@ class FoldApp(App):
         await self.view.dock(footer, edge="bottom")
 
         # Stylize the results-tree section headers
-        self.unmarked = TreeControl(
-            Text("Full Output", style="dark_slate_gray2 underline"),
-            {"results": self.test_results.unmarked_output},
-            name="unmarked",
-        )
-        self.summary = TreeControl(
-            Text("Summary", style="bold white underline"),
-            {"results": self.test_results.Sections['TEST_SESSION_STARTS'].content},
-            name="summary",
-        )
         self.fail_tree = TreeControl(
             Text("Failures:", style="bold red underline"), {}, name="fail_tree"
         )
@@ -115,6 +105,16 @@ class FoldApp(App):
         self.xfail_tree = TreeControl(
             Text("Xfails:", style="bold magenta underline"), {}, name="xfail_tree"
         )
+        self.unmarked = TreeControl(
+            Text("Full Output", style="dark_slate_gray2 underline"),
+            {"results": self.test_results.unmarked_output},
+            name="unmarked",
+        )
+        self.summary = TreeControl(
+            Text("Summary", style="bold white underline"),
+            {"results": self.test_results.Sections["TEST_SESSION_STARTS"].content},
+            name="summary",
+        )
 
         for failed in self.test_results.tests_failures:
             await self.fail_tree.add(
@@ -122,17 +122,17 @@ class FoldApp(App):
                 Text(failed),
                 {"results": self.test_results.tests_failures},
             )
-        for errored in self.test_results.tests_errors:
-            await self.error_tree.add(
-                self.error_tree.root.id,
-                Text(errored),
-                {"results": self.test_results.tests_errors},
-            )
         for passed in self.test_results.tests_passes:
             await self.pass_tree.add(
                 self.pass_tree.root.id,
                 Text(passed),
                 {"results": self.test_results.tests_passes},
+            )
+        for errored in self.test_results.tests_errors:
+            await self.error_tree.add(
+                self.error_tree.root.id,
+                Text(errored),
+                {"results": self.test_results.tests_errors},
             )
         for skipped in self.test_results.tests_skipped:
             await self.skip_tree.add(
@@ -153,24 +153,16 @@ class FoldApp(App):
                 {"results": self.test_results.tests_xfails},
             )
 
-        await self.unmarked.root.expand()
-        await self.summary.root.expand()
         await self.fail_tree.root.expand()
         await self.pass_tree.root.expand()
         await self.error_tree.root.expand()
         await self.skip_tree.root.expand()
         await self.xpass_tree.root.expand()
         await self.xfail_tree.root.expand()
+        await self.unmarked.root.expand()
+        await self.summary.root.expand()
 
         # Create and dock the results tree
-        await self.view.dock(
-            ScrollView(self.unmarked),
-            edge="top",
-            size=len(self.unmarked.nodes) + 2,
-            # edge="left",
-            # size = 25,
-            name="unmarked",
-        )
         await self.view.dock(
             ScrollView(self.summary),
             edge="top",
@@ -227,6 +219,14 @@ class FoldApp(App):
             # size = 25,
             name="xpass_tree",
         )
+        await self.view.dock(
+            ScrollView(self.unmarked),
+            edge="top",
+            size=len(self.unmarked.nodes) + 2,
+            # edge="left",
+            # size = 25,
+            name="unmarked",
+        )
 
         self.dockview = DockView()
         self.gridview = GridView()
@@ -243,7 +243,14 @@ class FoldApp(App):
 
         # Click the category headers to toggle on/off (future;
         # right now, just ignore those clicks)
-        if label in ("Failures:", "Passes:", "Errors:", "Skipped:", "Xpasses:", "Xfails:"):
+        if label in (
+            "Failures:",
+            "Passes:",
+            "Errors:",
+            "Skipped:",
+            "Xpasses:",
+            "Xfails:",
+        ):
             return
 
         # Display results when test name is clicked

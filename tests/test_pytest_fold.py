@@ -43,6 +43,10 @@ def test_f_xpass():
     pass
 
 
+@pytest.mark.parametrize("test_input, expected", [("3+5", 8), ("2+4", 6), ("6*9", 42)])
+def test_g_eval_parameterized(test_input, expected):
+    assert eval(test_input) == expected
+
 @pytest.fixture
 def log_testname():
     logger.info(f"Running test {__name__}...")

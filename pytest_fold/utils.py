@@ -20,13 +20,12 @@ short_test_summary_matcher = re.compile(r"^==.*\sshort test summary info\s.*==+"
 lastline_matcher = re.compile(r"^==.*in\s\d+.\d+s.*=+")
 section_name_matcher = re.compile(r"~~>PYTEST_FOLD_(\w+)")
 test_title_matcher = re.compile(r"__.*\s(.*)\s__+")
-test_outcome_matcher = re.compile(
-    r".*?::(.*?)\s(PASSED|FAILED|ERROR|SKIPPED|XFAIL|XPASS)\s.*?\[\s?.*?\]",
-    re.MULTILINE | re.DOTALL,
+standard_test_matcher = re.compile(
+    r".*\::(\S+)\s(PASSED|FAILED|ERROR|SKIPPED|XFAIL|XPASS)"
 )
-live_log_line_matcher = re.compile(r"--+\s(live log)(\s).*--+")
-test_session_starts_section_extra_space_matcher = re.compile(
-    r".*::(.*)\s(PASSED|FAILED|ERROR|SKIPPED|XFAIL|XPASS)\s+.\[\s*.*\]"
+live_log_testname_matcher = re.compile(r".*::(\S+)", re.MULTILINE)
+live_log_outcome_matcher = re.compile(
+    r"^(PASSED|FAILED|ERROR|SKIPPED|XFAIL|XPASS)\W.+(\[\W?.*?\])", re.MULTILINE
 )
 
 MARKERS = {
@@ -79,6 +78,7 @@ class Results:
     """
     This class holds all pertinent information for a given Pytest test run.
     """
+
     def __init__(self):
         self.Sections = self._init_sections()
         self.unmarked_output = self._get_unmarked_output()
@@ -145,15 +145,52 @@ class Results:
                 test_result.category = result
 
     def _categorize_tests(self) -> None:
-        cleaned_out = r""
+        """
+        Extract test title and outcome from each line.
+
+        Line formats are different depending on setting of Pytest config option 'log_cli'.
+        Hence the two regex matcher flavors (standard / live_log), and the two
+        sections of per-line regex analysys. (Creating a single regex that captures both
+        formats reliably was very difficult, hence I worked around with with some per-line
+        logic.
+        """
+        hits = []
+        look_for_live_log_testname = look_for_live_log_outcome = False
+
         for line in self.Sections["TEST_SESSION_STARTS"].content.split("\n"):
-            cleaned = re.sub(live_log_line_matcher, "", strip_ansi(line))
-            cleaned_out += cleaned
-            possible_match = re.search(test_outcome_matcher, cleaned)
-            if possible_match:
-                title = possible_match.groups()[0]
-                outcome = possible_match.groups()[1]
+            stripped_line = strip_ansi(line).rstrip()
+
+            # Start out by looking for non-live-log results
+            standard_match = re.search(standard_test_matcher, stripped_line)
+            if standard_match:
+                title = standard_match.groups()[0]
+                outcome = standard_match.groups()[1]
+                if title and outcome:
+                    self._update_test_result_by_testname(title, outcome)
+                    hits.append((title, outcome))
+                    look_for_live_log_testname = True
+                    title = outcome = None
+                continue
+
+            # If the line doesn't match non-live-log format, look for live-log matches
+            live_log_testname_match = re.search(
+                live_log_testname_matcher, stripped_line
+            )
+            if look_for_live_log_testname and live_log_testname_match:
+                title = live_log_testname_match.groups()[0].strip()
+                look_for_live_log_testname = False
+                look_for_live_log_outcome = True
+                continue
+
+            live_log_outcome_match = re.search(live_log_outcome_matcher, stripped_line)
+            if look_for_live_log_outcome and live_log_outcome_match:
+                outcome = live_log_outcome_match.groups()[0].strip()
+                look_for_live_log_outcome = False
+                look_for_live_log_testname = False
                 self._update_test_result_by_testname(title, outcome)
+                hits.append((title, outcome))
+                title = outcome = None
+
         print("")
 
     def _get_result_by_outcome(self, outcome: str) -> None:

@@ -162,7 +162,6 @@ class TkTui:
             sleep(3)
             item._visible = True
 
-
         for outcome in OUTCOMES:
             tab_label = outcome
             results_list = ttk.TTkList(
