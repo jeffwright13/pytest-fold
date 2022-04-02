@@ -190,9 +190,9 @@ def pyfold_tui(config: Config) -> None:
         try:
             capmanager.suspend_global_capture(in_=True)
         finally:
-            if config.getoption("--ft")[0] == "k":
+            if config.getoption("--ft") in ["k", "pytermtk"]:
                 tuitk()
-            elif config.getoption("--ft")[0] == "t":
+            elif config.getoption("--ft") in ["t", "textual"]:
                 tuitxt()
             else:
                 print(f"Incorrect choice for fold-tui: {config.getoption('--ft')}")

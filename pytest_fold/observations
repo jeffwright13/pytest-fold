@@ -3,7 +3,7 @@
 - The actual test outcome is shown during the 'call' phase:
   - for 'passed' tests, all three phases show outcome = 'passed'
   - for 'failed' tests, only the 'call' phase shows outcome = 'failed'; 'setup' and 'teardown' show 'passed'
-  - for 'failed' tests, the traceback info is located in the "longreprtext" field
+  - for 'failed' tests, the traceback info is located in the "longreprtext" field (but stripped of ANSI codes)
 - Some tests only have two phases:
   - for 'skipped' tests, only 'setup' and 'teardown' exist IF they were marked as skip with the `pytest.mark.skip` decorator
   - for 'skipped' tests, all three phases exist IF they were forced to skip with the `pytest.skip` statement inside the test

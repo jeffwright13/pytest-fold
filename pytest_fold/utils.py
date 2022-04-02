@@ -18,8 +18,9 @@ warnings_summary_matcher = re.compile(r"^==.*\swarnings summary\s.*==+")
 passes_section_matcher = re.compile(r"^==.*\sPASSES\s==+")
 short_test_summary_matcher = re.compile(r"^==.*\sshort test summary info\s.*==+")
 lastline_matcher = re.compile(r"^==.*in\s\d+.\d+s.*=+")
+ansi_test_name_matcher = re.compile(r"\x1b\[[0-9;]+m__+\W(\S+)\W__+\x1b\[[0-9;]+m")
 section_name_matcher = re.compile(r"~~>PYTEST_FOLD_(\w+)")
-test_title_matcher = re.compile(r"__.*\s(.*)\s__+")
+test_title_matcher = re.compile(r"__+\W(.*test.*)\W__+")
 standard_test_matcher = re.compile(
     r".*\::(\S+)\s(PASSED|FAILED|ERROR|SKIPPED|XFAIL|XPASS)"
 )
@@ -277,13 +278,6 @@ class MarkedSections:
             )
         else:
             raise NameError(f"Cannot retrieve section by name: '{name}'")
-
-    def get_test_text_from_section(self, name: str, section_name: str) -> str:
-        # sourcery skip: use-next
-        for section in self._sections:
-            if section.name == section_name and name == section["test_title"]:
-                return section.content
-        return ""
 
     def _get_marked_lines(
         self, marked_file_path: Path = MARKEDTERMINALOUTPUTFILE
