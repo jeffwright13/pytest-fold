@@ -80,14 +80,16 @@ class Results:
     """
 
     def __init__(self):
+        self.reports = []
+
         self.Sections = self._init_sections()
         self.unmarked_output = self._get_unmarked_output()
         self.marked_output = MarkedSections(self.Sections)
         self.test_results = self._get_test_results()
 
+        # This code presents categorized test results
         self._categorize_tests()
 
-        # This code presents categorized test results
         self.tests_errors = self._get_result_by_outcome("ERROR")
         self.tests_passes = self._get_result_by_outcome("PASSED")
         self.tests_failures = self._get_result_by_outcome("FAILED")
@@ -104,6 +106,8 @@ class Results:
         self.tests_all.update(self.tests_xpasses)
 
     def _init_sections(self):
+        """
+        Initialize SectionInfo dataclass instances"""
         return {
             "TEST_SESSION_STARTS": SectionInfo(
                 name="TEST_SESSION_STARTS",
@@ -139,6 +143,41 @@ class Results:
             ),
         }
 
+    def _get_unmarked_output(
+        self, unmarked_file_path: Path = UNMARKEDTERMINALOUTPUTFILE
+    ) -> list:
+        """Get full Pytest terminal output"""
+        with open(UNMARKEDTERMINALOUTPUTFILE, "r") as umfile:
+            return umfile.read()
+
+    def _get_test_results(self):
+        """Process TestReport objects from Pytest output, then remove duplicates"""
+        processed_reports = self._process_reports()
+        return list({item.title: item for item in processed_reports}.values())
+
+    def _process_reports(self):
+        """Extract individual test results from full list of Pytest's TestReport instances"""
+        test_infos = []
+        for report in self._unpickle():
+            test_info = TestInfo()
+            self.reports.append(report)
+
+            # populate the TestInfo instance with pertinent data from report
+            test_info.outcome = report.outcome
+            test_info.caplog = report.caplog
+            test_info.capstderr = report.capstderr
+            test_info.capstdout = report.capstdout
+            test_info.title = report.head_line
+            test_info.keywords = set(report.keywords)
+
+            # get ANSI-coded text from marked sections
+            if test_info.outcome == "failed" and report.when == "call":
+                test_info.text = report.longreprtext
+                print("")
+
+            test_infos.append(test_info)
+        return test_infos
+
     def _update_test_result_by_testname(self, title: str, result: str) -> None:
         for test_result in self.test_results:
             if title == test_result.title:
@@ -154,7 +193,6 @@ class Results:
         formats reliably was very difficult, hence I worked around with with some per-line
         logic.
         """
-        hits = []
         look_for_live_log_outcome = False
 
         for line in self.Sections["TEST_SESSION_STARTS"].content.split("\n"):
@@ -167,7 +205,6 @@ class Results:
                 outcome = standard_match.groups()[1]
                 if title and outcome:
                     self._update_test_result_by_testname(title, outcome)
-                    hits.append((title, outcome))
                     title = outcome = None
                 continue
 
@@ -186,10 +223,8 @@ class Results:
                 outcome = live_log_outcome_match.groups()[0].strip()
                 look_for_live_log_outcome = False
                 self._update_test_result_by_testname(title, outcome)
-                hits.append((title, outcome))
                 title = outcome = None
 
-        print("")
 
     def _get_result_by_outcome(self, outcome: str) -> None:
         # dict of {testname: log+stderr+stdout) for each test, per-outcome
@@ -197,59 +232,15 @@ class Results:
             test_result.title: test_result.caplog
             + test_result.capstderr
             + test_result.capstdout
+            + test_result.text
             for test_result in self.test_results
             if test_result.category == outcome
         }
-
-    def _get_unmarked_output(
-        self, unmarked_file_path: Path = UNMARKEDTERMINALOUTPUTFILE
-    ) -> list:
-        with open(UNMARKEDTERMINALOUTPUTFILE, "r") as umfile:
-            return umfile.read()
 
     def _unpickle(self):
         """Unpack pickled Pytest TestReport objects from file"""
         with open(REPORTFILE, "rb") as rfile:
             return pickle.load(rfile)
-
-    def _get_test_results(self):
-        """Process TestReports from Pytest output and then remove duplicates"""
-        processed_reports = self._process_reports()
-        return list({item.title: item for item in processed_reports}.values())
-
-    def _process_reports(self):
-        """Extract individual test results from the pytest marked output"""
-        test_infos = []
-        for report in self._unpickle():
-            test_info = TestInfo()
-
-            # populate the TestInfo instance with pertinent data from report
-            test_info.outcome = report.outcome
-            test_info.caplog = report.caplog
-            test_info.capstderr = report.capstderr
-            test_info.capstdout = report.capstdout
-            test_info.title = report.head_line
-            test_info.keywords = set(report.keywords)
-
-            # # get ANSI-coded text from marked sections
-            # if test_info.category in ("failed", "passed"):
-            #     try:
-            #         test_info.text = self._marked_output.get_test_text_from_section(
-            #             test_info.title, "FAILED_TEST"
-            #         )
-            #     except:
-            #         try:
-            #             test_info.text = report.longreprtext
-            #         except:
-            #             test_info.text == ""
-            # else:
-            #     test_info.text == ""
-
-            test_infos.append(test_info)
-        return test_infos
-
-    def get_results(self) -> list:
-        return self.test_results
 
 
 class MarkedSections:
@@ -302,7 +293,7 @@ class MarkedSections:
             return mfile.readlines()
 
     def _line_is_a_marker(self, line: str) -> bool:
-        """Determine if the current line is a marker or part of Pytest output"""
+        """Determine if the current line is a marker, or part of Pytest output"""
         return (
             line.strip()
             in (

@@ -59,9 +59,9 @@ class FoldApp(App):
         await self.bind("e", "toggle_tree('error_tree')", "Toggle Error  ⁞")
         await self.bind("f", "toggle_tree('fail_tree')", "Toggle Fail  ⁞")
         await self.bind("p", "toggle_tree('pass_tree')", "Toggle Pass  ⁞")
-        await self.bind("f", "toggle_tree('skip_tree')", "Toggle Skipped  ⁞")
-        await self.bind("p", "toggle_tree('xpass_tree')", "Toggle Xpass  ⁞")
-        await self.bind("e", "toggle_tree('xfail_tree')", "Toggle Xfail  ⁞")
+        await self.bind("s", "toggle_tree('skip_tree')", "Toggle Skipped  ⁞")
+        await self.bind("y", "toggle_tree('xpass_tree')", "Toggle Xpass  ⁞")
+        await self.bind("z", "toggle_tree('xfail_tree')", "Toggle Xfail  ⁞")
         await self.bind(
             "a",
             "toggle_tree(['unmarked', 'summary', 'error_tree', 'pass_tree', 'fail_tree', 'skip_tree', 'xpass_tree', 'xfail_tree'])",
@@ -76,6 +76,7 @@ class FoldApp(App):
         )
         self.unmarked_output = self.test_results.unmarked_output
         self.marked_output = self.test_results.marked_output
+        print("")
 
     async def on_mount(self) -> None:
         # Create and dock header and footer widgets
@@ -88,7 +89,7 @@ class FoldApp(App):
 
         # Stylize the results-tree section headers
         self.fail_tree = TreeControl(
-            Text("Failures:", style="bold red underline"), {}, name="fail_tree"
+            Text("Failures:", style="bold red underline"), {"results": self.test_results.Sections["FAILURES_SECTION"].content}, name="fail_tree"
         )
         self.pass_tree = TreeControl(
             Text("Passes:", style="bold green underline"), {}, name="pass_tree"
@@ -167,64 +168,48 @@ class FoldApp(App):
             ScrollView(self.summary),
             edge="top",
             size=len(self.summary.nodes) + 2,
-            # edge="left",
-            # size = 25,
             name="summary",
         )
         await self.view.dock(
             ScrollView(self.pass_tree),
             edge="top",
             size=len(self.pass_tree.nodes) + 2,
-            # edge="left",
-            # size = 25,
             name="pass_tree",
         )
         await self.view.dock(
             ScrollView(self.fail_tree),
             edge="top",
             size=len(self.fail_tree.nodes) + 2,
-            # edge="left",
-            # size = 25,
             name="fail_tree",
         )
         await self.view.dock(
             ScrollView(self.error_tree),
             edge="top",
             size=len(self.error_tree.nodes) + 2,
-            # edge="left",
-            # size = 25,
             name="error_tree",
         )
         await self.view.dock(
             ScrollView(self.skip_tree),
             edge="top",
             size=len(self.skip_tree.nodes) + 2,
-            # edge="left",
-            # size = 25,
             name="skip_tree",
         )
         await self.view.dock(
             ScrollView(self.xfail_tree),
             edge="top",
             size=len(self.xfail_tree.nodes) + 2,
-            # edge="left",
-            # size = 25,
             name="xfail_tree",
         )
         await self.view.dock(
             ScrollView(self.xpass_tree),
             edge="top",
             size=len(self.xpass_tree.nodes) + 2,
-            # edge="left",
-            # size = 25,
             name="xpass_tree",
         )
         await self.view.dock(
             ScrollView(self.unmarked),
             edge="top",
             size=len(self.unmarked.nodes) + 2,
-            # edge="left",
-            # size = 25,
             name="unmarked",
         )
 
@@ -258,6 +243,7 @@ class FoldApp(App):
             self.text = message.node.data.get("results")
         else:
             self.text = message.node.data.get("results")[label]
+            print("")
 
         text: RenderableType
         text = Text.from_ansi(self.text)
