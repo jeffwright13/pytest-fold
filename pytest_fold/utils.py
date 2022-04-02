@@ -155,7 +155,7 @@ class Results:
         logic.
         """
         hits = []
-        look_for_live_log_testname = look_for_live_log_outcome = False
+        look_for_live_log_outcome = False
 
         for line in self.Sections["TEST_SESSION_STARTS"].content.split("\n"):
             stripped_line = strip_ansi(line).rstrip()
@@ -168,17 +168,16 @@ class Results:
                 if title and outcome:
                     self._update_test_result_by_testname(title, outcome)
                     hits.append((title, outcome))
-                    look_for_live_log_testname = True
                     title = outcome = None
                 continue
 
-            # If the line doesn't match non-live-log format, look for live-log matches
+            # If the line doesn't match non-live-log format, look for live-log matches;
+            # outcomes and testnames in separate searches
             live_log_testname_match = re.search(
                 live_log_testname_matcher, stripped_line
             )
-            if look_for_live_log_testname and live_log_testname_match:
+            if live_log_testname_match:
                 title = live_log_testname_match.groups()[0].strip()
-                look_for_live_log_testname = False
                 look_for_live_log_outcome = True
                 continue
 
@@ -186,7 +185,6 @@ class Results:
             if look_for_live_log_outcome and live_log_outcome_match:
                 outcome = live_log_outcome_match.groups()[0].strip()
                 look_for_live_log_outcome = False
-                look_for_live_log_testname = False
                 self._update_test_result_by_testname(title, outcome)
                 hits.append((title, outcome))
                 title = outcome = None
