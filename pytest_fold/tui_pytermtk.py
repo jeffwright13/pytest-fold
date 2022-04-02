@@ -114,19 +114,19 @@ class TkTui:
         text_area.setText(text)
         self.tab_widget.addTab(text_area, f" {tab_label}")
 
-        text = self.test_results.Sections["PASSES_SECTION"].content
-        tab_label = "Passes Section"
-        text_area = ttk.TTkTextEdit(parent=self.tab_widget)
-        text_area.setText(text)
-        text_areas[tab_label] = text_area
-        self.tab_widget.addTab(text_area, f" {tab_label}")
+        # text = self.test_results.Sections["PASSES_SECTION"].content
+        # tab_label = "Passes Section"
+        # text_area = ttk.TTkTextEdit(parent=self.tab_widget)
+        # text_area.setText(text)
+        # text_areas[tab_label] = text_area
+        # self.tab_widget.addTab(text_area, f" {tab_label}")
 
-        text = self.test_results.Sections["FAILURES_SECTION"].content
-        tab_label = "Failures Section"
-        text_area = ttk.TTkTextEdit(parent=self.tab_widget)
-        text_area.setText(text)
-        text_areas[tab_label] = text_area
-        self.tab_widget.addTab(text_area, f" {tab_label}")
+        # text = self.test_results.Sections["FAILURES_SECTION"].content
+        # tab_label = "Failures Section"
+        # text_area = ttk.TTkTextEdit(parent=self.tab_widget)
+        # text_area.setText(text)
+        # text_areas[tab_label] = text_area
+        # self.tab_widget.addTab(text_area, f" {tab_label}")
 
         text = self.test_results.Sections["ERRORS_SECTION"].content
         tab_label = "Errors Section"
