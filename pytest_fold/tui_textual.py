@@ -89,7 +89,9 @@ class FoldApp(App):
 
         # Stylize the results-tree section headers
         self.fail_tree = TreeControl(
-            Text("Failures:", style="bold red underline"), {"results": self.test_results.Sections["FAILURES_SECTION"].content}, name="fail_tree"
+            Text("Failures:", style="bold red underline"),
+            {"results": self.test_results.Sections["FAILURES_SECTION"].content},
+            name="fail_tree",
         )
         self.pass_tree = TreeControl(
             Text("Passes:", style="bold green underline"), {}, name="pass_tree"

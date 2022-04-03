@@ -1,6 +1,3 @@
-from dataclasses import dataclass
-from typing import Callable
-from TermTk.TTkCore.constant import TTkK
 from os import get_terminal_size
 from pytest_fold.utils import OUTCOMES, Results
 

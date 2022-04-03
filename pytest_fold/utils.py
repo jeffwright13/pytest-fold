@@ -19,6 +19,8 @@ passes_section_matcher = re.compile(r"^==.*\sPASSES\s==+")
 short_test_summary_matcher = re.compile(r"^==.*\sshort test summary info\s.*==+")
 lastline_matcher = re.compile(r"^==.*in\s\d+.\d+s.*=+")
 ansi_test_name_matcher = re.compile(r"\x1b\[[0-9;]+m__+\W(\S+)\W__+\x1b\[[0-9;]+m")
+ansi_failed_test_name_matcher = re.compile(r"\x1b\[31m\x1b\[1m__+\W(\S+)\W__+\x1b\[0m")
+ansi_passed_test_name_matcher = re.compile(r"\x1b\[32m\x1b\[1m__+\W(\S+)\W__+\x1b\[0m")
 section_name_matcher = re.compile(r"~~>PYTEST_FOLD_(\w+)")
 test_title_matcher = re.compile(r"__+\W(.*test.*)\W__+")
 standard_test_matcher = re.compile(
@@ -106,6 +108,9 @@ class Results:
         self.tests_all.update(self.tests_xfails)
         self.tests_all.update(self.tests_xpasses)
 
+        # Dict holding failed testnames and thei ANSI-encoded traceback info
+        self.failed_tracebacks = {}
+
     def _init_sections(self):
         """
         Initialize SectionInfo dataclass instances"""
@@ -152,12 +157,43 @@ class Results:
             return umfile.read()
 
     def _get_test_results(self):
-        """Process TestReport objects from Pytest output, then remove duplicates"""
+        """
+        Process TestReport objects from Pytest output; remove duplicates;
+        extract ANSI-encoded traceback info for failures.
+        """
+        self.failed_tracebacks = self._get_tracebacks(
+            "FAILURES_SECTION", ansi_failed_test_name_matcher
+        )
+        self.passed_tracebacks = self._get_tracebacks(
+            "PASSES_SECTION", ansi_passed_test_name_matcher
+        )
         processed_reports = self._process_reports()
         return list({item.title: item for item in processed_reports}.values())
 
+    def _get_tracebacks(self, section_name: str, regex: str) -> dict:
+        # get ANSI-coded traceback text for each test in failures section, in the
+        # form of a dictionary: {'test_title': 'ansi-encoded traceback text'}
+
+        last_header = ""
+        output = {}
+
+        lines = re.split("\n", self.Sections[section_name].content)
+        for line in lines:
+            result = re.search(regex, line)
+            if result:
+                last_header = result.groups()[0]
+                output[last_header] = ""
+            else:
+                if not last_header:
+                    continue
+                existing_data = output[last_header]
+                output[last_header] = existing_data + "\n" + line
+
+        return output
+
     def _process_reports(self):
         """Extract individual test results from full list of Pytest's TestReport instances"""
+
         test_infos = []
         for report in self._unpickle():
             test_info = TestInfo()
@@ -171,10 +207,12 @@ class Results:
             test_info.title = report.head_line
             test_info.keywords = set(report.keywords)
 
-            # get ANSI-coded text from marked sections
+            # for failed test cases, we want the ANSI coded output, not longreprtext,
+            # since the latter has no ANSI codes and all text will be plain
             if test_info.outcome == "failed" and report.when == "call":
-                test_info.text = report.longreprtext
-                print("")
+                test_info.text = self.failed_tracebacks[test_info.title]
+            # if test_info.outcome == "passed" and report.when == "call":
+            #     test_info.text = self.passed_tracebacks[test_info.title]
 
             test_infos.append(test_info)
         return test_infos
@@ -191,7 +229,7 @@ class Results:
         Line formats are different depending on setting of Pytest config option 'log_cli'.
         Hence the two regex matcher flavors (standard / live_log), and the two
         sections of per-line regex analysys. (Creating a single regex that captures both
-        formats reliably was very difficult, hence I worked around with with some per-line
+        formats reliably was very difficult, hence worked around with with some per-line
         logic.
         """
         look_for_live_log_outcome = False
@@ -226,14 +264,13 @@ class Results:
                 self._update_test_result_by_testname(title, outcome)
                 title = outcome = None
 
-
     def _get_result_by_outcome(self, outcome: str) -> None:
         # dict of {testname: log+stderr+stdout) for each test, per-outcome
         return {
-            test_result.title: test_result.caplog
+            test_result.title: test_result.text
+            + test_result.caplog
             + test_result.capstderr
             + test_result.capstdout
-            + test_result.text
             for test_result in self.test_results
             if test_result.category == outcome
         }
