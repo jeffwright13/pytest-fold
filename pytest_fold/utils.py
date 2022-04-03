@@ -275,14 +275,21 @@ class Results:
 
     def _get_result_by_outcome(self, outcome: str) -> None:
         # dict of {testname: log+stderr+stdout) for each test, per-outcome
-        return {
-            test_result.title: test_result.text
-            + test_result.caplog
-            + test_result.capstderr
-            + test_result.capstdout
-            for test_result in self.test_results
-            if test_result.category == outcome
-        }
+        if outcome == "FAILED":
+            return {
+                test_result.title: test_result.text
+                for test_result in self.test_results
+                if test_result.category == outcome
+            }
+        else:
+            return {
+                test_result.title: test_result.text
+                + test_result.caplog
+                + test_result.capstderr
+                + test_result.capstdout
+                for test_result in self.test_results
+                if test_result.category == outcome
+            }
 
     def _unpickle(self):
         """Unpack pickled Pytest TestReport objects from file"""
