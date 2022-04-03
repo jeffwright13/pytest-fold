@@ -208,15 +208,23 @@ class Results:
             test_info.title = report.head_line
             test_info.keywords = set(report.keywords)
 
-            # for failed test cases, we want the ANSI coded output, not longreprtext,
-            # since the latter has no ANSI codes and all text will be plain
-            if test_info.outcome == "failed" and report.when == "call":
-                test_info.text = self.failed_tracebacks[test_info.title]
-            # if test_info.outcome == "passed" and report.when == "call":
-            #     test_info.text = self.passed_tracebacks[test_info.title]
-
             test_infos.append(test_info)
         return test_infos
+
+    def _update_testinfo_category(self):
+        for report in self.reports:
+            for test_info in self.test_results:
+
+                # for failed test cases, we want the ANSI coded output, not longreprtext,
+                # since the latter has no ANSI codes and all text will be rendered w/o markup
+                if (
+                    test_info.category == "FAILED"
+                    and report.when == "call"
+                    and test_info.title in self.failed_tracebacks
+                ):
+                    test_info.text = self.failed_tracebacks[test_info.title]
+                # if test_info.category == "PASSED" and report.when == "call" and test_info.title in self.passed_tracebacks:
+                #     test_info.text = self.passed_tracebacks[test_info.title]
 
     def _update_test_result_by_testname(self, title: str, result: str) -> None:
         for test_result in self.test_results:
