@@ -92,6 +92,7 @@ class Results:
 
         # This code presents categorized test results
         self._categorize_tests()
+        self._update_testinfo_category()
 
         self.tests_errors = self._get_result_by_outcome("ERROR")
         self.tests_passes = self._get_result_by_outcome("PASSED")
