@@ -11,27 +11,12 @@ from time import sleep
 TERMINAL_SIZE = get_terminal_size()
 
 
-# @dataclass
-# class ResultHandler:
-#     name: str = ""
-#     tab_label: str = ""
-#     section_name: str = ""
-#     section_text: str = ""
-#     result_list: set = ()
-#     callback: set[Callable] = ()
-
-
 class TkTui:
     def __init__(self) -> None:
         self.test_results = Results()
         self.summary_results = self.test_results.Sections["LAST_LINE"].content.replace(
             "=", ""
         )
-
-        # self.result_handlers = [
-        #     ResultHandler(name=result, tab_label=result)
-        #     for result in OUTCOMES
-        # ]
 
         # Create root TTk object
         self.root = ttk.TTk()
@@ -111,19 +96,19 @@ class TkTui:
         text_area.setText(text)
         self.tab_widget.addTab(text_area, f" {tab_label}")
 
-        # text = self.test_results.Sections["PASSES_SECTION"].content
-        # tab_label = "Passes Section"
-        # text_area = ttk.TTkTextEdit(parent=self.tab_widget)
-        # text_area.setText(text)
-        # text_areas[tab_label] = text_area
-        # self.tab_widget.addTab(text_area, f" {tab_label}")
+        text = self.test_results.Sections["PASSES_SECTION"].content
+        tab_label = "Passes Section"
+        text_area = ttk.TTkTextEdit(parent=self.tab_widget)
+        text_area.setText(text)
+        text_areas[tab_label] = text_area
+        self.tab_widget.addTab(text_area, f" {tab_label}")
 
-        # text = self.test_results.Sections["FAILURES_SECTION"].content
-        # tab_label = "Failures Section"
-        # text_area = ttk.TTkTextEdit(parent=self.tab_widget)
-        # text_area.setText(text)
-        # text_areas[tab_label] = text_area
-        # self.tab_widget.addTab(text_area, f" {tab_label}")
+        text = self.test_results.Sections["FAILURES_SECTION"].content
+        tab_label = "Failures Section"
+        text_area = ttk.TTkTextEdit(parent=self.tab_widget)
+        text_area.setText(text)
+        text_areas[tab_label] = text_area
+        self.tab_widget.addTab(text_area, f" {tab_label}")
 
         text = self.test_results.Sections["ERRORS_SECTION"].content
         tab_label = "Errors Section"
@@ -156,7 +141,7 @@ class TkTui:
         @ttk.pyTTkSlot(ttk.TTkWidget)
         def callback2(item: ttk.TTkWidget) -> None:
             item._visible = False
-            sleep(3)
+            sleep(1)
             item._visible = True
 
         for outcome in OUTCOMES:

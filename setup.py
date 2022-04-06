@@ -13,12 +13,12 @@ def read(fname):
 
 setup(
     name="pytest-fold",
-    version="0.7.6",
+    version="0.7.7",
     author="Jeff Wright",
     author_email="jeff.washcloth@gmail.com",
     license="MIT",
     url="https://github.com/jeffwright13/pytest-fold",
-    description="Mark console output and drop user into interactive text user interface",
+    description="Capture Pytest output and when test run is complete, drop user into interactive text user interface",
     long_description=read("README.md"),
     long_description_content_type="text/markdown",
     # packages=["pytest_fold"],
@@ -26,10 +26,12 @@ setup(
     py_modules=["pytest_fold"],
     python_requires=">=3.8",
     install_requires=[
-        "pytest>=6.2.5",
-        "pytermgui>=4.1.0",
-        "single-source>=0.2.0",
         "Faker>=13.0.0",
+        "pytest>=6.2.5",
+        "pyTermTk>=0.9.0a37",
+        "single-source>=0.2.0",
+        "strip-ansi>=0.1.1",
+        "textual>=0.1.17",
     ],
     classifiers=[
         "Framework :: Pytest",
