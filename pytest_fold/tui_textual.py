@@ -8,12 +8,6 @@ from textual import messages
 from textual.views import DockView, GridView
 from textual.widgets import Header, Footer, TreeControl, ScrollView, TreeClick
 from pytest_fold.utils import Results
-from textual.widgets.tabs import Tabs, Tab
-
-
-class Hr(Widget):
-    def render(self) -> RenderableType:
-        return Rule()
 
 
 class FoldFooter(Footer):
