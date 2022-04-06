@@ -42,7 +42,7 @@ def pytest_addoption(parser):
         "--fold-tui",
         "--ft",
         action="store",
-        default="pytermk",
+        default="pytermtk",
         help="specify user interface ('pytermtk' ' k' | 'asciimatics' 'a' | 'textual' 't')",
         choices=["pytermtk", "k", "asciimatics", "a", "textual", "t"],
     )
