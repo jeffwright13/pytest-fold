@@ -18,11 +18,9 @@ warnings_summary_matcher = re.compile(r"^==.*\swarnings summary\s.*==+")
 passes_section_matcher = re.compile(r"^==.*\sPASSES\s==+")
 short_test_summary_matcher = re.compile(r"^==.*\sshort test summary info\s.*==+")
 lastline_matcher = re.compile(r"^==.*in\s\d+.\d+s.*=+")
-ansi_test_name_matcher = re.compile(r"\x1b\[[0-9;]+m__+\W(\S+)\W__+\x1b\[[0-9;]+m")
 ansi_failed_test_name_matcher = re.compile(r"\x1b\[31m\x1b\[1m__+\W(\S+)\W__+\x1b\[0m")
 ansi_passed_test_name_matcher = re.compile(r"\x1b\[32m\x1b\[1m__+\W(\S+)\W__+\x1b\[0m")
 section_name_matcher = re.compile(r"~~>PYTEST_FOLD_(\w+)")
-test_title_matcher = re.compile(r"__+\W(.*test.*)\W__+")
 standard_test_matcher = re.compile(
     r".*\::(\S+)\s(PASSED|FAILED|ERROR|SKIPPED|XFAIL|XPASS)"
 )
@@ -154,7 +152,7 @@ class Results:
         self, unmarked_file_path: Path = UNMARKEDTERMINALOUTPUTFILE
     ) -> list:
         """Get full Pytest terminal output"""
-        with open(UNMARKEDTERMINALOUTPUTFILE, "r") as umfile:
+        with open(unmarked_file_path, "r") as umfile:
             return umfile.read()
 
     def _get_test_results(self):
