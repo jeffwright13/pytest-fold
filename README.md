@@ -25,13 +25,15 @@ Do you run long Pytest campaigns and get lots of failures? And then spend the ne
 - Support for other, simple output-manipulating plugins:
   - `pytest-clarity`
   - `pytest-emoji`
-- Not supported: plugins that completely take over the console:
+  - `pytest-icdiff`
+  - etc.
+- Not supported: plugins that take over the console in other ways, like
   - `pytest-sugar`
+  - `pytest-emoji-output`
 
 ## Requirements
 - Pytest >= 6.2.5
 - Python >= 3.8
-- Works on Mac, Linux, Windows (using Asciimatics TUI); and Mac (using Textual TUI)
 
 ## Installation
 `pip install pytest-fold`
