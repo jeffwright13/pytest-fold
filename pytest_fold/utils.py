@@ -41,9 +41,9 @@ MARKERS = {
 
 
 OUTCOMES = (
-    "Errors",
-    "Passes",
     "Failures",
+    "Passes",
+    "Errors",
     "Skipped",
     "Xfails",
     "Xpasses",
