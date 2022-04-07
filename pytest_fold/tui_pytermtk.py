@@ -26,24 +26,19 @@ class TkTui:
             layout=ttk.TTkHBoxLayout(),
         )
         self.top_label = ttk.TTkLabel(
-            parent=self.top_frame,
-            text=ttk.TTkString(self.summary_results)
+            parent=self.top_frame, text=ttk.TTkString(self.summary_results)
         )
-        self.root.layout().addWidget(self.top_frame,0,0)
+        self.root.layout().addWidget(self.top_frame, 0, 0)
 
     def create_quit_button(self) -> None:
-        self.quit_button = ttk.TTkButton(
-            text="Quit",
-            border=True,
-            maxSize=(6,3)
-        )
+        self.quit_button = ttk.TTkButton(text="Quit", border=True, maxSize=(6, 3))
         self.quit_button.clicked.connect(self.root.quit)
-        self.root.layout().addWidget(self.quit_button,0,1)
+        self.root.layout().addWidget(self.quit_button, 0, 1)
 
     def create_section_tabs(self) -> None:
         # Create tabs with results from individual sections
         self.tab_widget = ttk.TTkTabWidget(border=False)
-        #self.tab_widget.setPadding(3, 0, 0, 0)
+        # self.tab_widget.setPadding(3, 0, 0, 0)
         self.root.layout().addWidget(self.tab_widget, 1, 0, 1, 2)
 
         text = (
@@ -94,21 +89,13 @@ class TkTui:
         text_areas[tab_label] = text_area
         self.tab_widget.addTab(text_area, f" {tab_label} ")
 
-    def create_log_tab(self) -> None:
-        # Create tab with TTkLog widget to log clicks from test tabs
-        tab_label = "Click Log"
-        log_viewer = ttk.TTkLogViewer()
-        self.tab_widget.addTab(log_viewer, f" {tab_label} ")
-
     def create_test_result_tabs(self) -> None:
         # Create tabs with results from individual sections
 
         for outcome in OUTCOMES:
             tab_label = outcome
 
-            results_list = ttk.TTkList(
-                selectionMode=ttk.TTkK.MultiSelection
-            )
+            results_list = ttk.TTkList(selectionMode=ttk.TTkK.MultiSelection)
             results_view = ttk.TTkTextEdit()
             results_view.setLineWrapMode(ttk.TTkK.WidgetWidth)
             results_view.setWordWrapMode(ttk.TTkK.WrapAnywhere)
@@ -140,7 +127,6 @@ def main():
     tui.create_top_frame()
     tui.create_quit_button()
     tui.create_section_tabs()
-    tui.create_log_tab()
     tui.create_test_result_tabs()
 
     tui.root.mainloop()
