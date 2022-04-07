@@ -13,7 +13,7 @@ def read(fname):
 
 setup(
     name="pytest-fold",
-    version="0.7.7",
+    version="0.8.0",
     author="Jeff Wright",
     author_email="jeff.washcloth@gmail.com",
     license="MIT",
@@ -28,7 +28,7 @@ setup(
     install_requires=[
         "Faker>=13.0.0",
         "pytest>=6.2.5",
-        "pyTermTk>=0.9.0a37",
+        "pyTermTk>=0.9.0a43",
         "single-source>=0.2.0",
         "strip-ansi>=0.1.1",
         "textual>=0.1.17",

@@ -9,8 +9,8 @@ pluggy==1.0.0
 py==1.11.0
 pyfiglet==0.8.post1
 pyparsing==3.0.7
-pyTermTk==0.9.0a37
-pytest==7.1.1
+pyTermTk==0.9.0a43
+pytest>=6.2.5
 single-source==0.2.0
 strip-ansi==0.1.1
 textual==0.1.17
