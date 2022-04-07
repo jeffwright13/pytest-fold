@@ -100,10 +100,10 @@ class Results:
         self.tests_xpasses = self._get_result_by_outcome("XPASS")
 
         self.tests_all = {}
-        self.tests_all.update(self.tests_errors)
+        self.tests_all |= self.tests_errors
         self.tests_all.update(self.tests_passes)
-        self.tests_all.update(self.tests_failures)
-        self.tests_all.update(self.tests_skipped)
+        self.tests_all |= self.tests_failures
+        self.tests_all |= self.tests_skipped
         self.tests_all.update(self.tests_xfails)
         self.tests_all.update(self.tests_xpasses)
 
@@ -178,8 +178,7 @@ class Results:
 
         lines = re.split("\n", self.Sections[section_name].content)
         for line in lines:
-            result = re.search(regex, line)
-            if result:
+            if result := re.search(regex, line):
                 testname = result.groups()[0]
                 tracebacks[testname] = ""
             else:
@@ -244,9 +243,7 @@ class Results:
         for line in self.Sections["TEST_SESSION_STARTS"].content.split("\n"):
             stripped_line = strip_ansi(line).rstrip()
 
-            # Start out by looking for non-live-log results
-            standard_match = re.search(standard_test_matcher, stripped_line)
-            if standard_match:
+            if standard_match := re.search(standard_test_matcher, stripped_line):
                 title = standard_match.groups()[0]
                 outcome = standard_match.groups()[1]
                 if title and outcome:
@@ -254,12 +251,9 @@ class Results:
                     title = outcome = None
                 continue
 
-            # If the line doesn't match non-live-log format, look for live-log matches;
-            # outcomes and testnames in separate searches
-            live_log_testname_match = re.search(
+            if live_log_testname_match := re.search(
                 live_log_testname_matcher, stripped_line
-            )
-            if live_log_testname_match:
+            ):
                 title = live_log_testname_match.groups()[0].strip()
                 look_for_live_log_outcome = True
                 continue
