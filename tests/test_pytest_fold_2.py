@@ -34,6 +34,13 @@ def test_v_xfail():
     pytest.xfail("xfailing this test")
 
 
+def test_vi_fail_compare_dicts_for_pytest_icdiff():
+    listofStrings = ["Hello", "hi", "there", "at", "this"]
+    listofInts = [7, 10, 45, 23, 77]
+    assert len(listofStrings) == len(listofInts)
+    assert listofStrings == listofInts
+
+
 @pytest.mark.xfail(reason="always xfail")
 def test_vi_xpass():
     pass

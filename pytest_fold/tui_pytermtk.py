@@ -11,10 +11,10 @@ from time import sleep
 class TkTui:
     def __init__(self) -> None:
         self.test_results = Results()
-        self.summary_results = self.test_results.Sections["LAST_LINE"].content.replace(
-            "=", ""
-        ).replace(
-            "\n",""
+        self.summary_results = (
+            self.test_results.Sections["LAST_LINE"]
+            .content.replace("=", "")
+            .replace("\n", "")
         )
 
         # Create root TTk object
