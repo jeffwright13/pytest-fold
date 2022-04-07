@@ -101,15 +101,11 @@ class TkTui:
             results_view.setWordWrapMode(ttk.TTkK.WrapAnywhere)
 
             @ttk.pyTTkSlot(str)
-            def callback(
-                test_name: str, rlist=results_list, rview=results_view
-            ) -> None:
+            def callback(test_name: str, rlist=results_list, rview=results_view) -> None:
                 ttk.TTkLog.info(f"Clicked test: {test_name}")
                 rview.clear()
                 for label in rlist.selectedLabels():
-                    rview.append(
-                        ttk.TTkString(f" # {label}", ttk.TTkColor.fg("#00FFFF"))
-                    )
+                    rview.append(ttk.TTkString(f" # {label}", ttk.TTkColor.fg("#00FFFF")))
                     rview.append(self.test_results.tests_all[label])
 
             width = 10
