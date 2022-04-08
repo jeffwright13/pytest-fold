@@ -47,6 +47,6 @@ setup(
     keywords="pytest testing fold output logs fail pytermtk asciimatics textual single-source",
     entry_points={
         "pytest11": ["pytest_fold = pytest_fold.plugin"],
-        "console_scripts": ["tuitxt = pytest_fold.tui_textual:main", "tuitk = pytest_fold.tui_pytermtk:main"],
+        "console_scripts": ["tuitxt = pytest_fold.tui_textual1:main", "tuitxt2 = pytest_fold.tui_textual2:main", "tuitk = pytest_fold.tui_pytermtk:main"],
     },
 )

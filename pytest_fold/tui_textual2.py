@@ -68,8 +68,9 @@ class PytestFoldApp(App):
         )
         self.unmarked_output = self.test_results.unmarked_output
         self.marked_output = self.test_results.marked_output
-        await self.bind("b", "view.toggle('sidebar')", "Toggle sidebar")
-        await self.bind("q", "quit", f"Quit        {self.summary_results}")
+        await self.bind("b", "view.toggle('sidebar')", "Toggle Tree")
+        await self.bind("q", "quit", "Quit")
+        await self.bind("~", None, f"{self.summary_results}")
 
     async def on_mount(self) -> None:
         # Create and dock header and footer widgets
@@ -82,15 +83,24 @@ class PytestFoldApp(App):
 
         tree = TreeControl("SESSION RESULTS:", {})
 
-        await tree.add(tree.root.id, Text("FAILURES"), {"results": self.test_results.tests_failures})
+        section = "FAILURES"
+        section_text = Text(section)
+        section_text.stylize(SECTIONS[section])
+        await tree.add(tree.root.id, section_text, {"results": self.test_results.tests_failures})
         for testname in self.test_results.tests_failures:
-            await tree.add(tree.root.id, Text(testname), {})
+            _test_text = Text(testname)
+            _test_text.stylize("italic")
+            await tree.add(tree.root.id, _test_text, {})
 
-        # for k, v in SECTIONS.items():
-        #     if tree.nodes[tree.id].label.plain == k:
-        #         tree.nodes[tree.id].label.stylize(v)
-        #     else:
-        #         tree.nodes[tree.id].label.stylize("italic")
+        section = "PASSES"
+        section_text = Text(section)
+        section_text.stylize(SECTIONS[section])
+        await tree.add(tree.root.id, section_text, {"results": self.test_results.tests_passes})
+        for testname in self.test_results.tests_passes:
+            _text = Text(testname)
+            _text.stylize("italic")
+            await tree.add(tree.root.id, _text, {})
+
         await tree.root.expand()
 
         # Create and dock the results header tree, and individual results
@@ -103,9 +113,19 @@ class PytestFoldApp(App):
         await self.dock_view.dock(self.body, edge="top")
 
     async def handle_tree_click(self, message: TreeClick[dict]) -> None:
-        # Display results in body when section header is clicked
+        # Display results in body when section header is clicked;
+        # but don't try processing the section titles
         label = message.node.label
-        self.text = self.test_results.tests_failures[message.node.label.plain]
+        if label.plain in SECTIONS:
+            return
+
+        for section in SECTIONS:
+            try:
+                test_section = f"tests_{section.lower()}"
+                self.text = eval(f"self.test_results.{test_section}[message.node.label.plain]")
+            except:
+                pass
+
         text: RenderableType
         text = Text.from_ansi(self.text)
         await self.body.update(text)
