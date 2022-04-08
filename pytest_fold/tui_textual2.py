@@ -9,54 +9,20 @@ from pytest_fold.utils import Results
 
 TREE_WIDTH = 30
 
-
-# class ResultsData:
-#     """
-#     Class to read in results from a 'pytest --fold' session (which inserts markers
-#     around each failed test), and sectionize the results into individual sections for
-#     display on the TUI. Relies on utils.py.
-#     """
-
-#     def __init__(self, path: Path = OUTFILE) -> None:
-#         self.results_file = path
-#         self.sections = []
-#         self.parsed_sections = []
-
-#     def _sectionize_results(self) -> None:
-#         with open(self.results_file, "r") as results_file:
-#             results_lines = results_file.readlines()
-#         self.sections = sectionize(results_lines)
-
-#     def get_results(self) -> list:
-#         self._sectionize_results()
-#         return self.sections
-
-#     def get_results_dict(self) -> dict:
-#         self.results = self.get_results()
-#         d = {}
-#         for section in self.results:
-#             if section["test_title"]:
-#                 d[section["test_title"]] = section["content"]
-#             else:
-#                 d[section["name"]] = section["content"]
-#         return d
-
-        # Stylize the results tree section headers
-        # tree = TreeControl("SESSION RESULTS:", {})
-        # for results_key in self.results.keys():
-        #     await tree.add(tree.root.id, Text(results_key), {"results": self.results})
-        #     for k, v in SECTIONS.items():
-        #         if tree.nodes[tree.id].label.plain == k:
-        #             tree.nodes[tree.id].label.stylize(v)
-        #         else:
-        #             tree.nodes[tree.id].label.stylize("italic")
-        # await tree.root.expand()
-
 SECTIONS = {
-    "FAILURES": "bold red underline",
     "PASSES": "bold green underline",
+    "FAILURES": "bold red underline",
     "ERRORS": "bold magenta underline",
     "WARNINGS_SUMMARY": "bold yellow underline",
+}
+
+CATEGORIES = {
+    "PASSES": "bold green underline",
+    "FAILURES": "bold red underline",
+    "ERRORS": "bold magenta underline",
+    "SKIPPED": "bold yellow underline",
+    "XFAILS": "bold magenta underline",
+    "XPASSES": "bold yellow underline",
 }
 
 class PytestFoldApp(App):
@@ -83,19 +49,19 @@ class PytestFoldApp(App):
 
         tree = TreeControl("SESSION RESULTS:", {})
 
-        section = "FAILURES"
-        section_text = Text(section)
-        section_text.stylize(SECTIONS[section])
-        await tree.add(tree.root.id, section_text, {"results": self.test_results.tests_failures})
+        category = "FAILURES"
+        category_text = Text(category)
+        category_text.stylize(CATEGORIES[category])
+        await tree.add(tree.root.id, category_text, {"results": self.test_results.tests_failures})
         for testname in self.test_results.tests_failures:
             _test_text = Text(testname)
             _test_text.stylize("italic")
             await tree.add(tree.root.id, _test_text, {})
 
-        section = "PASSES"
-        section_text = Text(section)
-        section_text.stylize(SECTIONS[section])
-        await tree.add(tree.root.id, section_text, {"results": self.test_results.tests_passes})
+        category = "PASSES"
+        category_text = Text(category)
+        category_text.stylize(CATEGORIES[category])
+        await tree.add(tree.root.id, category_text, {"results": self.test_results.tests_passes})
         for testname in self.test_results.tests_passes:
             _text = Text(testname)
             _text.stylize("italic")
@@ -113,16 +79,16 @@ class PytestFoldApp(App):
         await self.dock_view.dock(self.body, edge="top")
 
     async def handle_tree_click(self, message: TreeClick[dict]) -> None:
-        # Display results in body when section header is clicked;
-        # but don't try processing the section titles
+        # Display results in body when category header is clicked;
+        # but don't try processing the category titles
         label = message.node.label
-        if label.plain in SECTIONS:
+        if label.plain in CATEGORIES:
             return
 
-        for section in SECTIONS:
+        for category in CATEGORIES:
             try:
-                test_section = f"tests_{section.lower()}"
-                self.text = eval(f"self.test_results.{test_section}[message.node.label.plain]")
+                test_category = f"tests_{category.lower()}"
+                self.text = eval(f"self.test_results.{test_category}[message.node.label.plain]")
             except:
                 pass
 
