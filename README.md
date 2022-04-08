@@ -66,4 +66,4 @@ Please run pyflakes and black on any code before submitting a PR.
 Distributed under the terms of the `MIT`_ license, "pytest-fold" is free and open source software.
 
 ## Issues
-If you encounter any problems, have feedback or requests, or anything else, please `file an issue`, along with a detailed description.
+If you encounter any problems, have feedback or requests, or anything else, please [file an issue](https://github.com/jeffwright13/pytest-fold/issues/new), along with a detailed description.
