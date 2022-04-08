@@ -364,7 +364,7 @@ class MarkedSections:
             if self._line_is_a_marker(line):
                 section_name = re.search(section_name_matcher, line).groups()[0]
                 self.Sections[section_name].content = r""
-            else:
+            elif section_name:
                 self.Sections[section_name].content += line
         self.Sections["LAST_LINE"].content = lines[-1]
         return self.Sections

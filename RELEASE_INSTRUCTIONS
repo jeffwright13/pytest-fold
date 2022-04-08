@@ -1,28 +1,42 @@
 RELEASE_INSTRUCTIONS
 --------------------
-- Verify package installs and run correctly locally (from toplevel):
+1 Verify package installs and runs correctly locally (from toplevel):
+  cd <dev-direcory>
   pip install -e .
-- Install/upgrade build & release tools:
+
+2 Install/upgrade build & release tools:
   pip install --upgrade setuptools wheel twine
-- Clear out old builds:
+
+3 Clear out old builds:
   rm dist/*
-- Build:
+
+4 Build:
   python setup.py sdist bdist_wheel
-- Publish to TestPyPi:
+
+5 Publish to TestPyPi:
   python -m twine upload --repository testpypi dist/*
-- Test the installation:
-  pip uninstall -y pytest-fold
+
+6 Test the installation in a fresh directory:
+  cd ~
+  mkdir pytest-fold-testing
+  cd pytest-fold-testing
+  pyenv local 3.9.9
+  python -m venv venvsource venv/bin/activate
   python -m pip install --index-url https://test.pypi.org/simple/ pytest-fold
-- Verify Asciimatics TUI:
+
+7 Verify PyTermTk TUI:
   pytest --fold
-- Verify Textual TUI:
+
+8 Verify Textual TUI:
   pytest --fold --fold-tui textual
-- Unistall again:
-  pip uninstall -y pytest-fold
-- Publish to Pypi:
+
+9 Make any adjustments required, then git-commit and push, then start over at step 1
+
+10 Publish to Pypi:
+  cd <dev-directory>
   python -m twine upload dist/*
-- Test the installation:
-  pip uninstall -y pytest-fold
-  pip install pytest-fold
-- Run a test run to make sure it works (verify TUI):
-  pytest --fold -s
+
+11 Test the installation as per Step 6
+
+12 Run a test run to make sure it works (verify TUI):
+  pytest --fold
