@@ -1,3 +1,4 @@
+import itertools
 import re
 import pickle
 from dataclasses import dataclass
@@ -210,17 +211,15 @@ class Results:
         return test_infos
 
     def _update_testinfo_category(self):
-        for report in self.reports:
-            for test_info in self.test_results:
-
-                # for failed test cases, we want the ANSI coded output, not longreprtext,
-                # since the latter has no ANSI codes and all text will be rendered w/o markup
-                if (
-                    test_info.category == "FAILED"
-                    and report.when == "call"
-                    and test_info.title in self.failed_tracebacks
-                ):
-                    test_info.text = self.failed_tracebacks[test_info.title]
+        for report, test_info in itertools.product(self.reports, self.test_results):
+            # for failed test cases, we want the ANSI coded output, not longreprtext;
+            # longreprtext has no ANSI codes and all text will be rendered w/o markup
+            if (
+                test_info.category == "FAILED"
+                and report.when == "call"
+                and test_info.title in self.failed_tracebacks
+            ):
+                test_info.text = self.failed_tracebacks[test_info.title]
                 # if test_info.category == "PASSED" and report.when == "call" and test_info.title in self.passed_tracebacks:
                 #     test_info.text = self.passed_tracebacks[test_info.title]
 
@@ -348,6 +347,7 @@ class MarkedSections:
                 MARKERS["pytest_fold_passes_section"],
                 MARKERS["pytest_fold_warnings_summary"],
                 MARKERS["pytest_fold_short_test_summary"],
+                MARKERS["pytest_fold_last_line"],
             )
             if line.strip()
             else False
@@ -362,6 +362,8 @@ class MarkedSections:
 
         for line in lines:
             if self._line_is_a_marker(line):
+                if MARKERS["pytest_fold_last_line"] in line:
+                    continue
                 section_name = re.search(section_name_matcher, line).groups()[0]
                 self.Sections[section_name].content = r""
             elif section_name:

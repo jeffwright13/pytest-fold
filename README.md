@@ -39,7 +39,13 @@ Do you run long Pytest campaigns and get lots of failures? And then spend the ne
 
 From top-level directory:
 
-* `pytest --fold [--fold-tui textual|pytermtk|none] <other-pytest-options>`
+* `pytest --fold`
+
+Or, if you want to get technical about it:
+
+* `pytest --fold [--fold-tui textual1|textual2|pytermtk|none] <other-pytest-options>`
+
+See 'pytest --help' for more info.
 
 To quit the Textual TUI, either click the Quit button, or press `Q`. To quit the PyTermTk TUI, click the Quit button in the upper right.
 

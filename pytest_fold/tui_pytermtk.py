@@ -89,7 +89,7 @@ class TkTui:
         for outcome in OUTCOMES:
             tab_label = outcome
 
-            results_list = ttk.TTkList(selectionMode=ttk.TTkK.MultiSelection)
+            results_list = ttk.TTkList()
             results_view = ttk.TTkTextEdit()
             results_view.setLineWrapMode(ttk.TTkK.WidgetWidth)
             results_view.setWordWrapMode(ttk.TTkK.WrapAnywhere)
@@ -101,9 +101,6 @@ class TkTui:
                 ttk.TTkLog.info(f"Clicked test: {test_name}")
                 rview.clear()
                 for label in rlist.selectedLabels():
-                    rview.append(
-                        ttk.TTkString(f"  # {label}", ttk.TTkColor.fg("#00FFFF"))
-                    )
                     rview.append(self.test_results.tests_all[label])
 
             width = 10
