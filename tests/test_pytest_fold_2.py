@@ -8,11 +8,13 @@ logger.setLevel(logging.NOTSET)
 logger.propagate = True
 stdout_handler = logging.StreamHandler(sys.stdout)
 logger.addHandler(stdout_handler)
-logging.getLogger('faker').setLevel(logging.ERROR)
+logging.getLogger("faker").setLevel(logging.ERROR)
+
 
 @pytest.fixture
 def error_fixture():
     assert 0
+
 
 def test_i_ok():
     print("ok")

@@ -66,8 +66,12 @@ def pytest_configure(config: Config) -> None:
     This code works by looking at every line sent by Pytest to the terminal,
     and based on its category, marking or not marking it
     """
-    config.option.verbose = 1  # force verbose mode for easier parsing of final test results
-    config.option.reportchars = "A"  # force "display all" mode so all results can be shown
+    config.option.verbose = (
+        1  # force verbose mode for easier parsing of final test results
+    )
+    config.option.reportchars = (
+        "A"  # force "display all" mode so all results can be shown
+    )
 
     if config.option.fold:
         tr = config.pluginmanager.getplugin("terminalreporter")

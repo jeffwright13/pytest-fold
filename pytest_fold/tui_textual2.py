@@ -1,4 +1,3 @@
-from pathlib import Path
 from rich.console import RenderableType
 from rich.text import Text
 from textual import events
@@ -20,10 +19,11 @@ CATEGORIES = {
     "PASSES": "bold green underline",
     "FAILURES": "bold red underline",
     "ERRORS": "bold magenta underline",
-    "SKIPPED": "bold yellow underline",
-    "XFAILS": "bold magenta underline",
-    "XPASSES": "bold yellow underline",
+    "SKIPPED": "bold cyan underline",
+    "XFAILS": "bold indian_red underline",
+    "XPASSES": "bold chartreuse1 underline",
 }
+
 
 class PytestFoldApp(App):
     async def on_load(self, event: events.Load) -> None:
@@ -47,25 +47,20 @@ class PytestFoldApp(App):
         footer = Footer()
         await self.view.dock(footer, edge="bottom")
 
-        tree = TreeControl("SESSION RESULTS:", {})
+        tree = TreeControl("TEST RESULTS:", {})
 
-        category = "FAILURES"
-        category_text = Text(category)
-        category_text.stylize(CATEGORIES[category])
-        await tree.add(tree.root.id, category_text, {"results": self.test_results.tests_failures})
-        for testname in self.test_results.tests_failures:
-            _test_text = Text(testname)
-            _test_text.stylize("italic")
-            await tree.add(tree.root.id, _test_text, {})
-
-        category = "PASSES"
-        category_text = Text(category)
-        category_text.stylize(CATEGORIES[category])
-        await tree.add(tree.root.id, category_text, {"results": self.test_results.tests_passes})
-        for testname in self.test_results.tests_passes:
-            _text = Text(testname)
-            _text.stylize("italic")
-            await tree.add(tree.root.id, _text, {})
+        for category in CATEGORIES:
+            category_text = Text(category)
+            category_text.stylize(CATEGORIES[category])
+            await tree.add(
+                tree.root.id,
+                category_text,
+                {"results": eval(f"self.test_results.tests_{category.lower()}")},
+            )
+            for testname in eval(f"self.test_results.tests_{category.lower()}"):
+                _test_text = Text(testname)
+                _test_text.stylize("italic")
+                await tree.add(tree.root.id, _test_text, {})
 
         await tree.root.expand()
 
@@ -88,7 +83,9 @@ class PytestFoldApp(App):
         for category in CATEGORIES:
             try:
                 test_category = f"tests_{category.lower()}"
-                self.text = eval(f"self.test_results.{test_category}[message.node.label.plain]")
+                self.text = eval(
+                    f"self.test_results.{test_category}[message.node.label.plain]"
+                )
             except:
                 pass
 

@@ -11,7 +11,8 @@ logger.setLevel(logging.NOTSET)
 logger.propagate = True
 stdout_handler = logging.StreamHandler(sys.stdout)
 logger.addHandler(stdout_handler)
-logging.getLogger('faker').setLevel(logging.ERROR)
+logging.getLogger("faker").setLevel(logging.ERROR)
+
 
 @pytest.fixture
 def error_fixture():
@@ -47,6 +48,7 @@ def test_f_xpass():
 def test_g_eval_parameterized(test_input, expected):
     assert eval(test_input) == expected
 
+
 @pytest.fixture
 def log_testname():
     logger.info(f"Running test {__name__}...")
@@ -56,8 +58,9 @@ def log_testname():
     logger.info("Tearing test down...")
 
 
-def fake_data(min: int=30, max: int=120) -> str:
-    return faker.Faker().text(random.randint(min,max))
+def fake_data(min: int = 30, max: int = 120) -> str:
+    return faker.Faker().text(random.randint(min, max))
+
 
 def test_1_passes_and_has_logging_output(log_testname):
     logger.critical(fake_data())
@@ -141,8 +144,13 @@ def test_11_pass_capturing(capsys):
     print("PASS this stderr is captured", file=sys.stderr)
     logger.warning("PASS this log is captured")
     with capsys.disabled(log_testname):
-        print("PASS stdout not captured (capsys disabled), going directly to sys.stdout")
-        print("PASS stderr not captured (capsys disabled), going directly to sys.stderr", file=sys.stderr)
+        print(
+            "PASS stdout not captured (capsys disabled), going directly to sys.stdout"
+        )
+        print(
+            "PASS stderr not captured (capsys disabled), going directly to sys.stderr",
+            file=sys.stderr,
+        )
         logger.warning("is this log captured?")
     print("PASS this stdout is also captured")
     print("PASS this stderr is also captured", file=sys.stderr)

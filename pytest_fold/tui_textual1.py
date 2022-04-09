@@ -1,7 +1,5 @@
 from rich.console import RenderableType
 from rich.text import Text
-from rich.padding import Padding
-from rich.rule import Rule
 from textual import events
 from textual.app import App
 from textual import messages
@@ -56,14 +54,14 @@ class FoldApp(App):
 
     async def on_load(self, event: events.Load) -> None:
         # Populate footer with quit and toggle info
-        await self.bind("u", "toggle_tree('unmarked')", "Toggle Unmarked  ⁞")
-        await self.bind("1", "toggle_tree('summary')", "Toggle Summary  ⁞")
-        await self.bind("e", "toggle_tree('error_tree')", "Toggle Error  ⁞")
-        await self.bind("f", "toggle_tree('fail_tree')", "Toggle Fail  ⁞")
-        await self.bind("p", "toggle_tree('pass_tree')", "Toggle Pass  ⁞")
-        await self.bind("s", "toggle_tree('skip_tree')", "Toggle Skipped  ⁞")
-        await self.bind("y", "toggle_tree('xpass_tree')", "Toggle Xpass  ⁞")
-        await self.bind("z", "toggle_tree('xfail_tree')", "Toggle Xfail  ⁞")
+        await self.bind("u", "toggle_tree('unmarked')", "Unmarked Output  ⁞")
+        await self.bind("1", "toggle_tree('summary')", "Summary  ⁞")
+        await self.bind("e", "toggle_tree('error_tree')", "Error  ⁞")
+        await self.bind("f", "toggle_tree('fail_tree')", "Fail  ⁞")
+        await self.bind("p", "toggle_tree('pass_tree')", "Pass  ⁞")
+        await self.bind("s", "toggle_tree('skip_tree')", "Skipped  ⁞")
+        await self.bind("y", "toggle_tree('xpass_tree')", "Xpass  ⁞")
+        await self.bind("z", "toggle_tree('xfail_tree')", "Xfail  ⁞")
         await self.bind(
             "a",
             "toggle_tree(['unmarked', 'summary', 'error_tree', 'pass_tree', 'fail_tree', 'skip_tree', 'xpass_tree', 'xfail_tree'])",
