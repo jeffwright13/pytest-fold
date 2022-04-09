@@ -24,6 +24,7 @@ RELEASE_INSTRUCTIONS
   python -m venv venv
   source venv/bin/activate
   python -m pip install --index-url https://test.pypi.org/simple/ pytest-fold
+  mkdir -p ./tests/ && p ../pytest-fold/tests/* ./tests/
 
 7 Verify PyTermTk TUI:
   pytest --fold
