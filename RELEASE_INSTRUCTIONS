@@ -21,18 +21,24 @@ RELEASE_INSTRUCTIONS
   mkdir pytest-fold-testing
   cd pytest-fold-testing
   pyenv local 3.9.9
-  python -m venv venvsource venv/bin/activate
+  python -m venv venv
+  source venv/bin/activate
   python -m pip install --index-url https://test.pypi.org/simple/ pytest-fold
+  mkdir -p ./tests/ && p ../pytest-fold/tests/* ./tests/
 
 7 Verify PyTermTk TUI:
   pytest --fold
 
-8 Verify Textual TUI:
-  pytest --fold --fold-tui textual
+8 Verify Textual TUIs:
+  pytest --fold --ft=t1
+  pytest --fold --ft=t2
 
-9 Make any adjustments required, then git-commit and push, then start over at step 1
+9 Verify No-TUI:
+  pytest --fold --ft=n
 
-10 Publish to Pypi:
+10 Make any adjustments required, then git-commit and push, then start over at step 1
+
+11 Publish to Pypi:
   cd <dev-directory>
   python -m twine upload dist/*
 

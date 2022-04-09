@@ -58,13 +58,11 @@ You can also run with the `--fold` option enabled but bypass auto-launch of the 
 
 ## Known Limitations / Issues
 - Rudimentary user interfaces that need a lot of love:
-  - Textual interface shows incomplete information (will be fixed very soon); can be slow, esp. if run within an IDE
-  - PyTermTk interface does not yet show expanded individual test results (second on my list to fix, but will require writing some custom widget code)
-  - There is an Asciimatics interface as well, but it lacks mouse support on Mac, which is a dealbreaker for me (may not ever fix)
+  - Textual interface can be slow, esp. if run within an IDE
+  - PyTermTk interface sometimes gets corrupted if resized
 - Not fully tested with all combinations of output formats. Probably some use-cases where things won't work 100% right.
 - `pytest-fold` does not mark stderr or stdout sections for folding. It is assumed that the tester is interested in seeing such output.
 - `pytest-fold` is currently incompatible with `--tb=native` and will cause an INTERNALERROR if run together. (TODO: Fix this.)
-- `pytest-fold` may crash in the Asciimatics TUI if the console is resized.
 
 ## Contributing
 Contributions are very welcome. If you are slick with user interfaces, I would love some help there.
