@@ -13,7 +13,7 @@ def read(fname):
 
 setup(
     name="pytest-fold",
-    version="0.8.3",
+    version="0.8.4",
     author="Jeff Wright",
     author_email="jeff.washcloth@gmail.com",
     license="MIT",
