@@ -21,7 +21,8 @@ RELEASE_INSTRUCTIONS
   mkdir pytest-fold-testing
   cd pytest-fold-testing
   pyenv local 3.9.9
-  python -m venv venvsource venv/bin/activate
+  python -m venv venv
+  source venv/bin/activate
   python -m pip install --index-url https://test.pypi.org/simple/ pytest-fold
 
 7 Verify PyTermTk TUI:
