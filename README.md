@@ -1,3 +1,5 @@
+# NOTE: THIS REPO DEPRECATED. USE [pytest-tui](https://github.com/jeffwright13/pytest-tui) INSTEAD.
+
 # pytest-fold
 ## A Pytest plugin to make console output more manageable
 
